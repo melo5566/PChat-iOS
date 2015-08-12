@@ -32,6 +32,7 @@
 		134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370F81B68B67F00AE7FA7 /* UIImage+Utils.m */; };
 		134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FB1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m */; };
 		1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */; };
+		13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13619F1D1B7B2F5000B79CEC /* .gitignore */; };
 		2AEE06F5EB4218866127775F /* libPods-MuchTVHealthy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */; };
 		D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */; };
 		D0D030B51B70A38E00046917 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D030B31B70A38E00046917 /* checkbox.png */; };
@@ -112,6 +113,7 @@
 		134371001B68B67F00AE7FA7 /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
 		134371011B68B67F00AE7FA7 /* EventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventList.h; sourceTree = "<group>"; };
 		134371021B68B67F00AE7FA7 /* StaticValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticValues.h; sourceTree = "<group>"; };
+		13619F1D1B7B2F5000B79CEC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.release.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.release.xcconfig"; sourceTree = "<group>"; };
 		9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.debug.xcconfig"; sourceTree = "<group>"; };
 		D0D030AD1B6F26A800046917 /* PostNewDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostNewDiscussionViewController.h; path = Frontpage/PostNewDiscussionViewController.h; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 		1343709C1B68B19000AE7FA7 = {
 			isa = PBXGroup;
 			children = (
+				13619F1D1B7B2F5000B79CEC /* .gitignore */,
 				134370A71B68B19000AE7FA7 /* MuchTVHealthy */,
 				134370C11B68B19000AE7FA7 /* MuchTVHealthyTests */,
 				134370A61B68B19000AE7FA7 /* Products */,
@@ -627,6 +630,7 @@
 				D0D295EC1B68E70B00671449 /* fanzytv_btn@2x.png in Resources */,
 				D0D295EE1B68ED3000671449 /* image_placeholder_4x3.png in Resources */,
 				134370B41B68B19000AE7FA7 /* Main.storyboard in Resources */,
+				13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */,
 				D0D295EA1B68D77400671449 /* image_preset_avatar.png in Resources */,
 				D0D296151B69F09C00671449 /* icon_arrow_back.png in Resources */,
 				134370B91B68B19000AE7FA7 /* LaunchScreen.xib in Resources */,
