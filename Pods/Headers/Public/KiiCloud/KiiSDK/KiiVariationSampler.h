@@ -1,0 +1,1 @@
+../../../../KiiCloud/KiiSDK.framework/Versions/A/Headers/KiiVariationSampler.h

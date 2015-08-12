@@ -1,0 +1,42 @@
+//
+//  MuchTVHealthy-Prefix.pch
+//  MuchTVHealthy
+//
+//  Created by Weiyu Chen on 2015/7/29.
+//  Copyright (c) 2015年 Fanzytv. All rights reserved.
+//
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+
+#ifndef MuchTVHealthy_MuchTVHealthy_Prefix_pch
+#define MuchTVHealthy_MuchTVHealthy_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+// SDK & Pods
+#import <KiiSDK/Kii.h>
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <AFNetworking.h>
+#import <Reachability/Reachability.h>
+#import "MBProgressHUD.h"
+
+// Headers
+#import "StaticValues.h"
+#import "Defines.h"
+#import "EventList.h"
+
+// Categories
+#import "UIColor+HexColor.h"
+#import "UIView+Utils.h"
+#import "NSString+Utils.h"
+#import "NSArray+Utils.h"
+#import "UIImageView+ActivityIndicator.h"
+#import "UIImage+Utils.h"
+
+#endif

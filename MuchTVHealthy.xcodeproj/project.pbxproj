@@ -1,0 +1,928 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		134370AB1B68B19000AE7FA7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370AA1B68B19000AE7FA7 /* main.m */; };
+		134370AE1B68B19000AE7FA7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370AD1B68B19000AE7FA7 /* AppDelegate.m */; };
+		134370B11B68B19000AE7FA7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370B01B68B19000AE7FA7 /* ViewController.m */; };
+		134370B41B68B19000AE7FA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 134370B21B68B19000AE7FA7 /* Main.storyboard */; };
+		134370B61B68B19000AE7FA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 134370B51B68B19000AE7FA7 /* Images.xcassets */; };
+		134370B91B68B19000AE7FA7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 134370B71B68B19000AE7FA7 /* LaunchScreen.xib */; };
+		134370C51B68B19000AE7FA7 /* MuchTVHealthyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370C41B68B19000AE7FA7 /* MuchTVHealthyTests.m */; };
+		134370DD1B68B5BB00AE7FA7 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D11B68B5BB00AE7FA7 /* Accounts.framework */; };
+		134370DE1B68B5BB00AE7FA7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D21B68B5BB00AE7FA7 /* AudioToolbox.framework */; };
+		134370DF1B68B5BB00AE7FA7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D31B68B5BB00AE7FA7 /* CFNetwork.framework */; };
+		134370E01B68B5BB00AE7FA7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D41B68B5BB00AE7FA7 /* CoreGraphics.framework */; };
+		134370E11B68B5BB00AE7FA7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D51B68B5BB00AE7FA7 /* libsqlite3.dylib */; };
+		134370E21B68B5BB00AE7FA7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D61B68B5BB00AE7FA7 /* libz.dylib */; };
+		134370E31B68B5BB00AE7FA7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D71B68B5BB00AE7FA7 /* MobileCoreServices.framework */; };
+		134370E41B68B5BB00AE7FA7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D81B68B5BB00AE7FA7 /* QuartzCore.framework */; };
+		134370E51B68B5BB00AE7FA7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370D91B68B5BB00AE7FA7 /* Security.framework */; };
+		134370E61B68B5BB00AE7FA7 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370DA1B68B5BB00AE7FA7 /* Social.framework */; };
+		134370E71B68B5BB00AE7FA7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370DB1B68B5BB00AE7FA7 /* StoreKit.framework */; };
+		134370E81B68B5BB00AE7FA7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134370DC1B68B5BB00AE7FA7 /* SystemConfiguration.framework */; };
+		134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370EF1B68B67F00AE7FA7 /* NSArray+Utils.m */; };
+		134371061B68B67F00AE7FA7 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370F21B68B67F00AE7FA7 /* NSString+Utils.m */; };
+		134371071B68B67F00AE7FA7 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370F51B68B67F00AE7FA7 /* UIColor+HexColor.m */; };
+		134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370F81B68B67F00AE7FA7 /* UIImage+Utils.m */; };
+		134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FB1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m */; };
+		1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */; };
+		2AEE06F5EB4218866127775F /* libPods-MuchTVHealthy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */; };
+		D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */; };
+		D0D030B51B70A38E00046917 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D030B31B70A38E00046917 /* checkbox.png */; };
+		D0D030B61B70A38E00046917 /* selected_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D030B41B70A38E00046917 /* selected_checkbox.png */; };
+		D0D030BF1B72FB2000046917 /* DiscussionSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030BE1B72FB2000046917 /* DiscussionSingleViewController.m */; };
+		D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030C41B72FF2700046917 /* DiscussionCommentTableViewCell.m */; };
+		D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030C81B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m */; };
+		D0D030CD1B7307B900046917 /* ImageSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030CC1B7307B900046917 /* ImageSlideView.m */; };
+		D0D295DD1B68C24200671449 /* FrontpageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D295DC1B68C24200671449 /* FrontpageViewController.m */; };
+		D0D295E21B68C38D00671449 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D295E11B68C38D00671449 /* BaseViewController.m */; };
+		D0D295E51B68C3D000671449 /* FrontpageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D295E41B68C3D000671449 /* FrontpageTableViewCell.m */; };
+		D0D295E81B68CE7600671449 /* icon_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D295E71B68CE7600671449 /* icon_setting@2x.png */; };
+		D0D295EA1B68D77400671449 /* image_preset_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D295E91B68D77400671449 /* image_preset_avatar.png */; };
+		D0D295EC1B68E70B00671449 /* fanzytv_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D295EB1B68E70B00671449 /* fanzytv_btn@2x.png */; };
+		D0D295EE1B68ED3000671449 /* image_placeholder_4x3.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D295ED1B68ED3000671449 /* image_placeholder_4x3.png */; };
+		D0D295F01B69D04300671449 /* icon_time.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D295EF1B69D04300671449 /* icon_time.png */; };
+		D0D295FD1B69D2B800671449 /* FrontpageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D295FC1B69D2B800671449 /* FrontpageModel.m */; };
+		D0D296001B69D30900671449 /* FrontpageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D295FF1B69D30900671449 /* FrontpageObject.m */; };
+		D0D296031B69D4D300671449 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D296021B69D4D300671449 /* BaseModel.m */; };
+		D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D296061B69EBC000671449 /* SignUpAndSignInModel.m */; };
+		D0D2960B1B69EC4800671449 /* PersonalSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D2960A1B69EC4800671449 /* PersonalSettingViewController.m */; };
+		D0D2960F1B69ECF300671449 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D2960E1B69ECF300671449 /* UserModel.m */; };
+		D0D296131B69EE0800671449 /* CustomizedSettingPageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D296121B69EE0800671449 /* CustomizedSettingPageButton.m */; };
+		D0D296151B69F09C00671449 /* icon_arrow_back.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D296141B69F09C00671449 /* icon_arrow_back.png */; };
+		D0D296181B6A128500671449 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D296171B6A128500671449 /* SignUpViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		134370BF1B68B19000AE7FA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1343709D1B68B19000AE7FA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 134370A41B68B19000AE7FA7;
+			remoteInfo = MuchTVHealthy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MuchTVHealthy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		134370A51B68B19000AE7FA7 /* MuchTVHealthy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuchTVHealthy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		134370A91B68B19000AE7FA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		134370AA1B68B19000AE7FA7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		134370AC1B68B19000AE7FA7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		134370AD1B68B19000AE7FA7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		134370AF1B68B19000AE7FA7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		134370B01B68B19000AE7FA7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		134370B31B68B19000AE7FA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		134370B51B68B19000AE7FA7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		134370B81B68B19000AE7FA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		134370BE1B68B19000AE7FA7 /* MuchTVHealthyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MuchTVHealthyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		134370C31B68B19000AE7FA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		134370C41B68B19000AE7FA7 /* MuchTVHealthyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MuchTVHealthyTests.m; sourceTree = "<group>"; };
+		134370D01B68B47800AE7FA7 /* MuchTVHealthy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MuchTVHealthy-Prefix.pch"; sourceTree = "<group>"; };
+		134370D11B68B5BB00AE7FA7 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		134370D21B68B5BB00AE7FA7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		134370D31B68B5BB00AE7FA7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		134370D41B68B5BB00AE7FA7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		134370D51B68B5BB00AE7FA7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		134370D61B68B5BB00AE7FA7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		134370D71B68B5BB00AE7FA7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		134370D81B68B5BB00AE7FA7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		134370D91B68B5BB00AE7FA7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		134370DA1B68B5BB00AE7FA7 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		134370DB1B68B5BB00AE7FA7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		134370DC1B68B5BB00AE7FA7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		134370EE1B68B67F00AE7FA7 /* NSArray+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Utils.h"; sourceTree = "<group>"; };
+		134370EF1B68B67F00AE7FA7 /* NSArray+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Utils.m"; sourceTree = "<group>"; };
+		134370F11B68B67F00AE7FA7 /* NSString+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
+		134370F21B68B67F00AE7FA7 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
+		134370F41B68B67F00AE7FA7 /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
+		134370F51B68B67F00AE7FA7 /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
+		134370F71B68B67F00AE7FA7 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
+		134370F81B68B67F00AE7FA7 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
+		134370FA1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ActivityIndicator.h"; sourceTree = "<group>"; };
+		134370FB1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ActivityIndicator.m"; sourceTree = "<group>"; };
+		134370FD1B68B67F00AE7FA7 /* UIView+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Utils.h"; sourceTree = "<group>"; };
+		134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Utils.m"; sourceTree = "<group>"; };
+		134371001B68B67F00AE7FA7 /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
+		134371011B68B67F00AE7FA7 /* EventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventList.h; sourceTree = "<group>"; };
+		134371021B68B67F00AE7FA7 /* StaticValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticValues.h; sourceTree = "<group>"; };
+		5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.release.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.release.xcconfig"; sourceTree = "<group>"; };
+		9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.debug.xcconfig"; sourceTree = "<group>"; };
+		D0D030AD1B6F26A800046917 /* PostNewDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostNewDiscussionViewController.h; path = Frontpage/PostNewDiscussionViewController.h; sourceTree = "<group>"; };
+		D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostNewDiscussionViewController.m; path = Frontpage/PostNewDiscussionViewController.m; sourceTree = "<group>"; };
+		D0D030B31B70A38E00046917 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkbox.png; path = Resources/checkbox.png; sourceTree = "<group>"; };
+		D0D030B41B70A38E00046917 /* selected_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected_checkbox.png; path = Resources/selected_checkbox.png; sourceTree = "<group>"; };
+		D0D030BD1B72FB2000046917 /* DiscussionSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscussionSingleViewController.h; path = Discussion/DiscussionSingleViewController.h; sourceTree = "<group>"; };
+		D0D030BE1B72FB2000046917 /* DiscussionSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiscussionSingleViewController.m; path = Discussion/DiscussionSingleViewController.m; sourceTree = "<group>"; };
+		D0D030C31B72FF2700046917 /* DiscussionCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscussionCommentTableViewCell.h; path = Discussion/DiscussionCommentTableViewCell.h; sourceTree = "<group>"; };
+		D0D030C41B72FF2700046917 /* DiscussionCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiscussionCommentTableViewCell.m; path = Discussion/DiscussionCommentTableViewCell.m; sourceTree = "<group>"; };
+		D0D030C71B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscussionAuthorAndContentTableViewCell.h; path = Discussion/DiscussionAuthorAndContentTableViewCell.h; sourceTree = "<group>"; };
+		D0D030C81B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiscussionAuthorAndContentTableViewCell.m; path = Discussion/DiscussionAuthorAndContentTableViewCell.m; sourceTree = "<group>"; };
+		D0D030CB1B7307B900046917 /* ImageSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageSlideView.h; path = CustomizedView/ImageSlideView.h; sourceTree = "<group>"; };
+		D0D030CC1B7307B900046917 /* ImageSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageSlideView.m; path = CustomizedView/ImageSlideView.m; sourceTree = "<group>"; };
+		D0D295DB1B68C24200671449 /* FrontpageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrontpageViewController.h; path = Frontpage/FrontpageViewController.h; sourceTree = "<group>"; };
+		D0D295DC1B68C24200671449 /* FrontpageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrontpageViewController.m; path = Frontpage/FrontpageViewController.m; sourceTree = "<group>"; };
+		D0D295E01B68C38D00671449 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Base/BaseViewController.h; sourceTree = "<group>"; };
+		D0D295E11B68C38D00671449 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Base/BaseViewController.m; sourceTree = "<group>"; };
+		D0D295E31B68C3D000671449 /* FrontpageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrontpageTableViewCell.h; path = Frontpage/FrontpageTableViewCell.h; sourceTree = "<group>"; };
+		D0D295E41B68C3D000671449 /* FrontpageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrontpageTableViewCell.m; path = Frontpage/FrontpageTableViewCell.m; sourceTree = "<group>"; };
+		D0D295E71B68CE7600671449 /* icon_setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_setting@2x.png"; path = "Resources/icon_setting@2x.png"; sourceTree = "<group>"; };
+		D0D295E91B68D77400671449 /* image_preset_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_preset_avatar.png; path = Resources/image_preset_avatar.png; sourceTree = "<group>"; };
+		D0D295EB1B68E70B00671449 /* fanzytv_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fanzytv_btn@2x.png"; path = "Resources/fanzytv_btn@2x.png"; sourceTree = "<group>"; };
+		D0D295ED1B68ED3000671449 /* image_placeholder_4x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_placeholder_4x3.png; path = Resources/image_placeholder_4x3.png; sourceTree = "<group>"; };
+		D0D295EF1B69D04300671449 /* icon_time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_time.png; path = Resources/icon_time.png; sourceTree = "<group>"; };
+		D0D295FB1B69D2B800671449 /* FrontpageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrontpageModel.h; path = Frontpage/FrontpageModel.h; sourceTree = "<group>"; };
+		D0D295FC1B69D2B800671449 /* FrontpageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrontpageModel.m; path = Frontpage/FrontpageModel.m; sourceTree = "<group>"; };
+		D0D295FE1B69D30900671449 /* FrontpageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrontpageObject.h; path = Frontpage/FrontpageObject.h; sourceTree = "<group>"; };
+		D0D295FF1B69D30900671449 /* FrontpageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrontpageObject.m; path = Frontpage/FrontpageObject.m; sourceTree = "<group>"; };
+		D0D296011B69D4D300671449 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		D0D296021B69D4D300671449 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
+		D0D296051B69EBC000671449 /* SignUpAndSignInModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpAndSignInModel.h; path = SingUpAndSignIn/SignUpAndSignInModel.h; sourceTree = "<group>"; };
+		D0D296061B69EBC000671449 /* SignUpAndSignInModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpAndSignInModel.m; path = SingUpAndSignIn/SignUpAndSignInModel.m; sourceTree = "<group>"; };
+		D0D296091B69EC4800671449 /* PersonalSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalSettingViewController.h; path = Setting/PersonalSettingViewController.h; sourceTree = "<group>"; };
+		D0D2960A1B69EC4800671449 /* PersonalSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalSettingViewController.m; path = Setting/PersonalSettingViewController.m; sourceTree = "<group>"; };
+		D0D2960D1B69ECF300671449 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserModel.h; path = UserModel/UserModel.h; sourceTree = "<group>"; };
+		D0D2960E1B69ECF300671449 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserModel.m; path = UserModel/UserModel.m; sourceTree = "<group>"; };
+		D0D296111B69EE0800671449 /* CustomizedSettingPageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomizedSettingPageButton.h; path = CustomizedButton/CustomizedSettingPageButton.h; sourceTree = "<group>"; };
+		D0D296121B69EE0800671449 /* CustomizedSettingPageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomizedSettingPageButton.m; path = CustomizedButton/CustomizedSettingPageButton.m; sourceTree = "<group>"; };
+		D0D296141B69F09C00671449 /* icon_arrow_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_arrow_back.png; path = Resources/icon_arrow_back.png; sourceTree = "<group>"; };
+		D0D296161B6A128500671449 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Setting/SignUpViewController.h; sourceTree = "<group>"; };
+		D0D296171B6A128500671449 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Setting/SignUpViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		134370A21B68B19000AE7FA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				134370DD1B68B5BB00AE7FA7 /* Accounts.framework in Frameworks */,
+				134370DE1B68B5BB00AE7FA7 /* AudioToolbox.framework in Frameworks */,
+				134370DF1B68B5BB00AE7FA7 /* CFNetwork.framework in Frameworks */,
+				134370E01B68B5BB00AE7FA7 /* CoreGraphics.framework in Frameworks */,
+				134370E11B68B5BB00AE7FA7 /* libsqlite3.dylib in Frameworks */,
+				134370E21B68B5BB00AE7FA7 /* libz.dylib in Frameworks */,
+				134370E31B68B5BB00AE7FA7 /* MobileCoreServices.framework in Frameworks */,
+				134370E41B68B5BB00AE7FA7 /* QuartzCore.framework in Frameworks */,
+				134370E51B68B5BB00AE7FA7 /* Security.framework in Frameworks */,
+				134370E61B68B5BB00AE7FA7 /* Social.framework in Frameworks */,
+				134370E71B68B5BB00AE7FA7 /* StoreKit.framework in Frameworks */,
+				134370E81B68B5BB00AE7FA7 /* SystemConfiguration.framework in Frameworks */,
+				2AEE06F5EB4218866127775F /* libPods-MuchTVHealthy.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		134370BB1B68B19000AE7FA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1343709C1B68B19000AE7FA7 = {
+			isa = PBXGroup;
+			children = (
+				134370A71B68B19000AE7FA7 /* MuchTVHealthy */,
+				134370C11B68B19000AE7FA7 /* MuchTVHealthyTests */,
+				134370A61B68B19000AE7FA7 /* Products */,
+				584DC4B7B7C77191F90B29CC /* Pods */,
+				CAF8FF9C95641731E761CFD0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		134370A61B68B19000AE7FA7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				134370A51B68B19000AE7FA7 /* MuchTVHealthy.app */,
+				134370BE1B68B19000AE7FA7 /* MuchTVHealthyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		134370A71B68B19000AE7FA7 /* MuchTVHealthy */ = {
+			isa = PBXGroup;
+			children = (
+				D0D295E61B68C66400671449 /* Resources */,
+				134370AC1B68B19000AE7FA7 /* AppDelegate.h */,
+				134370AD1B68B19000AE7FA7 /* AppDelegate.m */,
+				134370AF1B68B19000AE7FA7 /* ViewController.h */,
+				134370B01B68B19000AE7FA7 /* ViewController.m */,
+				134370B51B68B19000AE7FA7 /* Images.xcassets */,
+				134370E91B68B67F00AE7FA7 /* SourceCodes */,
+				1343710B1B68B8BA00AE7FA7 /* StoryboardAndXib */,
+				134370A81B68B19000AE7FA7 /* Supporting Files */,
+			);
+			path = MuchTVHealthy;
+			sourceTree = "<group>";
+		};
+		134370A81B68B19000AE7FA7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				134370A91B68B19000AE7FA7 /* Info.plist */,
+				134370AA1B68B19000AE7FA7 /* main.m */,
+				134370D01B68B47800AE7FA7 /* MuchTVHealthy-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		134370C11B68B19000AE7FA7 /* MuchTVHealthyTests */ = {
+			isa = PBXGroup;
+			children = (
+				134370C41B68B19000AE7FA7 /* MuchTVHealthyTests.m */,
+				134370C21B68B19000AE7FA7 /* Supporting Files */,
+			);
+			path = MuchTVHealthyTests;
+			sourceTree = "<group>";
+		};
+		134370C21B68B19000AE7FA7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				134370C31B68B19000AE7FA7 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		134370E91B68B67F00AE7FA7 /* SourceCodes */ = {
+			isa = PBXGroup;
+			children = (
+				134370EA1B68B67F00AE7FA7 /* Controllers */,
+				134371031B68B67F00AE7FA7 /* Models */,
+				134371041B68B67F00AE7FA7 /* Views */,
+				134370EB1B68B67F00AE7FA7 /* Helpers */,
+			);
+			path = SourceCodes;
+			sourceTree = "<group>";
+		};
+		134370EA1B68B67F00AE7FA7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D0D030BC1B72FAD300046917 /* Discussion */,
+				D0D296081B69EC1600671449 /* Setting */,
+				D0D295DF1B68C36300671449 /* Base */,
+				D0D295DA1B68C17000671449 /* Frontpage */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		134370EB1B68B67F00AE7FA7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				134370EC1B68B67F00AE7FA7 /* Categories */,
+				134370FF1B68B67F00AE7FA7 /* Headers */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		134370EC1B68B67F00AE7FA7 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				134370ED1B68B67F00AE7FA7 /* NSArray */,
+				134370F01B68B67F00AE7FA7 /* NSString */,
+				134370F31B68B67F00AE7FA7 /* UIColor */,
+				134370F61B68B67F00AE7FA7 /* UIImage */,
+				134370F91B68B67F00AE7FA7 /* UIImagView */,
+				134370FC1B68B67F00AE7FA7 /* UIView */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		134370ED1B68B67F00AE7FA7 /* NSArray */ = {
+			isa = PBXGroup;
+			children = (
+				134370EE1B68B67F00AE7FA7 /* NSArray+Utils.h */,
+				134370EF1B68B67F00AE7FA7 /* NSArray+Utils.m */,
+			);
+			path = NSArray;
+			sourceTree = "<group>";
+		};
+		134370F01B68B67F00AE7FA7 /* NSString */ = {
+			isa = PBXGroup;
+			children = (
+				134370F11B68B67F00AE7FA7 /* NSString+Utils.h */,
+				134370F21B68B67F00AE7FA7 /* NSString+Utils.m */,
+			);
+			path = NSString;
+			sourceTree = "<group>";
+		};
+		134370F31B68B67F00AE7FA7 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				134370F41B68B67F00AE7FA7 /* UIColor+HexColor.h */,
+				134370F51B68B67F00AE7FA7 /* UIColor+HexColor.m */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
+		134370F61B68B67F00AE7FA7 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				134370F71B68B67F00AE7FA7 /* UIImage+Utils.h */,
+				134370F81B68B67F00AE7FA7 /* UIImage+Utils.m */,
+			);
+			path = UIImage;
+			sourceTree = "<group>";
+		};
+		134370F91B68B67F00AE7FA7 /* UIImagView */ = {
+			isa = PBXGroup;
+			children = (
+				134370FA1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.h */,
+				134370FB1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m */,
+			);
+			path = UIImagView;
+			sourceTree = "<group>";
+		};
+		134370FC1B68B67F00AE7FA7 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				134370FD1B68B67F00AE7FA7 /* UIView+Utils.h */,
+				134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		134370FF1B68B67F00AE7FA7 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				134371001B68B67F00AE7FA7 /* Defines.h */,
+				134371011B68B67F00AE7FA7 /* EventList.h */,
+				134371021B68B67F00AE7FA7 /* StaticValues.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		134371031B68B67F00AE7FA7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0D2960C1B69ECC100671449 /* UserModel */,
+				D0D296041B69EB4E00671449 /* SignUpAndSignIn */,
+				D0D296011B69D4D300671449 /* BaseModel.h */,
+				D0D296021B69D4D300671449 /* BaseModel.m */,
+				D0D295FA1B69D2A000671449 /* Frontpage */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		134371041B68B67F00AE7FA7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0D030CA1B73078200046917 /* CustomizedView */,
+				D0D030C01B72FE2300046917 /* Discussion */,
+				D0D296101B69EDD800671449 /* CustomizedButton */,
+				D0D295DE1B68C25400671449 /* Frontpage */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1343710B1B68B8BA00AE7FA7 /* StoryboardAndXib */ = {
+			isa = PBXGroup;
+			children = (
+				134370B21B68B19000AE7FA7 /* Main.storyboard */,
+				134370B71B68B19000AE7FA7 /* LaunchScreen.xib */,
+			);
+			name = StoryboardAndXib;
+			sourceTree = "<group>";
+		};
+		584DC4B7B7C77191F90B29CC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */,
+				5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CAF8FF9C95641731E761CFD0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				134370D11B68B5BB00AE7FA7 /* Accounts.framework */,
+				134370D21B68B5BB00AE7FA7 /* AudioToolbox.framework */,
+				134370D31B68B5BB00AE7FA7 /* CFNetwork.framework */,
+				134370D41B68B5BB00AE7FA7 /* CoreGraphics.framework */,
+				134370D51B68B5BB00AE7FA7 /* libsqlite3.dylib */,
+				134370D61B68B5BB00AE7FA7 /* libz.dylib */,
+				134370D71B68B5BB00AE7FA7 /* MobileCoreServices.framework */,
+				134370D81B68B5BB00AE7FA7 /* QuartzCore.framework */,
+				134370D91B68B5BB00AE7FA7 /* Security.framework */,
+				134370DA1B68B5BB00AE7FA7 /* Social.framework */,
+				134370DB1B68B5BB00AE7FA7 /* StoreKit.framework */,
+				134370DC1B68B5BB00AE7FA7 /* SystemConfiguration.framework */,
+				0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0D030BC1B72FAD300046917 /* Discussion */ = {
+			isa = PBXGroup;
+			children = (
+				D0D030BD1B72FB2000046917 /* DiscussionSingleViewController.h */,
+				D0D030BE1B72FB2000046917 /* DiscussionSingleViewController.m */,
+			);
+			name = Discussion;
+			sourceTree = "<group>";
+		};
+		D0D030C01B72FE2300046917 /* Discussion */ = {
+			isa = PBXGroup;
+			children = (
+				D0D030C31B72FF2700046917 /* DiscussionCommentTableViewCell.h */,
+				D0D030C41B72FF2700046917 /* DiscussionCommentTableViewCell.m */,
+				D0D030C71B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.h */,
+				D0D030C81B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m */,
+			);
+			name = Discussion;
+			sourceTree = "<group>";
+		};
+		D0D030CA1B73078200046917 /* CustomizedView */ = {
+			isa = PBXGroup;
+			children = (
+				D0D030CB1B7307B900046917 /* ImageSlideView.h */,
+				D0D030CC1B7307B900046917 /* ImageSlideView.m */,
+			);
+			name = CustomizedView;
+			sourceTree = "<group>";
+		};
+		D0D295DA1B68C17000671449 /* Frontpage */ = {
+			isa = PBXGroup;
+			children = (
+				D0D295DB1B68C24200671449 /* FrontpageViewController.h */,
+				D0D295DC1B68C24200671449 /* FrontpageViewController.m */,
+				D0D030AD1B6F26A800046917 /* PostNewDiscussionViewController.h */,
+				D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */,
+			);
+			name = Frontpage;
+			sourceTree = "<group>";
+		};
+		D0D295DE1B68C25400671449 /* Frontpage */ = {
+			isa = PBXGroup;
+			children = (
+				D0D295E31B68C3D000671449 /* FrontpageTableViewCell.h */,
+				D0D295E41B68C3D000671449 /* FrontpageTableViewCell.m */,
+			);
+			name = Frontpage;
+			sourceTree = "<group>";
+		};
+		D0D295DF1B68C36300671449 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D0D295E01B68C38D00671449 /* BaseViewController.h */,
+				D0D295E11B68C38D00671449 /* BaseViewController.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		D0D295E61B68C66400671449 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D0D030B31B70A38E00046917 /* checkbox.png */,
+				D0D030B41B70A38E00046917 /* selected_checkbox.png */,
+				D0D295E91B68D77400671449 /* image_preset_avatar.png */,
+				D0D295ED1B68ED3000671449 /* image_placeholder_4x3.png */,
+				D0D295EF1B69D04300671449 /* icon_time.png */,
+				D0D295E71B68CE7600671449 /* icon_setting@2x.png */,
+				D0D296141B69F09C00671449 /* icon_arrow_back.png */,
+				D0D295EB1B68E70B00671449 /* fanzytv_btn@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D0D295FA1B69D2A000671449 /* Frontpage */ = {
+			isa = PBXGroup;
+			children = (
+				D0D295FB1B69D2B800671449 /* FrontpageModel.h */,
+				D0D295FC1B69D2B800671449 /* FrontpageModel.m */,
+				D0D295FE1B69D30900671449 /* FrontpageObject.h */,
+				D0D295FF1B69D30900671449 /* FrontpageObject.m */,
+			);
+			name = Frontpage;
+			sourceTree = "<group>";
+		};
+		D0D296041B69EB4E00671449 /* SignUpAndSignIn */ = {
+			isa = PBXGroup;
+			children = (
+				D0D296051B69EBC000671449 /* SignUpAndSignInModel.h */,
+				D0D296061B69EBC000671449 /* SignUpAndSignInModel.m */,
+			);
+			name = SignUpAndSignIn;
+			sourceTree = "<group>";
+		};
+		D0D296081B69EC1600671449 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D0D296091B69EC4800671449 /* PersonalSettingViewController.h */,
+				D0D2960A1B69EC4800671449 /* PersonalSettingViewController.m */,
+				D0D296161B6A128500671449 /* SignUpViewController.h */,
+				D0D296171B6A128500671449 /* SignUpViewController.m */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
+		D0D2960C1B69ECC100671449 /* UserModel */ = {
+			isa = PBXGroup;
+			children = (
+				D0D2960D1B69ECF300671449 /* UserModel.h */,
+				D0D2960E1B69ECF300671449 /* UserModel.m */,
+			);
+			name = UserModel;
+			sourceTree = "<group>";
+		};
+		D0D296101B69EDD800671449 /* CustomizedButton */ = {
+			isa = PBXGroup;
+			children = (
+				D0D296111B69EE0800671449 /* CustomizedSettingPageButton.h */,
+				D0D296121B69EE0800671449 /* CustomizedSettingPageButton.m */,
+			);
+			name = CustomizedButton;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		134370A41B68B19000AE7FA7 /* MuchTVHealthy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 134370C81B68B19000AE7FA7 /* Build configuration list for PBXNativeTarget "MuchTVHealthy" */;
+			buildPhases = (
+				819DE638F12ED62849BBAA39 /* Check Pods Manifest.lock */,
+				134370A11B68B19000AE7FA7 /* Sources */,
+				134370A21B68B19000AE7FA7 /* Frameworks */,
+				134370A31B68B19000AE7FA7 /* Resources */,
+				6ECE60B0E13C81EBA4013AAE /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MuchTVHealthy;
+			productName = MuchTVHealthy;
+			productReference = 134370A51B68B19000AE7FA7 /* MuchTVHealthy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		134370BD1B68B19000AE7FA7 /* MuchTVHealthyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 134370CB1B68B19000AE7FA7 /* Build configuration list for PBXNativeTarget "MuchTVHealthyTests" */;
+			buildPhases = (
+				134370BA1B68B19000AE7FA7 /* Sources */,
+				134370BB1B68B19000AE7FA7 /* Frameworks */,
+				134370BC1B68B19000AE7FA7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				134370C01B68B19000AE7FA7 /* PBXTargetDependency */,
+			);
+			name = MuchTVHealthyTests;
+			productName = MuchTVHealthyTests;
+			productReference = 134370BE1B68B19000AE7FA7 /* MuchTVHealthyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1343709D1B68B19000AE7FA7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = Fanzytv;
+				TargetAttributes = {
+					134370A41B68B19000AE7FA7 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					134370BD1B68B19000AE7FA7 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 134370A41B68B19000AE7FA7;
+					};
+				};
+			};
+			buildConfigurationList = 134370A01B68B19000AE7FA7 /* Build configuration list for PBXProject "MuchTVHealthy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1343709C1B68B19000AE7FA7;
+			productRefGroup = 134370A61B68B19000AE7FA7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				134370A41B68B19000AE7FA7 /* MuchTVHealthy */,
+				134370BD1B68B19000AE7FA7 /* MuchTVHealthyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		134370A31B68B19000AE7FA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0D030B51B70A38E00046917 /* checkbox.png in Resources */,
+				D0D295EC1B68E70B00671449 /* fanzytv_btn@2x.png in Resources */,
+				D0D295EE1B68ED3000671449 /* image_placeholder_4x3.png in Resources */,
+				134370B41B68B19000AE7FA7 /* Main.storyboard in Resources */,
+				D0D295EA1B68D77400671449 /* image_preset_avatar.png in Resources */,
+				D0D296151B69F09C00671449 /* icon_arrow_back.png in Resources */,
+				134370B91B68B19000AE7FA7 /* LaunchScreen.xib in Resources */,
+				D0D295E81B68CE7600671449 /* icon_setting@2x.png in Resources */,
+				D0D030B61B70A38E00046917 /* selected_checkbox.png in Resources */,
+				134370B61B68B19000AE7FA7 /* Images.xcassets in Resources */,
+				D0D295F01B69D04300671449 /* icon_time.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		134370BC1B68B19000AE7FA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6ECE60B0E13C81EBA4013AAE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		819DE638F12ED62849BBAA39 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		134370A11B68B19000AE7FA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0D295E51B68C3D000671449 /* FrontpageTableViewCell.m in Sources */,
+				134370B11B68B19000AE7FA7 /* ViewController.m in Sources */,
+				D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */,
+				D0D295DD1B68C24200671449 /* FrontpageViewController.m in Sources */,
+				D0D296131B69EE0800671449 /* CustomizedSettingPageButton.m in Sources */,
+				D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */,
+				D0D296031B69D4D300671449 /* BaseModel.m in Sources */,
+				D0D296181B6A128500671449 /* SignUpViewController.m in Sources */,
+				D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */,
+				D0D295FD1B69D2B800671449 /* FrontpageModel.m in Sources */,
+				D0D295E21B68C38D00671449 /* BaseViewController.m in Sources */,
+				D0D030BF1B72FB2000046917 /* DiscussionSingleViewController.m in Sources */,
+				D0D030CD1B7307B900046917 /* ImageSlideView.m in Sources */,
+				D0D296001B69D30900671449 /* FrontpageObject.m in Sources */,
+				D0D2960F1B69ECF300671449 /* UserModel.m in Sources */,
+				134370AE1B68B19000AE7FA7 /* AppDelegate.m in Sources */,
+				134371061B68B67F00AE7FA7 /* NSString+Utils.m in Sources */,
+				D0D2960B1B69EC4800671449 /* PersonalSettingViewController.m in Sources */,
+				1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */,
+				134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */,
+				134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */,
+				D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */,
+				134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */,
+				134370AB1B68B19000AE7FA7 /* main.m in Sources */,
+				134371071B68B67F00AE7FA7 /* UIColor+HexColor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		134370BA1B68B19000AE7FA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				134370C51B68B19000AE7FA7 /* MuchTVHealthyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		134370C01B68B19000AE7FA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 134370A41B68B19000AE7FA7 /* MuchTVHealthy */;
+			targetProxy = 134370BF1B68B19000AE7FA7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		134370B21B68B19000AE7FA7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				134370B31B68B19000AE7FA7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		134370B71B68B19000AE7FA7 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				134370B81B68B19000AE7FA7 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		134370C61B68B19000AE7FA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		134370C71B68B19000AE7FA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		134370C91B68B19000AE7FA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MuchTVHealthy/MuchTVHealthy-Prefix.pch";
+				INFOPLIST_FILE = MuchTVHealthy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		134370CA1B68B19000AE7FA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MuchTVHealthy/MuchTVHealthy-Prefix.pch";
+				INFOPLIST_FILE = MuchTVHealthy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		134370CC1B68B19000AE7FA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MuchTVHealthyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MuchTVHealthy.app/MuchTVHealthy";
+			};
+			name = Debug;
+		};
+		134370CD1B68B19000AE7FA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MuchTVHealthyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MuchTVHealthy.app/MuchTVHealthy";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		134370A01B68B19000AE7FA7 /* Build configuration list for PBXProject "MuchTVHealthy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				134370C61B68B19000AE7FA7 /* Debug */,
+				134370C71B68B19000AE7FA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		134370C81B68B19000AE7FA7 /* Build configuration list for PBXNativeTarget "MuchTVHealthy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				134370C91B68B19000AE7FA7 /* Debug */,
+				134370CA1B68B19000AE7FA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		134370CB1B68B19000AE7FA7 /* Build configuration list for PBXNativeTarget "MuchTVHealthyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				134370CC1B68B19000AE7FA7 /* Debug */,
+				134370CD1B68B19000AE7FA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1343709D1B68B19000AE7FA7 /* Project object */;
+}
