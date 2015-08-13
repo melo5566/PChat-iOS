@@ -17,5 +17,6 @@
 @interface DiscussionAuthorAndContentTableViewCell : UITableViewCell
 @property (nonatomic, strong) NSString                  *content;
 @property (nonatomic) float                             contentHeight;
+@property (nonatomic) NSUInteger                        numberOfImage;
 @property (nonatomic, weak) id <DiscussionAuthorAndContentTableViewCellDelegate> delegate;
 @end

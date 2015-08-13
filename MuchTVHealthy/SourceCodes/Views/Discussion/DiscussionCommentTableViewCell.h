@@ -24,3 +24,4 @@
 @property (nonatomic) BOOL                              hasMoreReply;
 @property (nonatomic, weak) id <DiscussionCommentTableViewCellDelegate> delegate;
 @end
+

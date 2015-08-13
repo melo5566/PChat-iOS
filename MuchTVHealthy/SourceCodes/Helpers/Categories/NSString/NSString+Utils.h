@@ -25,6 +25,7 @@
 - (NSString *) stringToFormattedDate;
 - (NSString *) stringNSTimeIntervalToFormattedDate;
 - (CGSize) sizeOfStringWithSystemFontSize:(CGFloat) fontSize andMaxLength:(CGFloat) maxLength;
+- (CGSize) sizeOfStringWithFont:(UIFont *) font andMaxLength:(CGFloat) maxLength;
 - (NSString *) trimmedString;
 - (NSString *) truncatedString:(NSUInteger) numberOfCharacters;
 

@@ -20,6 +20,10 @@
 
 @interface BaseViewController : UIViewController <NoNetworkAlertDelegate, BaseModelDelegate, UIAlertViewDelegate>
 
+- (void) initMenuLayout;
+- (void) initWholeButton;
+- (void) dismissMenu;
+
 - (void) initNavigationBarCloseButtonAtLeft;
 - (void) initNavigationBarCloseButtonAtRight;
 - (void) initNavigationBarBackButtonAtLeft;

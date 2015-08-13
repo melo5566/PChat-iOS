@@ -201,6 +201,19 @@
     return labelBounds.size;
 }
 
+- (CGSize) sizeOfStringWithFont:(UIFont *) font andMaxLength:(CGFloat) maxLength {
+    CGSize maximumLabelSize = CGSizeMake(maxLength, MAXFLOAT);
+    
+    NSStringDrawingOptions options = NSStringDrawingUsesFontLeading |
+    NSStringDrawingUsesLineFragmentOrigin;
+    
+    NSDictionary *attr = @{NSFontAttributeName: font};
+    CGRect labelBounds = [self boundingRectWithSize:maximumLabelSize
+                                            options:options
+                                         attributes:attr
+                                            context:nil];
+    return labelBounds.size;
+}
 
 /**
  *  依字串長度及字型、寬度，計算多行字串之TextView尺寸

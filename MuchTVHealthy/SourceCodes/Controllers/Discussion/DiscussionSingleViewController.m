@@ -9,6 +9,7 @@
 #import "DiscussionSingleViewController.h"
 #import "DiscussionAuthorAndContentTableViewCell.h"
 #import "DiscussionCommentTableViewCell.h"
+#import "PostNewDiscussionReplyViewController.h"
 
 
 #define kLogoWidth kScreenWidth * 211.0f / IPHONE_6_SCREEN_WIDTH
@@ -30,16 +31,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
+    self.navigationItem.title = @"Title";
     
     _totalCommentDataArray = @[].mutableCopy;
     for (int i = 0; i < 6; i ++) {
         [_totalCommentDataArray addObject:@"abc"];
     }
     for (int i = 0; i < 10; i ++) {
-        [_totalCommentDataArray addObject:@"abcdefghijklmnopqrstuvwxyzabcdef"];
+        [_totalCommentDataArray addObject:@"abcdefghi"];
     }
-    _content = @"ContentContentContentContentContentContentContentContentContentContentContent";
-    NSLog(@"imageSlide height: %f",kImageSlideViewHeight);
+    _content = @"ContentContentContentContentContentContentContentContentCont";
+    _numberOfImage = 5;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -135,10 +137,8 @@
 
 #pragma mark - height for row
 - (CGFloat) heightOfReplyCellWithReplyContent:(NSString *)content {
-    NSUInteger padding = kScreenWidth > 350 ? 30 : 20;
-    CGFloat replyContentHeight = [content sizeOfStringWithSystemFontSize:kDiscussionReplyContentFontSize andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding - kDiscussionReplyLeftAndRightPadding * 2 - (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH) - padding].height;
-
-    return kDiscussionReplyTopAndBottomPadding * 2 + kDiscussionReplyContentPadding * 2 + kDiscussionReplyAuthorNameFontSize + 0.5f + replyContentHeight + kDiscussionReplyTimeFontSize + 0.5f;
+    CGFloat replyContentHeight = [content sizeOfStringWithFont:[UIFont fontWithName:@"STHeitiTC-Light" size:kDiscussionReplyContentFontSize] andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding - kDiscussionReplyLeftAndRightPadding * 2 - (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH)].height;
+    return kDiscussionReplyTopAndBottomPadding + kDiscussionReplyContentPadding * 2 + kDiscussionReplyAuthorNameFontSize + 0.5f + replyContentHeight + kDiscussionReplyTimeFontSize + 0.5f;
 }
 
 - (CGFloat) heightOfTotalReplyCell {
@@ -154,13 +154,17 @@
 }
 
 - (CGFloat) heightForText:(NSString *)text {
-    NSUInteger padding = kScreenWidth > 350 ? 35 : 30;
-    CGFloat heightForTextView = [text sizeOfStringWithSystemFontSize:kDiscussionContentFontSize andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionContentLeftPadding*2 - padding].height;
+    CGFloat heightForTextView = [text sizeOfStringWithFont:[UIFont fontWithName:@"STHeitiTC-Light" size:kDiscussionContentFontSize] andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionContentLeftPadding*2 ].height;
     return heightForTextView;
 }
 
 - (CGFloat) heightOfAuthorAndContentCell {
-    return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_content] + kDiscussionImageSlideViewTopPadding + kImageSlideViewHeight + kScreenHeight/10;
+    if (_numberOfImage != 0) {
+        return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_content] + kDiscussionImageSlideViewTopPadding + kImageSlideViewHeight + kScreenHeight/10;
+    } else {
+        return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_content] + kScreenHeight/10 + 10;
+    }
+    
 }
 
 
@@ -210,7 +214,7 @@
     if (section == 1) {
         UIView *view         = [[UIView alloc] init];
         view.backgroundColor = [UIColor clearColor];
-        _fanzytvLogo         = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fanzytv_btn@2x"]];
+        _fanzytvLogo         = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_fanzytv"]];
         _fanzytvLogo.frame   = CGRectMake((kScreenWidth - kLogoWidth) / 2, 10, kLogoWidth, kLogoWidth * 15.0f / 48.0f);
         [view addSubview:_fanzytvLogo];
         return view;
@@ -232,10 +236,11 @@
             
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.delegate       = self;
             cell.contentHeight  = [self heightForText:_content];
             cell.content        = _content;
             return cell;
-
+            
         } else {
             static NSString *cellID = @"DiscussionCommentTableViewCell";
             DiscussionCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
@@ -250,28 +255,6 @@
             cell.commentDataArray = _commentDataArray;
             return cell;
         }
-        //        if (indexPath.row == 0) {
-//            static NSString *cellID = @"DiscussionAuthorAndContentTableViewCell";
-//            DiscussionAuthorAndContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//            
-//            if (!cell) {
-//                cell = [[DiscussionAuthorAndContentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//            }
-//            
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            return cell;
-//            
-//        } else {
-//            static NSString *cellID = @"DiscussionCommentTableViewCell";
-//            DiscussionCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//            
-//            if (!cell) {
-//                cell = [[DiscussionCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//            }
-//           
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            return cell;
-//        }
     }
     else {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
@@ -294,14 +277,18 @@
     NSLog(@"shareButtonClicked");
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) goPostReply {
+    PostNewDiscussionReplyViewController *postReplyViewController = [PostNewDiscussionReplyViewController new];
+    [self.navigationController pushViewController:postReplyViewController animated:YES];
 }
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
