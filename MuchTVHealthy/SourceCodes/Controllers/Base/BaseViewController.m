@@ -96,7 +96,7 @@
     [customizedButton setImage:iconImage forState:UIControlStateNormal];
     [customizedButton addTarget:self action:@selector(wholeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *navigatinBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customizedButton];
-    navigatinBarButtonItem.enabled = NO;
+    navigatinBarButtonItem.enabled = YES;
     self.navigationItem.leftBarButtonItem = navigatinBarButtonItem;
 }
 
@@ -496,13 +496,14 @@
     switch (button.tag) {
         case 0: {
             // 資訊
-            DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
-            [self.navigationController pushViewController:singleViewController animated:YES];
+            FrontpageViewController *viewController = [FrontpageViewController new];
+            [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
         case 1: {
             // 訊息
-            NSLog(@"%lu",button.tag);
+            DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
+            [self.navigationController pushViewController:singleViewController animated:YES];
             break;
         }
         case 2: {

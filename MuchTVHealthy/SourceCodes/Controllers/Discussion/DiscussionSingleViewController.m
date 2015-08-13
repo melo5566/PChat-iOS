@@ -30,7 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initNavigationBarBackButtonAtLeft];
+//    [self initNavigationBarBackButtonAtLeft];
+    [self initWholeButton];
     self.navigationItem.title = @"Title";
     
     _totalCommentDataArray = @[].mutableCopy;
@@ -47,6 +48,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self firstLoadReply];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self initMenuLayout];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self dismissMenu];
 }
 
 - (void)didReceiveMemoryWarning {

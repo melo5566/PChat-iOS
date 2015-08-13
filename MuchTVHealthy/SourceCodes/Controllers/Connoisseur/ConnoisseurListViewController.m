@@ -36,7 +36,6 @@
     }
 }
 
-
 - (void)initConnoisseurTableView {
     if(!_connoisseurListTableView) {
         _connoisseurListTableView = [[UITableView alloc]initForAutolayout];

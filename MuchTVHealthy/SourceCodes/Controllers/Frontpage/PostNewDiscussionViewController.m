@@ -350,7 +350,7 @@
         _chooseAttachmentTitleLabel.backgroundColor = [UIColor clearColor];
         _chooseAttachmentTitleLabel.font = [UIFont systemFontOfSize:18.0f];
         _chooseAttachmentTitleLabel.textColor = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
-        _chooseAttachmentTitleLabel.text = @"附加圖片";
+        _chooseAttachmentTitleLabel.text = @"附加檔案";
         [_chooseAttachmentView addSubview:_chooseAttachmentTitleLabel];
         [attachmentViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_chooseAttachmentTitleLabel
                                                                         attribute:NSLayoutAttributeLeft
@@ -381,7 +381,7 @@
         _useLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_useLibraryButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         _useLibraryButton.backgroundColor = [UIColor clearColor];
-        [_useLibraryButton setImage:[UIImage imageNamed:@"Discussion_Icon_Use_Library"] forState:UIControlStateNormal];
+        [_useLibraryButton setImage:[UIImage imageNamed:@"icon_fnphoto@2x"] forState:UIControlStateNormal];
         [_useLibraryButton addTarget:self action:@selector(useLibraryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_chooseAttachmentView addSubview:_useLibraryButton];
         [attachmentViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_useLibraryButton
@@ -412,7 +412,7 @@
         _useCameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_useCameraButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         _useCameraButton.backgroundColor = [UIColor clearColor];
-        [_useCameraButton setImage:[UIImage imageNamed:@"Discussion_Icon_Use_Camera"] forState:UIControlStateNormal];
+        [_useCameraButton setImage:[UIImage imageNamed:@"icon_fncamera@2x"] forState:UIControlStateNormal];
         [_useCameraButton addTarget:self action:@selector(useCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_chooseAttachmentView addSubview:_useCameraButton];
         [attachmentViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_useCameraButton
