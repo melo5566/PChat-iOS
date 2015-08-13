@@ -53,8 +53,6 @@
 		D05958C61B7C8BCE008C102C /* image_preset_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958B81B7C8BCE008C102C /* image_preset_avatar.png */; };
 		D05958C71B7C8BCE008C102C /* selected_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958B91B7C8BCE008C102C /* selected_checkbox.png */; };
 		D05958CA1B7C8C7A008C102C /* PostNewDiscussionReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05958C91B7C8C7A008C102C /* PostNewDiscussionReplyViewController.m */; };
-		D05958CD1B7C9F96008C102C /* icon_fncamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958CB1B7C9F96008C102C /* icon_fncamera@2x.png */; };
-		D05958CE1B7C9F96008C102C /* icon_fnphoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958CC1B7C9F96008C102C /* icon_fnphoto@2x.png */; };
 		D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */; };
 		D0D030BF1B72FB2000046917 /* DiscussionSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030BE1B72FB2000046917 /* DiscussionSingleViewController.m */; };
 		D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030C41B72FF2700046917 /* DiscussionCommentTableViewCell.m */; };
@@ -153,8 +151,6 @@
 		D05958B91B7C8BCE008C102C /* selected_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected_checkbox.png; path = Resources/selected_checkbox.png; sourceTree = "<group>"; };
 		D05958C81B7C8C7A008C102C /* PostNewDiscussionReplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostNewDiscussionReplyViewController.h; path = Discussion/PostNewDiscussionReplyViewController.h; sourceTree = "<group>"; };
 		D05958C91B7C8C7A008C102C /* PostNewDiscussionReplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostNewDiscussionReplyViewController.m; path = Discussion/PostNewDiscussionReplyViewController.m; sourceTree = "<group>"; };
-		D05958CB1B7C9F96008C102C /* icon_fncamera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_fncamera@2x.png"; path = "Resources/icon_fncamera@2x.png"; sourceTree = "<group>"; };
-		D05958CC1B7C9F96008C102C /* icon_fnphoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_fnphoto@2x.png"; path = "Resources/icon_fnphoto@2x.png"; sourceTree = "<group>"; };
 		D0D030AD1B6F26A800046917 /* PostNewDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostNewDiscussionViewController.h; path = Frontpage/PostNewDiscussionViewController.h; sourceTree = "<group>"; };
 		D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostNewDiscussionViewController.m; path = Frontpage/PostNewDiscussionViewController.m; sourceTree = "<group>"; };
 		D0D030BD1B72FB2000046917 /* DiscussionSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscussionSingleViewController.h; path = Discussion/DiscussionSingleViewController.h; sourceTree = "<group>"; };
@@ -548,8 +544,6 @@
 		D0D295E61B68C66400671449 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D05958CB1B7C9F96008C102C /* icon_fncamera@2x.png */,
-				D05958CC1B7C9F96008C102C /* icon_fnphoto@2x.png */,
 				D05958AC1B7C8BCE008C102C /* btn_fanzytv.png */,
 				D05958AD1B7C8BCE008C102C /* checkbox.png */,
 				D05958AE1B7C8BCE008C102C /* fanzytv_btn@2x.png */,
@@ -705,7 +699,6 @@
 				D05958C31B7C8BCE008C102C /* icon_time.png in Resources */,
 				D05958BC1B7C8BCE008C102C /* fanzytv_btn@2x.png in Resources */,
 				D05958C41B7C8BCE008C102C /* icon_whole.png in Resources */,
-				D05958CE1B7C9F96008C102C /* icon_fnphoto@2x.png in Resources */,
 				134370B41B68B19000AE7FA7 /* Main.storyboard in Resources */,
 				D05958BB1B7C8BCE008C102C /* checkbox.png in Resources */,
 				13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */,
@@ -716,7 +709,6 @@
 				D05958C21B7C8BCE008C102C /* icon_time 2.png in Resources */,
 				D05958BE1B7C8BCE008C102C /* icon_loading.png in Resources */,
 				D05958C71B7C8BCE008C102C /* selected_checkbox.png in Resources */,
-				D05958CD1B7C9F96008C102C /* icon_fncamera@2x.png in Resources */,
 				D05958BF1B7C8BCE008C102C /* icon_more.png in Resources */,
 				D05958C51B7C8BCE008C102C /* image_placeholder_4x3.png in Resources */,
 			);

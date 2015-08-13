@@ -69,6 +69,7 @@
     self.navController = [[UINavigationController alloc] initWithRootViewController:frontpageViewController];
     [self.navController.navigationBar setTranslucent:NO];
     self.window.rootViewController = self.navController;
+    frontpageViewController.title = @"首頁";
     [self.window makeKeyAndVisible];
 }
 

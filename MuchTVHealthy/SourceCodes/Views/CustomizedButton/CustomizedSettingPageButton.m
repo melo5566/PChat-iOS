@@ -44,7 +44,7 @@
             self.layer.borderWidth  = 1.0f;
             self.layer.borderColor  = [UIColor colorWithR:0 G:139 B:139].CGColor;
             [self setTitle:@"登出" forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor colorWithHexString:kPersonalSettingChangeAvatarButtonTextColorHexString] forState:UIControlStateNormal];
             break;
         }
         case SettingPageButtonTypeSignUp: {

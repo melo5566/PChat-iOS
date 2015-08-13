@@ -164,7 +164,7 @@
         [_replyButton setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
         [_replyButton setTitleColor:[UIColor colorWithR:0 G:125 B:125] forState:UIControlStateNormal];
         [_replyButton setTitle:@"我要回覆..." forState:UIControlStateNormal];
-        [_replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_replyButton addTarget:self action:@selector(goPostReply) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:_replyButton];
         
@@ -391,7 +391,6 @@
 
 #pragma mark - button clicked
 - (void) replyButtonClicked:(id)sender {
-    NSLog(@"replyButtonClicked");
     if ([self.delegate respondsToSelector:@selector(goPostReply)]) {
         [self.delegate goPostReply];
     }

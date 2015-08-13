@@ -443,7 +443,7 @@
         // Label (顯示暱稱)
         UILabel *displaynameLabel           = [[UILabel alloc] initForAutolayout];
         displaynameLabel.backgroundColor    = [UIColor clearColor];
-        displaynameLabel.textColor          = [UIColor colorWithHexString:kPersonalSettingChangeAvatarButtonTextColorHexString];
+        displaynameLabel.textColor          = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
         displaynameLabel.font               = [UIFont boldSystemFontOfSize:17.0f];
         displaynameLabel.text               = @"顯示暱稱";
         [_userNameView addSubview:displaynameLabel];
@@ -519,7 +519,7 @@
                                action:@selector(userNameTextFieldDidChange:)
                      forControlEvents:UIControlEventEditingChanged];
         _userNameTextField.backgroundColor  = [UIColor clearColor];
-        _userNameTextField.textColor        = [UIColor colorWithHexString:@"1d1d1d"];
+        _userNameTextField.textColor        = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
         _userNameTextField.clearButtonMode  = UITextFieldViewModeWhileEditing;
         _userNameTextField.returnKeyType    = UIReturnKeyDone;
         _userNameTextField.font             = [UIFont systemFontOfSize:24.0f];

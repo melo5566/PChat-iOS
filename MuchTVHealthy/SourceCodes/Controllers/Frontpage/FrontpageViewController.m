@@ -33,7 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initWholeButton];
-    [self.navigationItem setTitle:@"首頁"];
     
     UIButton *postDiscussionButton       = [UIButton buttonWithType:UIButtonTypeCustom];
     postDiscussionButton.backgroundColor = [UIColor clearColor];
@@ -51,11 +50,8 @@
     _frontpageTableView.hidden  = YES;
     [self resetParams];
     [self firstLoadFrontpageData];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     [self initMenuLayout];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
