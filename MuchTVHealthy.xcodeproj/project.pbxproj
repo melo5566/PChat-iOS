@@ -33,6 +33,11 @@
 		134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FB1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m */; };
 		1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */; };
 		13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13619F1D1B7B2F5000B79CEC /* .gitignore */; };
+		2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */; };
+		2672BD2A1B7C702D007AB9F1 /* icon_whole.png in Resources */ = {isa = PBXBuildFile; fileRef = 2672BD291B7C702D007AB9F1 /* icon_whole.png */; };
+		2689A3ED1B7B34BB00B4F708 /* ConnoisseurListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3EC1B7B34BB00B4F708 /* ConnoisseurListViewController.m */; };
+		2689A3F11B7B3BAA00B4F708 /* ConnoisseurModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3F01B7B3BAA00B4F708 /* ConnoisseurModel.m */; };
+		2689A3F41B7B41DC00B4F708 /* ConnoisseurObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3F31B7B41DC00B4F708 /* ConnoisseurObject.m */; };
 		2AEE06F5EB4218866127775F /* libPods-MuchTVHealthy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */; };
 		D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */; };
 		D0D030B51B70A38E00046917 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D030B31B70A38E00046917 /* checkbox.png */; };
@@ -114,6 +119,15 @@
 		134371011B68B67F00AE7FA7 /* EventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventList.h; sourceTree = "<group>"; };
 		134371021B68B67F00AE7FA7 /* StaticValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticValues.h; sourceTree = "<group>"; };
 		13619F1D1B7B2F5000B79CEC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2672BD241B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurListTableViewCell.h; sourceTree = "<group>"; };
+		2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurListTableViewCell.m; sourceTree = "<group>"; };
+		2672BD291B7C702D007AB9F1 /* icon_whole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_whole.png; path = Resources/icon_whole.png; sourceTree = "<group>"; };
+		2689A3EB1B7B34BB00B4F708 /* ConnoisseurListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurListViewController.h; sourceTree = "<group>"; };
+		2689A3EC1B7B34BB00B4F708 /* ConnoisseurListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurListViewController.m; sourceTree = "<group>"; };
+		2689A3EF1B7B3BAA00B4F708 /* ConnoisseurModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurModel.h; sourceTree = "<group>"; };
+		2689A3F01B7B3BAA00B4F708 /* ConnoisseurModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurModel.m; sourceTree = "<group>"; };
+		2689A3F21B7B41DC00B4F708 /* ConnoisseurObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurObject.h; sourceTree = "<group>"; };
+		2689A3F31B7B41DC00B4F708 /* ConnoisseurObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurObject.m; sourceTree = "<group>"; };
 		5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.release.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.release.xcconfig"; sourceTree = "<group>"; };
 		9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.debug.xcconfig"; sourceTree = "<group>"; };
 		D0D030AD1B6F26A800046917 /* PostNewDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostNewDiscussionViewController.h; path = Frontpage/PostNewDiscussionViewController.h; sourceTree = "<group>"; };
@@ -267,6 +281,7 @@
 		134370EA1B68B67F00AE7FA7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2689A3EA1B7B345C00B4F708 /* Connoisseur */,
 				D0D030BC1B72FAD300046917 /* Discussion */,
 				D0D296081B69EC1600671449 /* Setting */,
 				D0D295DF1B68C36300671449 /* Base */,
@@ -364,6 +379,7 @@
 		134371031B68B67F00AE7FA7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2689A3EE1B7B3B5300B4F708 /* Connoisseur */,
 				D0D2960C1B69ECC100671449 /* UserModel */,
 				D0D296041B69EB4E00671449 /* SignUpAndSignIn */,
 				D0D296011B69D4D300671449 /* BaseModel.h */,
@@ -376,6 +392,7 @@
 		134371041B68B67F00AE7FA7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2672BD231B7C4388007AB9F1 /* Connoisseur */,
 				D0D030CA1B73078200046917 /* CustomizedView */,
 				D0D030C01B72FE2300046917 /* Discussion */,
 				D0D296101B69EDD800671449 /* CustomizedButton */,
@@ -391,6 +408,35 @@
 				134370B71B68B19000AE7FA7 /* LaunchScreen.xib */,
 			);
 			name = StoryboardAndXib;
+			sourceTree = "<group>";
+		};
+		2672BD231B7C4388007AB9F1 /* Connoisseur */ = {
+			isa = PBXGroup;
+			children = (
+				2672BD241B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.h */,
+				2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */,
+			);
+			path = Connoisseur;
+			sourceTree = "<group>";
+		};
+		2689A3EA1B7B345C00B4F708 /* Connoisseur */ = {
+			isa = PBXGroup;
+			children = (
+				2689A3EB1B7B34BB00B4F708 /* ConnoisseurListViewController.h */,
+				2689A3EC1B7B34BB00B4F708 /* ConnoisseurListViewController.m */,
+			);
+			path = Connoisseur;
+			sourceTree = "<group>";
+		};
+		2689A3EE1B7B3B5300B4F708 /* Connoisseur */ = {
+			isa = PBXGroup;
+			children = (
+				2689A3EF1B7B3BAA00B4F708 /* ConnoisseurModel.h */,
+				2689A3F01B7B3BAA00B4F708 /* ConnoisseurModel.m */,
+				2689A3F21B7B41DC00B4F708 /* ConnoisseurObject.h */,
+				2689A3F31B7B41DC00B4F708 /* ConnoisseurObject.m */,
+			);
+			path = Connoisseur;
 			sourceTree = "<group>";
 		};
 		584DC4B7B7C77191F90B29CC /* Pods */ = {
@@ -483,6 +529,7 @@
 		D0D295E61B68C66400671449 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2672BD291B7C702D007AB9F1 /* icon_whole.png */,
 				D0D030B31B70A38E00046917 /* checkbox.png */,
 				D0D030B41B70A38E00046917 /* selected_checkbox.png */,
 				D0D295E91B68D77400671449 /* image_preset_avatar.png */,
@@ -631,6 +678,7 @@
 				D0D295EE1B68ED3000671449 /* image_placeholder_4x3.png in Resources */,
 				134370B41B68B19000AE7FA7 /* Main.storyboard in Resources */,
 				13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */,
+				2672BD2A1B7C702D007AB9F1 /* icon_whole.png in Resources */,
 				D0D295EA1B68D77400671449 /* image_preset_avatar.png in Resources */,
 				D0D296151B69F09C00671449 /* icon_arrow_back.png in Resources */,
 				134370B91B68B19000AE7FA7 /* LaunchScreen.xib in Resources */,
@@ -693,6 +741,7 @@
 				D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */,
 				D0D295DD1B68C24200671449 /* FrontpageViewController.m in Sources */,
 				D0D296131B69EE0800671449 /* CustomizedSettingPageButton.m in Sources */,
+				2689A3ED1B7B34BB00B4F708 /* ConnoisseurListViewController.m in Sources */,
 				D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */,
 				D0D296031B69D4D300671449 /* BaseModel.m in Sources */,
 				D0D296181B6A128500671449 /* SignUpViewController.m in Sources */,
@@ -707,10 +756,13 @@
 				134371061B68B67F00AE7FA7 /* NSString+Utils.m in Sources */,
 				D0D2960B1B69EC4800671449 /* PersonalSettingViewController.m in Sources */,
 				1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */,
+				2689A3F11B7B3BAA00B4F708 /* ConnoisseurModel.m in Sources */,
+				2689A3F41B7B41DC00B4F708 /* ConnoisseurObject.m in Sources */,
 				134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */,
 				134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */,
 				D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */,
 				134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */,
+				2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */,
 				134370AB1B68B19000AE7FA7 /* main.m in Sources */,
 				134371071B68B67F00AE7FA7 /* UIColor+HexColor.m in Sources */,
 			);

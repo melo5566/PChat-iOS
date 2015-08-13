@@ -173,6 +173,9 @@ static CGFloat    const kNotificationAlertViewPadding               = 8.0f;
 
 // ** CHATROOM ** //
 // color hex string
+static NSString * const kConnoisseurCellNameTextColor                   = @"1D1D1D";
+static NSString * const kConnoisseurCellSubtitleTextColor               = @"6D6D6D";
+static NSString * const kConnoisseurListBackgroundColor                 = @"#FAFAFA";
 static NSString * const kChatroomSpeakerTextFieldColor                  = @"#F0F0F0";
 static NSString * const kChatroomSpeakerTextFieldBorderColor            = @"#DDDDDD";
 static NSString * const kChatroomSelfContentBubbleColor                 = @"#FFE890";

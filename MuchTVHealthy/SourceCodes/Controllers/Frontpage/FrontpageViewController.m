@@ -14,6 +14,7 @@
 #import "PostNewDiscussionViewController.h"
 #import "SignUpAndSignInModel.h"
 #import "DiscussionSingleViewController.h"
+#import "ConnoisseurListViewController.h"
 
 
 @interface FrontpageViewController () <UITableViewDataSource, UITableViewDelegate, FrontpageModelDelegate>
@@ -46,7 +47,7 @@
     UIButton *customizedButton       = [UIButton buttonWithType:UIButtonTypeCustom];
     customizedButton.backgroundColor = [UIColor clearColor];
     customizedButton.frame           = CGRectMake(0, 0, 30, 30);
-    UIImage *iconImage               = [UIImage imageNamed:[NSString stringWithFormat:@"icon_setting"]];
+    UIImage *iconImage               = [UIImage imageNamed:[NSString stringWithFormat:@"icon_whole"]];
     [customizedButton setImage:iconImage forState:UIControlStateNormal];
     [customizedButton addTarget:self action:@selector(settingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *navigatinBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customizedButton];
@@ -558,6 +559,10 @@
     if (button.tag == 0) {
         DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
         [self.navigationController pushViewController:singleViewController animated:YES];
+    }
+    else if(button.tag == 3){
+        ConnoisseurListViewController *connoisseurListViewController = [ConnoisseurListViewController new];
+        [self.navigationController pushViewController:connoisseurListViewController animated:YES];
     }
 }
 
