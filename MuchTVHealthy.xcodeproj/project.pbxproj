@@ -56,9 +56,9 @@
 		D05958E01B7DA952008C102C /* icon_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958DD1B7DA952008C102C /* icon_delete.png */; };
 		D05958E11B7DA952008C102C /* icon_fncamera.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958DE1B7DA952008C102C /* icon_fncamera.png */; };
 		D05958E21B7DA952008C102C /* icon_fnphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958DF1B7DA952008C102C /* icon_fnphoto.png */; };
-		D05958EB1B7DC71F008C102C /* DiscussionCommentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D05958EA1B7DC71F008C102C /* DiscussionCommentTableView.m */; };
 		D05958ED1B7DCA3A008C102C /* icon_category.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958EC1B7DCA3A008C102C /* icon_category.png */; };
 		D05958F11B7DCB29008C102C /* RecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05958F01B7DCB29008C102C /* RecipeViewController.m */; };
+		D05958F41B7DF156008C102C /* CustomizedAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D05958F31B7DF156008C102C /* CustomizedAlertView.m */; };
 		D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */; };
 		D0D030BF1B72FB2000046917 /* DiscussionSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030BE1B72FB2000046917 /* DiscussionSingleViewController.m */; };
 		D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D030C41B72FF2700046917 /* DiscussionCommentTableViewCell.m */; };
@@ -160,11 +160,11 @@
 		D05958DD1B7DA952008C102C /* icon_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_delete.png; path = Resources/icon_delete.png; sourceTree = "<group>"; };
 		D05958DE1B7DA952008C102C /* icon_fncamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_fncamera.png; path = Resources/icon_fncamera.png; sourceTree = "<group>"; };
 		D05958DF1B7DA952008C102C /* icon_fnphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_fnphoto.png; path = Resources/icon_fnphoto.png; sourceTree = "<group>"; };
-		D05958E91B7DC71F008C102C /* DiscussionCommentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscussionCommentTableView.h; path = Discussion/DiscussionCommentTableView.h; sourceTree = "<group>"; };
-		D05958EA1B7DC71F008C102C /* DiscussionCommentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiscussionCommentTableView.m; path = Discussion/DiscussionCommentTableView.m; sourceTree = "<group>"; };
 		D05958EC1B7DCA3A008C102C /* icon_category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_category.png; path = Resources/icon_category.png; sourceTree = "<group>"; };
 		D05958EF1B7DCB29008C102C /* RecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipeViewController.h; path = Recipe/RecipeViewController.h; sourceTree = "<group>"; };
 		D05958F01B7DCB29008C102C /* RecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipeViewController.m; path = Recipe/RecipeViewController.m; sourceTree = "<group>"; };
+		D05958F21B7DF156008C102C /* CustomizedAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomizedAlertView.h; path = CustomizedView/CustomizedAlertView.h; sourceTree = "<group>"; };
+		D05958F31B7DF156008C102C /* CustomizedAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomizedAlertView.m; path = CustomizedView/CustomizedAlertView.m; sourceTree = "<group>"; };
 		D0D030AD1B6F26A800046917 /* PostNewDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostNewDiscussionViewController.h; path = Frontpage/PostNewDiscussionViewController.h; sourceTree = "<group>"; };
 		D0D030AE1B6F26A800046917 /* PostNewDiscussionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostNewDiscussionViewController.m; path = Frontpage/PostNewDiscussionViewController.m; sourceTree = "<group>"; };
 		D0D030BD1B72FB2000046917 /* DiscussionSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscussionSingleViewController.h; path = Discussion/DiscussionSingleViewController.h; sourceTree = "<group>"; };
@@ -523,8 +523,6 @@
 				D0D030C41B72FF2700046917 /* DiscussionCommentTableViewCell.m */,
 				D0D030C71B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.h */,
 				D0D030C81B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m */,
-				D05958E91B7DC71F008C102C /* DiscussionCommentTableView.h */,
-				D05958EA1B7DC71F008C102C /* DiscussionCommentTableView.m */,
 			);
 			name = Discussion;
 			sourceTree = "<group>";
@@ -532,6 +530,8 @@
 		D0D030CA1B73078200046917 /* CustomizedView */ = {
 			isa = PBXGroup;
 			children = (
+				D05958F21B7DF156008C102C /* CustomizedAlertView.h */,
+				D05958F31B7DF156008C102C /* CustomizedAlertView.m */,
 				D0D030CB1B7307B900046917 /* ImageSlideView.h */,
 				D0D030CC1B7307B900046917 /* ImageSlideView.m */,
 			);
@@ -796,7 +796,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D295E51B68C3D000671449 /* FrontpageTableViewCell.m in Sources */,
-				D05958EB1B7DC71F008C102C /* DiscussionCommentTableView.m in Sources */,
 				134370B11B68B19000AE7FA7 /* ViewController.m in Sources */,
 				D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */,
 				D0D295DD1B68C24200671449 /* FrontpageViewController.m in Sources */,
@@ -806,6 +805,7 @@
 				D05958F11B7DCB29008C102C /* RecipeViewController.m in Sources */,
 				D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */,
 				D0D296031B69D4D300671449 /* BaseModel.m in Sources */,
+				D05958F41B7DF156008C102C /* CustomizedAlertView.m in Sources */,
 				D0D296181B6A128500671449 /* SignUpViewController.m in Sources */,
 				D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */,
 				D0D295FD1B69D2B800671449 /* FrontpageModel.m in Sources */,

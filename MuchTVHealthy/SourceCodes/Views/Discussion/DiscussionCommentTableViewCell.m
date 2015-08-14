@@ -7,11 +7,10 @@
 //
 
 #import "DiscussionCommentTableViewCell.h"
-#import "DiscussionCommentTableView.h"
 #import <KiiSDK/Kii.h>
 //#import "DiscussionObject.h"
 
-@interface DiscussionCommentTableViewCell() <UITableViewDataSource, UITableViewDelegate, DiscussionCommentTableViewCellDelegate, DiscussionCommentTableViewDelegate>
+@interface DiscussionCommentTableViewCell() <UITableViewDataSource, UITableViewDelegate, DiscussionCommentTableViewCellDelegate>
 @property (nonatomic, strong) UITableView                   *commentTableView;
 @property (nonatomic, strong) UIImageView                   *avatarImageView;
 @property (nonatomic, strong) UIButton                      *replyButton;
@@ -19,7 +18,7 @@
 @property (nonatomic, strong) UILabel                       *authorLabel;
 @property (nonatomic, strong) UILabel                       *timeLabel;
 @property (nonatomic, strong) UITextField                   *commentTextField;
-@property (nonatomic, strong) DiscussionCommentTableView    *discussionCommentTableView;
+@property (nonatomic, strong) UITableView                   *discussionCommentTableView;
 @property (nonatomic, strong) UIImageView                   *timeIcon;
 @end
 
@@ -59,7 +58,7 @@
 
 - (void) initCommentTableView {
     if (!_discussionCommentTableView) {
-        _discussionCommentTableView                 = [[DiscussionCommentTableView alloc] initForAutolayout];
+        _discussionCommentTableView                 = [[UITableView alloc] initForAutolayout];
         _discussionCommentTableView.dataSource      = self;
         _discussionCommentTableView.delegate        = self;
         _discussionCommentTableView.scrollEnabled   = NO;
@@ -489,6 +488,7 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.row == 0) {
+        cell.delegate = self.delegate;
         [cell initReplyButtonLayout];
     } else if (indexPath.row == _commentDataArray.count + 1) {
         static NSString *cellID = @"DiscussionLoadMoreButton";

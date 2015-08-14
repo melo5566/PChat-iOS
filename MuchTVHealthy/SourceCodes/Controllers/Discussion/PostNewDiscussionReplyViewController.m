@@ -7,6 +7,7 @@
 //
 
 #import "PostNewDiscussionReplyViewController.h"
+#import "CustomizedAlertView.h"
 //#import "DiscussionModel.h"
 
 @interface PostNewDiscussionReplyViewController () <UITextViewDelegate>
@@ -16,7 +17,8 @@
 //@property (nonatomic, strong) DiscussionModel               *discussionModel;
 @property (nonatomic, strong) NSLayoutConstraint            *contentViewBottomConstraint;
 @property (nonatomic, strong) NSLayoutConstraint            *contentViewHeightConstraint;
-@property (nonatomic, strong) UIAlertView                   *notFinishedAlert;
+//@property (nonatomic, strong) UIAlertView                   *notFinishedAlert;
+@property (nonatomic, strong) CustomizedAlertView           *notFinishedAlert;
 @property (nonatomic) BOOL                                  isFirstLoad;
 @property float                                             keyboardHeight;
 @end
@@ -27,6 +29,7 @@
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
     [self.navigationItem setTitle:@"回覆"];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#ecf8f7"];
     _isFirstLoad = YES;
     // Do any additional setup after loading the view.
 }
@@ -87,7 +90,7 @@
         _contentTextView                    = [[UITextView alloc] initForAutolayout];
         _contentTextView.font               = [UIFont systemFontOfSize:18.0f];
         _contentTextView.delegate           = self;
-        _contentTextView.backgroundColor    = [UIColor colorWithR:255 G:255 B:255];
+        _contentTextView.backgroundColor    = [UIColor colorWithHexString:@"#ffffff"];
         _contentTextView.layer.borderColor  = [UIColor lightGrayColor].CGColor;
         _contentTextView.layer.borderWidth  = 0.5;
         
@@ -132,7 +135,7 @@
         _placeHolder                    = [[UILabel alloc] initForAutolayout];
         _placeHolder.backgroundColor    = [UIColor clearColor];
         _placeHolder.font               = [UIFont systemFontOfSize:18.0f];
-        _placeHolder.textColor          = [UIColor colorWithHexString:@"#C7C7CD"];
+        _placeHolder.textColor          = [UIColor colorWithHexString:@"#6d6d6d"];
         _placeHolder.text               = @"留言(限制140字)...";
         [_contentTextView addSubview:_placeHolder];
         
@@ -216,12 +219,27 @@
         [_contentTextView endEditing:YES];
     }
     
-    _notFinishedAlert = [[UIAlertView alloc] initWithTitle:@"注意"
-                                                   message:@"尚未完成，\n您確定要離開了嗎？"
-                                                  delegate:self
-                                         cancelButtonTitle:@"停留"
-                                         otherButtonTitles:@"離開", nil];
+//    _notFinishedAlert = [[UIAlertView alloc] initWithTitle:@"注意"
+//                                                   message:@"尚未完成，\n您確定要離開了嗎？"
+//                                                  delegate:self
+//                                         cancelButtonTitle:@"停留"
+//                                         otherButtonTitles:@"離開", nil];
+    _notFinishedAlert = [[CustomizedAlertView alloc] initWithTitle:@"注意" andMessage:@"尚未完成，\n您確定要離開了嗎？"];
+    [_notFinishedAlert addButtonWithTitle:@"停留"
+                                        type:CustomizedAlertViewButtonTypeDefaultLightGreen
+                                     handler:nil];
+    
+    [_notFinishedAlert addButtonWithTitle:@"離開"
+                                     type:CustomizedAlertViewButtonTypeDefaultGreen
+                                  handler:^(CustomizedAlertView *alertView) {
+                                      [self.navigationController popViewControllerAnimated:YES];
+                                  }];
+
     [_notFinishedAlert show];
+}
+
+- (void) action {
+    NSLog(@"action");
 }
 
 #pragma mark - keyboard
@@ -316,7 +334,18 @@
 }
 
 #pragma mark - UIAlertViewDelegate
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (alertView == _notFinishedAlert) {
+//        if (buttonIndex == 0) {
+//            [_contentTextView becomeFirstResponder];
+//        }
+//        if (buttonIndex == 1) {
+//            [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(popViewPorTimer) userInfo:nil repeats: NO];
+//        }
+//    }
+//}
+
+- (void) alertView:(CustomizedAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView == _notFinishedAlert) {
         if (buttonIndex == 0) {
             [_contentTextView becomeFirstResponder];
@@ -326,6 +355,7 @@
         }
     }
 }
+
 
 -(void) popViewPorTimer
 {

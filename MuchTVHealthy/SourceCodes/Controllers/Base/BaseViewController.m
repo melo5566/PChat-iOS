@@ -175,7 +175,7 @@
 - (void) initMenuView {
     if (!_menuView) {
         _menuView                 = [[UIView alloc] initForAutolayout];
-        _menuView.backgroundColor = [UIColor colorWithR:0 G:125 B:125];
+        _menuView.backgroundColor = [UIColor colorWithHexString:@"#4f9999"];
         
         [self.view addSubview:_menuView];
         
@@ -285,6 +285,7 @@
         _userNameLabel                    = [[UILabel alloc] initForAutolayout];
         _userNameLabel.backgroundColor    = [UIColor clearColor];
         _userNameLabel.font               = [UIFont systemFontOfSize:17.0f];
+        _userNameLabel.textColor          = [UIColor colorWithHexString:@"#96ffff"];
         _userNameLabel.textAlignment      = UITextAlignmentCenter;
         [_menuView addSubview:_userNameLabel];
         
@@ -326,12 +327,13 @@
 
 - (void)initMenuButton {
     NSArray *buttonArray = @[@"首頁",@"訊息中心",@"節目影音",@"達人專區",@"食譜"];
+    NSArray *colorArray  = @[@"#438a8a",@"#387f7f",@"#2a7372",@"#216563",@"#135350"];
     for (int i = 0; i < buttonArray.count; i++) {
         _menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_menuButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         _menuButton.tag = i;
         [_menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        _menuButton.backgroundColor = [UIColor colorWithR:0 G:139+5*i B:139+10*i];
+        _menuButton.backgroundColor = [UIColor colorWithHexString:colorArray[i]];
         
         [_menuButton setTitle:buttonArray[i] forState:UIControlStateNormal];
         [_menuButton setTitleColor:[UIColor colorWithR:255 G:255 B:255] forState:UIControlStateNormal];
@@ -374,7 +376,7 @@
 - (void) initFanzytvLogoView {
     if (!_fanzytvLogoView) {
         _fanzytvLogoView                 = [[UIView alloc] initForAutolayout];
-        _fanzytvLogoView.backgroundColor = [UIColor colorWithR:35 G:85 B:85];
+        _fanzytvLogoView.backgroundColor = [UIColor colorWithHexString:@"#0c3937"];
         [_menuView addSubview:_fanzytvLogoView];
         
         NSMutableArray *fanzytvLogoConstaint = @[].mutableCopy;

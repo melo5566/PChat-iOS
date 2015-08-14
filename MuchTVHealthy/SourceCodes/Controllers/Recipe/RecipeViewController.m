@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setTitle:@"食譜"];
     [self initWholeButton];
     
     UIButton *customizedButton       = [UIButton buttonWithType:UIButtonTypeCustom];
