@@ -38,8 +38,12 @@
             delayToHide:(CGFloat)delayToHide;
 - (void) askToLogIn;
 
-@property (nonatomic, strong) AppDelegate       *appdelegate;
-@property (nonatomic, strong) MBProgressHUD     *hud;
+@property (nonatomic, strong) AppDelegate                       *appdelegate;
+@property (nonatomic, strong) MBProgressHUD                     *hud;
+@property (nonatomic) BOOL                                      isShownMenuView;
+@property (nonatomic, strong) NSLayoutConstraint                *menuViewRightLayoutConstraint;
+@property (nonatomic, strong) UIView                            *menuView;
+- (void) showMenu;
 
 @property (weak) id <NoNetworkAlertDelegate>  noNetworkAlertDelegate;
 

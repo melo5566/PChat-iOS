@@ -12,6 +12,7 @@
 #import "PostNewDiscussionReplyViewController.h"
 
 
+
 #define kLogoWidth kScreenWidth * 211.0f / IPHONE_6_SCREEN_WIDTH
 #define kImageSlideViewHeight (kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionImageSlideViewInsideImagePadding) * (3.0f/4.0f)
 
@@ -31,6 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
+    [self initWholeButton];
     self.navigationItem.title = @"Title";
     
     _totalCommentDataArray = @[].mutableCopy;
@@ -38,7 +40,7 @@
         [_totalCommentDataArray addObject:@"abc"];
     }
     for (int i = 0; i < 10; i ++) {
-        [_totalCommentDataArray addObject:@"abcdefghi"];
+        [_totalCommentDataArray addObject:@"abcdefghiabcdefghiabcdefghiabcdefghi"];
     }
     _content = @"ContentContentContentContentContentContentContentContentCont";
     _numberOfImage = 5;
@@ -47,6 +49,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self firstLoadReply];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self initMenuLayout];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self dismissMenu];
 }
 
 - (void)didReceiveMemoryWarning {

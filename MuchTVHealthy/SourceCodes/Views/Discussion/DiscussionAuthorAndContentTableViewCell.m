@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UIButton                      *shareButton;
 @property (nonatomic, strong) UIImageView                   *shareButtonImageView;
 @property (nonatomic, strong) UILabel                       *shareLabel;
+@property (nonatomic, strong) UIImageView                   *timeIcon;
 @end
 
 @implementation DiscussionAuthorAndContentTableViewCell
@@ -44,6 +45,7 @@
     [self initSingleView];
     [self initAvatarImageView];
     [self initAuthorLabel];
+    [self initTimeIcon];
     [self initTimeLabel];
     [self initContentLabel];
     [self initImageSlideView];
@@ -176,6 +178,44 @@
     _authorLabel.text = @"Author";
 }
 
+- (void) initTimeIcon {
+    if (!_timeIcon) {
+        _timeIcon = [[UIImageView alloc] initForAutolayout];
+        _timeIcon.image = [UIImage imageNamed:@"icon_time"];
+        [_singleView addSubview:_timeIcon];
+        
+        NSMutableArray *timeIconConstraint = [[NSMutableArray alloc] init];
+        
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:_avatarImageView
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0f constant:kDiscussionTimeIconLeftPadding]];
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:_avatarImageView
+                                                                   attribute:NSLayoutAttributeCenterY
+                                                                  multiplier:1.0f constant:5.0f]];
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeWidth
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1.0f constant:15.0f]];
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeHeight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1.0f constant:15.0f]];
+        
+        [self addConstraints:timeIconConstraint];
+
+    }
+}
+
 - (void) initTimeLabel {
     if (!_timeLabel) {
         _timeLabel                  = [[UILabel alloc] initForAutolayout];
@@ -188,7 +228,7 @@
         [timeLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeLabel
                                                                         attribute:NSLayoutAttributeLeft
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:_avatarImageView
+                                                                           toItem:_timeIcon
                                                                         attribute:NSLayoutAttributeRight
                                                                        multiplier:1.0f constant:kDiscussionTimeLeftPadding]];
         [timeLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeLabel

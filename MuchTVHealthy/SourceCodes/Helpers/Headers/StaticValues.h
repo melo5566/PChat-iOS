@@ -14,7 +14,7 @@ static NSString * const kKiiApplicationKey    = @"604b1a2176afbcf37df95f90560726
  *  color hex string
  */
 static NSString * const kDefaultBackGroundColorHexString                                = @"#FAFAFA";
-static NSString * const kNavigationBarColorHexString                                    = @"#404ED0";
+static NSString * const kNavigationBarColorHexString                                    = @"#of9bab";
 static NSString * const kDefaultYellowColorHexString                                    = @"#FFCF11";
 static NSString * const kFacebookButtonColorHexString                                   = @"#5F80D6";
 static NSString * const kGooglePlusButtonColorHexString                                 = @"#F05343";
@@ -24,7 +24,7 @@ static NSString * const kVoteViewColorHexString                                 
 static NSString * const kListTableViewCellBackGroundColorHexString                      = @"#FAFACD";
 static NSString * const kListTableViewSeperatorLineColorHexString                       = @"#CCCCCC";
 static NSString * const kListTableViewTitleColorHexString                               = @"#3A3A3A";
-static NSString * const kListTableViewTimeColorHexString                                = @"#999999";
+static NSString * const kListTableViewTimeColorHexString                                = @"#ffa200";
 static NSString * const kListTableViewImageBorderColorHexString                         = @"#979797";
 
 static NSString * const kFrontpageTabButtonBarColorHexString                            = @"#FFFFFF";
@@ -32,10 +32,10 @@ static NSString * const kFrontpageTabButtonBarTextColorHexString                
 static NSString * const kFrontpageOnAirViewTextColorHexString                           = @"#FFFFFF";
 static NSString * const kFrontpageCardBoderColorHexString                               = @"#DDDDDD";
 
-static NSString * const kPersonalSettingChangeAvatarButtonTextColorHexString            = @"#CCCCCC";
+static NSString * const kPersonalSettingChangeAvatarButtonTextColorHexString            = @"#109bac";
 static NSString * const kPersonalSettingLogoutButtonBackroundColorHexString             = @"#F0F0F0";
 
-static NSString * const kPostDiscussionAttachmentViewBackgroundColorHexString           = @"#EEEEEE";
+static NSString * const kPostDiscussionAttachmentViewBackgroundColorHexString           = @"#019bab";
 static NSString * const kPostDiscussionViewBorderColorHexString                         = @"#CCCCCC";
 static NSString * const kDiscussionSinglePageCardBorderColorHexString                   = @"#CCCCCC";
 static NSString * const kDiscussionSinglePageAttachmentViewBackgroundColorHexString     = @"#F4F4F4";
@@ -82,7 +82,8 @@ static CGFloat const kDiscussionCardLeftAndRightPadding             = 15.0f;
 static CGFloat const kDiscussionAvatarLeftPadding                   = 10.0f;
 static CGFloat const kDiscussionAvatarTopPadding                    = 10.0f;
 static CGFloat const kDiscussionAuthorNameLeftPadding               = 15.0f;
-static CGFloat const kDiscussionTimeLeftPadding                     = 15.0f;
+static CGFloat const kDiscussionTimeLeftPadding                     = 5.0f;
+static CGFloat const kDiscussionTimeIconLeftPadding                 = 15.0f;
 static CGFloat const kDiscussionContentLeftPadding                  = 15.0f;
 static CGFloat const kDiscussionContentTopPadding                   = 12.0f;
 static CGFloat const kDiscussionContentRightPadding                 = 15.0f;

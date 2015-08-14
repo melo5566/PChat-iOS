@@ -410,7 +410,7 @@
         
         // Bottom Line
         UIView *bottomLine          = [[UIView alloc] initForAutolayout];
-        bottomLine.backgroundColor  = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
+        bottomLine.backgroundColor  = [UIColor colorWithHexString:@"0f9bab"];
         [_userNameView addSubview:bottomLine];
         NSMutableArray *bottomLineConstraint = @[].mutableCopy;
         [bottomLineConstraint addObject:[NSLayoutConstraint constraintWithItem:bottomLine
@@ -443,7 +443,7 @@
         // Label (顯示暱稱)
         UILabel *displaynameLabel           = [[UILabel alloc] initForAutolayout];
         displaynameLabel.backgroundColor    = [UIColor clearColor];
-        displaynameLabel.textColor          = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
+        displaynameLabel.textColor          = [UIColor colorWithHexString:@"109bac"];
         displaynameLabel.font               = [UIFont boldSystemFontOfSize:17.0f];
         displaynameLabel.text               = @"顯示暱稱";
         [_userNameView addSubview:displaynameLabel];
@@ -519,7 +519,7 @@
                                action:@selector(userNameTextFieldDidChange:)
                      forControlEvents:UIControlEventEditingChanged];
         _userNameTextField.backgroundColor  = [UIColor clearColor];
-        _userNameTextField.textColor        = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
+        _userNameTextField.textColor        = [UIColor colorWithHexString:@"1d1d1d"];
         _userNameTextField.clearButtonMode  = UITextFieldViewModeWhileEditing;
         _userNameTextField.returnKeyType    = UIReturnKeyDone;
         _userNameTextField.font             = [UIFont systemFontOfSize:24.0f];
@@ -602,7 +602,7 @@
     if (!_fanzytvLogoImageView) {
         _fanzytvLogoImageView                   = [[UIImageView alloc] initForAutolayout];
         _fanzytvLogoImageView.backgroundColor   = [UIColor clearColor];
-        _fanzytvLogoImageView.image             = [UIImage imageNamed:@"fanzytv_btn@2x"];
+        _fanzytvLogoImageView.image             = [UIImage imageNamed:@"btn_fanzytv"];
         
         [self.view addSubview:_fanzytvLogoImageView];
         

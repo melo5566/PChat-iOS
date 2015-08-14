@@ -7,19 +7,20 @@
 //
 
 #import "DiscussionCommentTableViewCell.h"
+#import "DiscussionCommentTableView.h"
 #import <KiiSDK/Kii.h>
 //#import "DiscussionObject.h"
 
-@interface DiscussionCommentTableViewCell() <UITableViewDataSource, UITableViewDelegate, DiscussionCommentTableViewCellDelegate>
-//@property (nonatomic, strong) DiscussionCommentView     *discussionCommentView;
-@property (nonatomic, strong) UITableView               *commentTableView;
-@property (nonatomic, strong) UIImageView               *avatarImageView;
-@property (nonatomic, strong) UIButton                  *replyButton;
-@property (nonatomic, strong) UILabel                   *contentLabel;
-@property (nonatomic, strong) UILabel                   *authorLabel;
-@property (nonatomic, strong) UILabel                   *timeLabel;
-@property (nonatomic, strong) UITextField               *commentTextField;
-@property (nonatomic, strong) UITableView               *discussionCommentTableView;
+@interface DiscussionCommentTableViewCell() <UITableViewDataSource, UITableViewDelegate, DiscussionCommentTableViewCellDelegate, DiscussionCommentTableViewDelegate>
+@property (nonatomic, strong) UITableView                   *commentTableView;
+@property (nonatomic, strong) UIImageView                   *avatarImageView;
+@property (nonatomic, strong) UIButton                      *replyButton;
+@property (nonatomic, strong) UILabel                       *contentLabel;
+@property (nonatomic, strong) UILabel                       *authorLabel;
+@property (nonatomic, strong) UILabel                       *timeLabel;
+@property (nonatomic, strong) UITextField                   *commentTextField;
+@property (nonatomic, strong) DiscussionCommentTableView    *discussionCommentTableView;
+@property (nonatomic, strong) UIImageView                   *timeIcon;
 @end
 
 @implementation DiscussionCommentTableViewCell
@@ -52,12 +53,13 @@
     [self initAvatarImageView];
     [self initAuthorLabel];
     [self initContentLabel];
+    [self initTimeIcon];
     [self initTimeLabel];
 }
 
 - (void) initCommentTableView {
     if (!_discussionCommentTableView) {
-        _discussionCommentTableView                 = [[UITableView alloc] initForAutolayout];
+        _discussionCommentTableView                 = [[DiscussionCommentTableView alloc] initForAutolayout];
         _discussionCommentTableView.dataSource      = self;
         _discussionCommentTableView.delegate        = self;
         _discussionCommentTableView.scrollEnabled   = NO;
@@ -164,7 +166,7 @@
         [_replyButton setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
         [_replyButton setTitleColor:[UIColor colorWithR:0 G:125 B:125] forState:UIControlStateNormal];
         [_replyButton setTitle:@"我要回覆..." forState:UIControlStateNormal];
-        [_replyButton addTarget:self action:@selector(goPostReply) forControlEvents:UIControlEventTouchUpInside];
+        [_replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:_replyButton];
         
@@ -338,6 +340,44 @@
     [_contentLabel sizeThatFits:CGSizeMake(kScreenWidth - kDiscussionCardLeftAndRightPadding * 2 - kDiscussionReplyLeftAndRightPadding * 2 - kDiscussionReplyButtonLeftPadding, kDiscussionReplyAuthorNameFontSize)];
 }
 
+- (void) initTimeIcon {
+    if (!_timeIcon) {
+        _timeIcon = [[UIImageView alloc] initForAutolayout];
+        _timeIcon.image = [UIImage imageNamed:@"icon_time"];
+        [self.contentView addSubview:_timeIcon];
+        
+        NSMutableArray *timeIconConstraint = [[NSMutableArray alloc] init];
+        
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:_avatarImageView
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0f constant:kDiscussionTimeIconLeftPadding]];
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:_contentLabel
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1.0f constant:5.0f]];
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeWidth
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1.0f constant:15.0f]];
+        [timeIconConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeIcon
+                                                                   attribute:NSLayoutAttributeHeight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1.0f constant:15.0f]];
+        
+        [self addConstraints:timeIconConstraint];
+        
+    }
+}
+
 
 - (void) initTimeLabel {
     if (!_timeLabel) {
@@ -351,9 +391,9 @@
         [timeLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeLabel
                                                                         attribute:NSLayoutAttributeLeft
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:_avatarImageView
+                                                                           toItem:_timeIcon
                                                                         attribute:NSLayoutAttributeRight
-                                                                       multiplier:1.0f constant:kDiscussionReplyButtonLeftPadding]];
+                                                                       multiplier:1.0f constant:kDiscussionTimeLeftPadding]];
         [timeLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeLabel
                                                                         attribute:NSLayoutAttributeTop
                                                                         relatedBy:NSLayoutRelationEqual
@@ -482,6 +522,5 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
-
 
 @end

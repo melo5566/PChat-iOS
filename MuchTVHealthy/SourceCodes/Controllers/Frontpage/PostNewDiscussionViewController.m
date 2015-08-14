@@ -12,26 +12,27 @@
 //#import "DiscussionModel.h"
 
 @interface PostNewDiscussionViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIActionSheetDelegate>
-@property (nonatomic, strong) NSURL                 *uri;
-@property (nonatomic) BOOL                          isProgramDiscussion;
-@property (nonatomic) BOOL                          isCelebrityDiscussion;
-@property (nonatomic, strong) UIScrollView          *backgroundScrollView;
-@property (nonatomic, strong) UIView                *scrollContentView;
-@property (nonatomic, strong) UITextField           *titleTextField;
-@property (nonatomic, strong) UIView                *titleView;
-@property (nonatomic, strong) UIView                *contentContainer;
-@property (nonatomic, strong) UITextView            *contentTextView;
-@property (nonatomic, strong) UILabel               *contentPlaceHolderLabel;
-@property (nonatomic, strong) UIView                *chooseAttachmentView;
-@property (nonatomic, strong) UILabel               *chooseAttachmentTitleLabel;
-@property (nonatomic, strong) UIButton              *useCameraButton;
-@property (nonatomic, strong) UIButton              *useLibraryButton;
-@property (nonatomic, strong) UIView                *attachmentPreviewBackground;
-@property (nonatomic, strong) NSLayoutConstraint    *contentTextViewBottomConstraint;
-@property (nonatomic, strong) NSLayoutConstraint    *contentContainerBottomConstraint;
-@property (nonatomic, strong) NSLayoutConstraint    *scrollViewBottomConstraint;
+@property (nonatomic, strong) NSURL                     *uri;
+@property (nonatomic) BOOL                              isProgramDiscussion;
+@property (nonatomic) BOOL                              isCelebrityDiscussion;
+@property (nonatomic, strong) UIScrollView              *backgroundScrollView;
+@property (nonatomic, strong) UIView                    *scrollContentView;
+@property (nonatomic, strong) UITextField               *titleTextField;
+@property (nonatomic, strong) UIView                    *titleView;
+@property (nonatomic, strong) UIView                    *contentContainer;
+@property (nonatomic, strong) UITextView                *contentTextView;
+@property (nonatomic, strong) UILabel                   *contentPlaceHolderLabel;
+@property (nonatomic, strong) UIView                    *chooseAttachmentView;
+@property (nonatomic, strong) UILabel                   *chooseAttachmentTitleLabel;
+@property (nonatomic, strong) UIButton                  *useCameraButton;
+@property (nonatomic, strong) UIButton                  *useLibraryButton;
+@property (nonatomic, strong) UIView                    *attachmentPreviewBackground;
+@property (nonatomic, strong) NSLayoutConstraint        *contentTextViewBottomConstraint;
+@property (nonatomic, strong) NSLayoutConstraint        *contentContainerBottomConstraint;
+@property (nonatomic, strong) NSLayoutConstraint        *scrollViewBottomConstraint;
 @property (nonatomic, strong) UIActivityIndicatorView   *activityIndicator;
-@property (nonatomic, strong) UIButton                   *categoryButton;
+@property (nonatomic, strong) UIButton                  *categoryButton;
+@property (nonatomic, strong) UIImageView               *categoryArrow;
 
 @property (nonatomic, strong) NSMutableArray        *imageArray;
 
@@ -107,6 +108,7 @@
     [self initScrollContentView];
     [self initTitleView];
     [self initCategoryLabel];
+    [self initCategoryArrow];
     [self initContentContainer];
 }
 
@@ -314,6 +316,43 @@
     }
 }
 
+- (void) initCategoryArrow {
+    if (!_categoryArrow) {
+        _categoryArrow       = [[UIImageView alloc] initForAutolayout];
+        _categoryArrow.image = [UIImage imageNamed:@"icon_menu"];
+        [_categoryButton addSubview:_categoryArrow];
+        NSMutableArray *categoryButtonConstaint = @[].mutableCopy;
+        
+        [categoryButtonConstaint addObject:[NSLayoutConstraint constraintWithItem:_categoryArrow
+                                                                        attribute:NSLayoutAttributeRight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:_categoryButton
+                                                                        attribute:NSLayoutAttributeRight
+                                                                       multiplier:1.0f constant:-15.0f]];
+        [categoryButtonConstaint addObject:[NSLayoutConstraint constraintWithItem:_categoryArrow
+                                                                        attribute:NSLayoutAttributeCenterY
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:_categoryButton
+                                                                        attribute:NSLayoutAttributeCenterY
+                                                                       multiplier:1.0f constant:0.0f]];
+        [categoryButtonConstaint addObject:[NSLayoutConstraint constraintWithItem:_categoryArrow
+                                                                        attribute:NSLayoutAttributeWidth
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0f constant:15.0f]];
+        [categoryButtonConstaint addObject:[NSLayoutConstraint constraintWithItem:_categoryArrow
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0f constant:15.0f]];
+        
+        [self.view addConstraints:categoryButtonConstaint];
+
+    }
+}
+
 - (void) initChooseAttachmentView {
     if (!_chooseAttachmentView) {
         _chooseAttachmentView = [[UIView alloc] initForAutolayout];
@@ -349,8 +388,8 @@
         _chooseAttachmentTitleLabel = [[UILabel alloc] initForAutolayout];
         _chooseAttachmentTitleLabel.backgroundColor = [UIColor clearColor];
         _chooseAttachmentTitleLabel.font = [UIFont systemFontOfSize:18.0f];
-        _chooseAttachmentTitleLabel.textColor = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
-        _chooseAttachmentTitleLabel.text = @"附加圖片";
+        _chooseAttachmentTitleLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _chooseAttachmentTitleLabel.text = @"附加檔案";
         [_chooseAttachmentView addSubview:_chooseAttachmentTitleLabel];
         [attachmentViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_chooseAttachmentTitleLabel
                                                                         attribute:NSLayoutAttributeLeft
@@ -381,7 +420,7 @@
         _useLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_useLibraryButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         _useLibraryButton.backgroundColor = [UIColor clearColor];
-        [_useLibraryButton setImage:[UIImage imageNamed:@"Discussion_Icon_Use_Library"] forState:UIControlStateNormal];
+        [_useLibraryButton setImage:[UIImage imageNamed:@"icon_fnphoto"] forState:UIControlStateNormal];
         [_useLibraryButton addTarget:self action:@selector(useLibraryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_chooseAttachmentView addSubview:_useLibraryButton];
         [attachmentViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_useLibraryButton
@@ -412,7 +451,7 @@
         _useCameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_useCameraButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         _useCameraButton.backgroundColor = [UIColor clearColor];
-        [_useCameraButton setImage:[UIImage imageNamed:@"Discussion_Icon_Use_Camera"] forState:UIControlStateNormal];
+        [_useCameraButton setImage:[UIImage imageNamed:@"icon_fncamera"] forState:UIControlStateNormal];
         [_useCameraButton addTarget:self action:@selector(useCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_chooseAttachmentView addSubview:_useCameraButton];
         [attachmentViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_useCameraButton
@@ -632,52 +671,53 @@
                                                               multiplier:1.0f constant:45.0f]];
         [self.view addConstraints:imageConstaint];
         
-        if ([[imageData objectForKey:@"imageUrl"] isNotEmpty]) {
-            [attachmentImageView setImage:[imageData objectForKey:@"image"]];
-        }
-        else {
-            [attachmentImageView addActivityIndicatorWithActivityStyle:UIActivityIndicatorViewStyleGray];
-            UIImageView *alphaImageView = [[UIImageView alloc] initForAutolayout];
-            alphaImageView.backgroundColor = [UIColor clearColor];
-            alphaImageView.contentMode = UIViewContentModeScaleAspectFill;
-            alphaImageView.clipsToBounds = YES;
-            alphaImageView.alpha = 0.3;
-            [attachmentImageView insertSubview:alphaImageView atIndex:0];
-            NSMutableArray *alphaImageViewConstaint = @[].mutableCopy;
-            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
-                                                                            attribute:NSLayoutAttributeLeft
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:attachmentImageView
-                                                                            attribute:NSLayoutAttributeLeft
-                                                                           multiplier:1.0f constant:0.0f]];
-            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
-                                                                            attribute:NSLayoutAttributeBottom
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:attachmentImageView
-                                                                            attribute:NSLayoutAttributeBottom
-                                                                           multiplier:1.0f constant:0.0f]];
-            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
-                                                                            attribute:NSLayoutAttributeRight
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:attachmentImageView
-                                                                            attribute:NSLayoutAttributeRight
-                                                                           multiplier:1.0f constant:0.0f]];
-            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
-                                                                            attribute:NSLayoutAttributeTop
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:attachmentImageView
-                                                                            attribute:NSLayoutAttributeTop
-                                                                           multiplier:1.0f constant:0.0f]];
-            [self.view addConstraints:alphaImageViewConstaint];
-            [alphaImageView setImage:imageData[@"image"]];
-        }
+        [attachmentImageView setImage:[imageData objectForKey:@"image"]];
+//        if ([[imageData objectForKey:@"imageUrl"] isNotEmpty]) {
+//            [attachmentImageView setImage:[imageData objectForKey:@"image"]];
+//        }
+//        else {
+//            [attachmentImageView addActivityIndicatorWithActivityStyle:UIActivityIndicatorViewStyleGray];
+//            UIImageView *alphaImageView = [[UIImageView alloc] initForAutolayout];
+//            alphaImageView.backgroundColor = [UIColor clearColor];
+//            alphaImageView.contentMode = UIViewContentModeScaleAspectFill;
+//            alphaImageView.clipsToBounds = YES;
+//            alphaImageView.alpha = 0.3;
+//            [attachmentImageView insertSubview:alphaImageView atIndex:0];
+//            NSMutableArray *alphaImageViewConstaint = @[].mutableCopy;
+//            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
+//                                                                            attribute:NSLayoutAttributeLeft
+//                                                                            relatedBy:NSLayoutRelationEqual
+//                                                                               toItem:attachmentImageView
+//                                                                            attribute:NSLayoutAttributeLeft
+//                                                                           multiplier:1.0f constant:0.0f]];
+//            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
+//                                                                            attribute:NSLayoutAttributeBottom
+//                                                                            relatedBy:NSLayoutRelationEqual
+//                                                                               toItem:attachmentImageView
+//                                                                            attribute:NSLayoutAttributeBottom
+//                                                                           multiplier:1.0f constant:0.0f]];
+//            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
+//                                                                            attribute:NSLayoutAttributeRight
+//                                                                            relatedBy:NSLayoutRelationEqual
+//                                                                               toItem:attachmentImageView
+//                                                                            attribute:NSLayoutAttributeRight
+//                                                                           multiplier:1.0f constant:0.0f]];
+//            [alphaImageViewConstaint addObject:[NSLayoutConstraint constraintWithItem:alphaImageView
+//                                                                            attribute:NSLayoutAttributeTop
+//                                                                            relatedBy:NSLayoutRelationEqual
+//                                                                               toItem:attachmentImageView
+//                                                                            attribute:NSLayoutAttributeTop
+//                                                                           multiplier:1.0f constant:0.0f]];
+//            [self.view addConstraints:alphaImageViewConstaint];
+//            [alphaImageView setImage:imageData[@"image"]];
+//        }
         
         // delete button
         UIButton *deleteImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [deleteImageButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         deleteImageButton.tag = index;
         deleteImageButton.backgroundColor = [UIColor clearColor];
-        [deleteImageButton setImage:[UIImage imageNamed:@"icon_delete.png"] forState:UIControlStateNormal];
+        [deleteImageButton setImage:[UIImage imageNamed:@"icon_delete"] forState:UIControlStateNormal];
         [deleteImageButton addTarget:self action:@selector(deleteImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_attachmentPreviewBackground addSubview:deleteImageButton];
         NSMutableArray *buttonConstaint = @[].mutableCopy;

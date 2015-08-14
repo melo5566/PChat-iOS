@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setTitle:@"首頁"];
     [self initWholeButton];
     
     UIButton *postDiscussionButton       = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -50,8 +51,11 @@
     _frontpageTableView.hidden  = YES;
     [self resetParams];
     [self firstLoadFrontpageData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [self initMenuLayout];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

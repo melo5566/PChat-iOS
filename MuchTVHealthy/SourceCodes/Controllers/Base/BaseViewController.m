@@ -11,19 +11,19 @@
 #import "FrontpageViewController.h"
 #import "DiscussionSingleViewController.h"
 #import "ConnoisseurListViewController.h"
+#import "RecipeViewController.h"
 
 @interface BaseViewController ()
 @property (nonatomic, strong) UIAlertView                       *loginAlertView;
-@property (nonatomic, strong) UIView                            *menuView;
+//@property (nonatomic, strong) UIView                            *menuView;
 @property (nonatomic, strong) UIView                            *fanzytvLogoView;
 @property (nonatomic, strong) UILabel                           *userNameLabel;
 @property (nonatomic, strong) UIButton                          *menuButton;
 @property (nonatomic, strong) UIButton                          *settinButton;
 @property (nonatomic, strong) UIImageView                       *avatarImageView;
 @property (nonatomic, strong) UIImageView                       *fanzytvLogo;
-@property (nonatomic, strong) NSLayoutConstraint                *menuViewRightLayoutConstraint;
+//@property (nonatomic, strong) NSLayoutConstraint                *menuViewRightLayoutConstraint;
 @property (nonatomic, strong) KiiUser                           *currentUser;
-@property (nonatomic) BOOL                                      isShownMenuView;
 @end
 
 @implementation BaseViewController
@@ -96,7 +96,7 @@
     [customizedButton setImage:iconImage forState:UIControlStateNormal];
     [customizedButton addTarget:self action:@selector(wholeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *navigatinBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customizedButton];
-    navigatinBarButtonItem.enabled = NO;
+    navigatinBarButtonItem.enabled = YES;
     self.navigationItem.leftBarButtonItem = navigatinBarButtonItem;
 }
 
@@ -495,14 +495,14 @@
     UIButton *button = sender;
     switch (button.tag) {
         case 0: {
-            // 資訊
-            DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
-            [self.navigationController pushViewController:singleViewController animated:YES];
+            FrontpageViewController *viewController = [FrontpageViewController new];
+            [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
         case 1: {
             // 訊息
-            NSLog(@"%lu",button.tag);
+            DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
+            [self.navigationController pushViewController:singleViewController animated:YES];
             break;
         }
         case 2: {
@@ -515,6 +515,11 @@
             ConnoisseurListViewController *controller = [ConnoisseurListViewController new];
             [self.navigationController pushViewController:controller animated:YES];
             break;
+        }
+        case 4: {
+            //食譜
+            RecipeViewController *controller = [RecipeViewController new];
+            [self.navigationController pushViewController:controller animated:YES];
         }
         default:
             break;
@@ -531,37 +536,27 @@
 - (void)wholeButtonPressed:(id)sender {
     [self.view removeConstraint:_menuViewRightLayoutConstraint];
     if (_isShownMenuView) {
-        _isShownMenuView = NO;
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             _menuViewRightLayoutConstraint = [NSLayoutConstraint constraintWithItem:_menuView
-                                                                                           attribute:NSLayoutAttributeRight
-                                                                                           relatedBy:NSLayoutRelationEqual
-                                                                                              toItem:self.view
-                                                                                           attribute:NSLayoutAttributeLeft
-                                                                                          multiplier:1.0f constant:0.0f];
-                             
-                             [self.view addConstraint:_menuViewRightLayoutConstraint];
-                             [self.view layoutIfNeeded];
-                         }];
-        
+        [self dismissMenu];
     } else {
-        _isShownMenuView = YES;
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             _menuViewRightLayoutConstraint = [NSLayoutConstraint constraintWithItem:_menuView
-                                                                                           attribute:NSLayoutAttributeRight
-                                                                                           relatedBy:NSLayoutRelationEqual
-                                                                                              toItem:self.view
-                                                                                           attribute:NSLayoutAttributeLeft
-                                                                                          multiplier:1.0f constant:kScreenWidth*3/5];
-                             
-                             [self.view addConstraint:_menuViewRightLayoutConstraint];
-                             [self.view layoutIfNeeded];
-                         }];
-        
+        [self showMenu];
     }
-    
+}
+
+- (void) showMenu {
+    _isShownMenuView = YES;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         _menuViewRightLayoutConstraint = [NSLayoutConstraint constraintWithItem:_menuView
+                                                                                       attribute:NSLayoutAttributeRight
+                                                                                       relatedBy:NSLayoutRelationEqual
+                                                                                          toItem:self.view
+                                                                                       attribute:NSLayoutAttributeLeft
+                                                                                      multiplier:1.0f constant:kScreenWidth*3/5];
+                         
+                         [self.view addConstraint:_menuViewRightLayoutConstraint];
+                         [self.view layoutIfNeeded];
+                     }];
+
 }
 
 - (void) dismissMenu {
