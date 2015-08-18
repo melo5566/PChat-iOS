@@ -10,5 +10,5 @@
 #import "BaseViewController.h"
 
 @interface SignUpViewController : BaseViewController
-
+@property (nonatomic, strong) NSString                  *signUpType;
 @end

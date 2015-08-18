@@ -33,8 +33,17 @@
 }
 
 
-- (void) setFrontpageObject:(FrontpageObject *)frontpageObject {
-    _frontpageObject = frontpageObject;
+//- (void) setFrontpageObject:(FrontpageObject *)frontpageObject {
+//    _frontpageObject = frontpageObject;
+//    [self initFrontpageView];
+//    [self initFrontpageImageView];
+//    [self initFrontpageTitleLabel];
+//    [self initFrontpageTimeImageView];
+//    [self initFrontpageTimeLabel];
+//}
+
+- (void) setString:(NSString *)string {
+    _string = string;
     [self initFrontpageView];
     [self initFrontpageImageView];
     [self initFrontpageTitleLabel];
@@ -176,7 +185,7 @@
         [self addConstraints:titleLabelViewConstraint];
         
     }
-    _titleLabel.text = _frontpageObject.title;
+    _titleLabel.text = @"Title";
 }
 
 - (void) initFrontpageTimeLabel {
@@ -214,7 +223,7 @@
         
         [self addConstraints:timeLabelViewConstraint];
     }
-    _timeLabel.text = _frontpageObject.time;
+    _timeLabel.text = @"2015/08/17";
     
 }
 

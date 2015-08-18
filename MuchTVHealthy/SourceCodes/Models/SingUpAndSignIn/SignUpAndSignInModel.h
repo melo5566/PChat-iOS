@@ -10,8 +10,6 @@
 
 @protocol SignUpAndSignInModelDelegate <BaseModelDelegate>
 @optional
-- (void) didLogin;
-- (void) didSignUp;
 @end
 
 
@@ -24,15 +22,34 @@ typedef enum facebookLogInStatus : NSUInteger {
 } facebookLogInStatus;
 
 @interface SignUpAndSignInModel : BaseModel
+typedef void (^PhoneNumberSignUpAndSignInHandler)(KiiUser *user, NSError *error);
+typedef void (^SignUpAndSignInHandler)(KiiUser *user, NSError *error);
 typedef void (^FacebookLogInHandler)(facebookLogInStatus logInStatus, KiiUser *user);
 typedef void (^CheckUserAvatarHandler)(BOOL hasAvatar, NSError *error);
 typedef void (^GetAvatarAndNameHandler)(BOOL finished, NSError *error);
 
 @property (nonatomic, weak) id <SignUpAndSignInModelDelegate> delegate;
 - (void) kiiUserLogIn:(NSString *)account password:(NSString *)password;
-- (void) kiiUserSignUp:(NSString *)displayName account:(NSString *)account password:(NSString *)password;
+
+- (void) kiiUserLogIn:(NSString *)account
+             password:(NSString *)password
+        CompleteBlock:(SignUpAndSignInHandler)handler;
+
+- (void) kiiUserSignUp:(NSString *)displayName
+               account:(NSString *)account
+              password:(NSString *)password
+         CompleteBlock:(SignUpAndSignInHandler)handler;
+
+- (void) verifiedUser:(NSString *)code
+    WithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
+
 - (void) facebookLogInInWithReadPermissions:(NSArray *)permissionsArray
                               completeBlock:(FacebookLogInHandler)handler;
+
+- (void) signUpWithPhoneNumber:(NSString *)displayName
+                       phoneNumber:(NSString *)phoneNumber
+                      password:(NSString *)password
+                 CompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
 
 //- (void) facebookLogInInBackgroundWithReadPermissions:(NSArray *)permissionsArray
 //                                        completeBlock:(LogInHandler)handler;

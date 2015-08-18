@@ -16,6 +16,8 @@
 #import "FrontpageViewController.h"
 #import "SignUpViewController.h"
 
+#import "CustomizedAlertView.h"
+
 #define kPhoneLoginAvailable        NO
 #define kFacebookLoginAvailable     YES
 #define kGoogleLoginAvailable       NO
@@ -46,6 +48,7 @@
 @property (nonatomic, strong) CustomizedSettingPageButton       *googleplusLoginButton;
 @property (nonatomic, strong) CustomizedSettingPageButton       *signInButton;
 @property (nonatomic, strong) CustomizedSettingPageButton       *signUpButton;
+@property (nonatomic, strong) CustomizedSettingPageButton       *phoneSignUpButton;
 
 @property (nonatomic, strong) UIButton                          *fanzytvButton;
 @property (nonatomic, strong) NSLayoutConstraint                *userNameViewBottomConstraint;
@@ -60,6 +63,8 @@
 @property (nonatomic, strong) NSString                          *originUserName;
 @property (nonatomic, strong) NSString                          *originAvatarUrl;
 @property (nonatomic, strong) UIImage                           *tempImageForReupload;
+
+@property (nonatomic, strong) CustomizedAlertView               *changeAvatarAlertView;
 @end
 
 @implementation PersonalSettingViewController
@@ -68,9 +73,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"設定";
+    [self initPermanentNotificationObservers];
     [self initNavigationBarBackButtonAtLeft];
     _isFirstLoad = YES;
-    
     _currentLogInUser = [KiiUser currentUser];
     
 }
@@ -89,8 +94,7 @@
         _isFirstLoad = NO;
         if (_currentLogInUser) {
             [self initUserLoggedInLayout];
-        }
-        else {
+        } else {
             [self initUserLoggedOutLayout];
         }
     }
@@ -103,6 +107,11 @@
     [super viewWillDisappear:animated];
     [self removeNotificationObservers];
 }
+
+- (void) dealloc {
+    [self removePermanentNotificationObservers];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -728,6 +737,7 @@
     [self initRememberMeView];
     [self initSignInButton];
     [self initSignUpButton];
+    [self initPhoneSignUpButton];
 //    if (kGoogleLoginAvailable) {
 //        [self initGooglePlusLoginButton];
 //    }
@@ -993,10 +1003,62 @@
     }
 }
 
+- (void) initPhoneSignUpButton {
+    if (!_phoneSignUpButton) {
+        _phoneSignUpButton                       = [[CustomizedSettingPageButton alloc] init];
+        _phoneSignUpButton.alpha                 = 0;
+        _phoneSignUpButton.delegate              = self;
+        _phoneSignUpButton.settingPageButtonType = SettingPageButtonTypePhoneSignUp;
+        [_phoneSignUpButton addTarget:self action:@selector(phoneSignUpButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_phoneSignUpButton];
+        
+        NSMutableArray *signUpButtonConstraint = @[].mutableCopy;
+        
+        [signUpButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_phoneSignUpButton
+                                                                       attribute:NSLayoutAttributeTop
+                                                                       relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                          toItem:_signUpButton
+                                                                       attribute:NSLayoutAttributeBottom
+                                                                      multiplier:1.0f constant:30.0f]];
+        [signUpButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_phoneSignUpButton
+                                                                       attribute:NSLayoutAttributeRight
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.view
+                                                                       attribute:NSLayoutAttributeRight
+                                                                      multiplier:1.0f constant:-20.0f]];
+        [signUpButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_phoneSignUpButton
+                                                                       attribute:NSLayoutAttributeLeft
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.view
+                                                                       attribute:NSLayoutAttributeLeft
+                                                                      multiplier:1.0f constant:20.0f]];
+        [signUpButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_phoneSignUpButton
+                                                                       attribute:NSLayoutAttributeHeight
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:_signUpButton
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:58.5/345 constant:0.0f]];
+        
+        [self.view addConstraints:signUpButtonConstraint];
+    }
+}
+
 
 #pragma mark - notifications
-- (void) initNotificationObservers
-{
+- (void) initPermanentNotificationObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userStatusChanged:)
+                                                 name:kEventUserStatusChanged
+                                               object:nil];
+}
+
+- (void) removePermanentNotificationObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kEventUserStatusChanged
+                                                  object:nil];
+}
+
+- (void) initNotificationObservers {
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -1009,8 +1071,7 @@
                                                object:nil];
 }
 
-- (void) removeNotificationObservers
-{
+- (void) removeNotificationObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillShowNotification
                                                   object:nil];
@@ -1079,6 +1140,18 @@
                      completion:^(BOOL finished) {}];
 }
 
+- (void) userStatusChanged:(NSNotification *) notification {
+    if ([notification.object isEqualToString:@"LOGGED_IN"]) {
+        _currentLogInUser = [KiiUser currentUser];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self userLoggedIn];
+        });
+        
+    }
+}
+
+
 #pragma mark - button actions
 - (void) checkboxButtonClicked:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1096,7 +1169,15 @@
 
 - (void)signUpButtonClicked:(id)sender {
     SignUpViewController *signUpView = [SignUpViewController new];
-    signUpView.title = @"註冊";
+    signUpView.signUpType = @"normal";
+    UINavigationController *naviController = [[UINavigationController alloc] initWithRootViewController:signUpView];
+    naviController.navigationBar.translucent = NO;
+    [self presentViewController:naviController animated:YES completion:nil];
+}
+
+- (void)phoneSignUpButtonClicked:(id)sender {
+    SignUpViewController *signUpView = [SignUpViewController new];
+    signUpView.signUpType = @"phone";
     UINavigationController *naviController = [[UINavigationController alloc] initWithRootViewController:signUpView];
     naviController.navigationBar.translucent = NO;
     [self presentViewController:naviController animated:YES completion:nil];
@@ -1105,14 +1186,33 @@
 - (void)signInButtonClicked:(id)sender {
     if (_signInAccountTextField.text.length > 0 && _signInPasswordTextField.text.length > 0) {
         [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"登入中" delayToHide:-1];
-        _account  = [[NSString alloc] initWithString:_signInAccountTextField.text];
-        _password = [[NSString alloc] initWithString:_signInPasswordTextField.text];
-        
         if (!_signUpAndSignInModel) {
             _signUpAndSignInModel = [SignUpAndSignInModel new];
             _signUpAndSignInModel.delegate = self;
         }
-        [_signUpAndSignInModel kiiUserLogIn:_account password:_password];
+        [_signUpAndSignInModel kiiUserLogIn:[[NSString alloc] initWithString:_signInAccountTextField.text]
+                                   password:[[NSString alloc] initWithString:_signInPasswordTextField.text]
+                              CompleteBlock:^(KiiUser *user, NSError *error) {
+                                  [self.hud hide:YES];
+                                  if (error != nil) {
+                                      NSLog(@"# ERROR : %@",error.userInfo[@"server_message"]);
+                                      NSLog(@"# ERROR CODE : %ld",(long)error.code);
+                                      return;
+                                  }
+                                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                  if (_checkboxSelected) {
+                                      [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
+                                      [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
+                                      [defaults setObject:@"YES" forKey:@"rememberMe"];
+                                  } else {
+                                      [defaults setObject:nil forKey:@"account"];
+                                      [defaults setObject:nil forKey:@"password"];
+                                      [defaults setObject:nil forKey:@"rememberMe"];
+                                  }
+                                  [defaults synchronize];
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
+                                  
+    }];
         
         
     } else if(_signInAccountTextField.text.length > 0 && _signInPasswordTextField.text.length == 0) {
@@ -1130,12 +1230,20 @@
 }
 
 - (void) changeAvatarButtonPressed:(id)sender {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"變更頭像"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"使用照相機",@"使用圖片庫", nil];
-    [sheet showInView:[UIApplication sharedApplication].delegate.window];
+    _changeAvatarAlertView = [[CustomizedAlertView alloc] initWithTitle:@"變更頭像" andMessage:@"選擇輸入方式"];
+    [_changeAvatarAlertView addButtonWithTitle:@"相機" type:CustomizedAlertViewButtonTypeDefaultLightGreen handler:^(CustomizedAlertView *alertView) {
+        [self useCamera];
+    }];
+    [_changeAvatarAlertView addButtonWithTitle:@"相簿" type:CustomizedAlertViewButtonTypeDefaultGreen handler:^(CustomizedAlertView *alertView) {
+        [self usePhotoLibrary];
+    }];
+    [_changeAvatarAlertView show];
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"變更頭像"
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"取消"
+//                                         destructiveButtonTitle:nil
+//                                              otherButtonTitles:@"使用照相機",@"使用圖片庫", nil];
+//    [sheet showInView:[UIApplication sharedApplication].delegate.window];
 }
 
 - (void) settingPageButtonPressed:(id)sender {
@@ -1238,6 +1346,10 @@
                 [_signUpButton removeFromSuperview];
                 _signUpButton = nil;
             }
+            if (_phoneSignUpButton) {
+                [_phoneSignUpButton removeFromSuperview];
+                _phoneSignUpButton = nil;
+            }
             if (_signInAccountTextField) {
                 [_signInAccountTextField removeFromSuperview];
                 _signInAccountTextField = nil;
@@ -1309,8 +1421,7 @@
 /**
  * 使用照相機
  */
-- (void) useCamera
-{
+- (void) useCamera {
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     NSLog(@"=====>> AVAuthorizationStatus : %ld",(long)status);
     if (status == AVAuthorizationStatusNotDetermined) {
@@ -1334,8 +1445,7 @@
     }
 }
 
-- (void) openCamera
-{
+- (void) openCamera {
     // check if camera is available
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
@@ -1360,8 +1470,7 @@
 /**
  * 使用圖片庫
  */
-- (void) usePhotoLibrary
-{
+- (void) usePhotoLibrary {
     UIImagePickerController* imagePicker    = [[UIImagePickerController alloc] init];
     imagePicker.sourceType                  = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate                    = self;
@@ -1490,23 +1599,4 @@
     }
 }
 
-#pragma mark - signin signup delegate
-- (void)didLogin {
-    [self.hud hide:YES];
-    _currentLogInUser = [KiiUser currentUser];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (_checkboxSelected) {
-        [defaults setObject:_account forKey:@"account"];
-        [defaults setObject:_password forKey:@"password"];
-        [defaults setObject:@"YES" forKey:@"rememberMe"];
-    } else {
-        [defaults setObject:nil forKey:@"account"];
-        [defaults setObject:nil forKey:@"password"];
-        [defaults setObject:nil forKey:@"rememberMe"];
-    }
-    
-    [defaults synchronize];
-    [self userLoggedIn];
-}
 @end

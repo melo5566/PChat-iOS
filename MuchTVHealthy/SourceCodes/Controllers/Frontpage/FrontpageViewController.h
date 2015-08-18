@@ -10,5 +10,5 @@
 #import "BaseViewController.h"
 
 @interface FrontpageViewController : BaseViewController
-
+- (void) firstLoadFrontpageData;
 @end

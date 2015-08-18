@@ -27,46 +27,51 @@
     return self;
 }
 
-- (void) kiiUserLogIn:(NSString *)account password:(NSString *)password {
-    NSError *error;
-    [KiiUser authenticateSynchronous:account
-                        withPassword:password
-                            andError:&error];
-    if (error != nil) {
-        NSLog(@"Error!!");
-        if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-            [self.delegate hasNoNetworkConnection];
-        }
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(didLogin)]) {
-        [self.delegate didLogin];
-    }
+- (void) kiiUserLogIn:(NSString *)account
+             password:(NSString *)password
+        CompleteBlock:(SignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        [KiiUser authenticate:account
+                 withPassword:password
+                     andBlock:^(KiiUser *user, NSError *error) {
+                         handler(user, error);
+                     }];
+
+    }];
+}
+
+- (void) kiiUserSignUp:(NSString *)displayName
+               account:(NSString *)account
+              password:(NSString *)password
+         CompleteBlock:(SignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        KiiUser *user = [KiiUser userWithUsername:account
+                                      andPassword:password];
+        [user setDisplayName:displayName];
+        [user performRegistrationWithBlock:^(KiiUser *user, NSError *error) {
+            handler(user, error);
+        }];
+    }];
 
 }
 
-- (void) kiiUserSignUp:(NSString *)displayName account:(NSString *)account password:(NSString *)password {
-    NSError *error = nil;
-    KiiUser *user  = [KiiUser userWithUsername:account
-                                  andPassword:password];
-    
-    [user performRegistrationSynchronous:&error];
-    
-    KiiUserFields *userFields = [[KiiUserFields alloc] init];
-    [userFields setDisplayName:displayName];
-    [user updateWithIdentityDataSynchronous:nil userFields:userFields error:&error];
-    
-    if (error != nil) {
-        NSLog(@"Error!!");
-        if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-            [self.delegate hasNoNetworkConnection];
-        }
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(didSignUp)]) {
-        [self.delegate didSignUp];
-    }
+- (void) signUpWithPhoneNumber:(NSString *)displayName
+                   phoneNumber:(NSString *)phoneNumber
+                      password:(NSString *)password
+                 CompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        NSString *phoneNumberWithCode = [phoneNumber stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+886"];
+        
+        KiiUser *user = [KiiUser userWithUsername:phoneNumber
+                                   andPhoneNumber:phoneNumberWithCode
+                                      andPassword:password];
+        [user setDisplayName:displayName];
+        [user performRegistrationWithBlock:^(KiiUser *user, NSError *error) {
+            handler(user, error);
+        }];
+    }];
 }
+
 
 - (void) facebookLogInInWithReadPermissions:(NSArray *)permissionsArray
                               completeBlock:(FacebookLogInHandler)handler {
@@ -105,6 +110,22 @@
                        }
                    }];
 }
+
+- (void) verifyPhoneNumberWithCode:(NSString *)code WithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        KiiUser *user = [KiiUser currentUser];
+        [user verifyPhoneNumber:code
+                      withBlock:^(KiiUser *verifiedUser, NSError *error) {
+                          if (error != nil) {
+                              // Error handling
+                              handler(verifiedUser, error);
+                              return;
+                          }
+                          handler(verifiedUser, error);
+                      }];
+    }];
+}
+
 
 - (void) facebookLogInInBackgroundWithReadPermissions:(NSArray *)permissionsArray
                                         completeBlock:(FacebookLogInHandler)handler {

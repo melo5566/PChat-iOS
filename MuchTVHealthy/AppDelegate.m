@@ -13,6 +13,7 @@
 @interface AppDelegate () <SignUpAndSignInModelDelegate>
 @property UINavigationController *navController;
 @property (nonatomic, strong) SignUpAndSignInModel              *signUpAndSignInModel;
+@property (nonatomic, strong) FrontpageViewController           *frontpageViewController;
 @end
 
 @implementation AppDelegate
@@ -27,15 +28,9 @@
               andKey:kKiiApplicationKey
              andSite:kiiSiteJP];
     
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     if ([defaults stringForKey:@"account"] && [defaults stringForKey:@"password"]) {
-        if (!_signUpAndSignInModel) {
-            _signUpAndSignInModel = [SignUpAndSignInModel new];
-            _signUpAndSignInModel.delegate = self;
-        }
-        [_signUpAndSignInModel kiiUserLogIn:[defaults stringForKey:@"account"] password:[defaults stringForKey:@"password"]];
+        [self loginWithUserDefault];
     }
     [self setFrontpageForRootViewController];
     return YES;
@@ -65,11 +60,26 @@
 
 - (void) setFrontpageForRootViewController {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    FrontpageViewController  *frontpageViewController = [FrontpageViewController new];
-    self.navController = [[UINavigationController alloc] initWithRootViewController:frontpageViewController];
+    _frontpageViewController = [FrontpageViewController new];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:_frontpageViewController];
     [self.navController.navigationBar setTranslucent:NO];
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
+}
+
+- (void) loginWithUserDefault {
+    if (!_signUpAndSignInModel) {
+        _signUpAndSignInModel = [SignUpAndSignInModel new];
+        _signUpAndSignInModel.delegate = self;
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [_signUpAndSignInModel kiiUserLogIn:[defaults stringForKey:@"account"] password:[defaults stringForKey:@"password"] CompleteBlock:^(KiiUser *user, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error");
+            return;
+        }
+        [_frontpageViewController firstLoadFrontpageData];
+    }];
 }
 
 @end

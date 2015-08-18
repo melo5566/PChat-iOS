@@ -7,8 +7,8 @@
 //
 
 // ** Kii Keys ** //
-static NSString * const kKiiApplicationID     = @"54f56c3d";
-static NSString * const kKiiApplicationKey    = @"604b1a2176afbcf37df95f9056072643";
+static NSString * const kKiiApplicationID     = @"d116d82a";
+static NSString * const kKiiApplicationKey    = @"a213b8cfb273b87ef1261b8fa43c4570";
 
 /* 
  *  color hex string

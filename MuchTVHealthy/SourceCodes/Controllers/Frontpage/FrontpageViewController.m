@@ -15,7 +15,7 @@
 #import "SignUpAndSignInModel.h"
 #import "DiscussionSingleViewController.h"
 #import "BaseViewController.h"
-
+#import "CustomizedAlertView.h"
 
 @interface FrontpageViewController () <UITableViewDataSource, UITableViewDelegate, FrontpageModelDelegate>
 @property (nonatomic, strong) UITableView                       *frontpageTableView;
@@ -25,6 +25,8 @@
 @property (nonatomic) NSUInteger                                loadingStartIndex;
 @property (nonatomic) BOOL                                      hasMoreFrontpageData;
 @property (nonatomic) BOOL                                      isLoadingMoreFrontpageData;
+@property (nonatomic, strong) CustomizedAlertView               *notFinishedAlert;
+@property (nonatomic, strong) KiiUser                           *currentUser;
 @end
 
 
@@ -48,9 +50,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _frontpageTableView.hidden  = YES;
+//    [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"讀取中..." delayToHide:-1];
+//    _frontpageTableView.hidden  = YES;
+    _frontpageDataArray = @[].mutableCopy;
+    for (int i = 0; i < 5; i ++) {
+        [_frontpageDataArray addObject:@"a"];
+    }
     [self resetParams];
-    [self firstLoadFrontpageData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -124,8 +130,6 @@
 
 #pragma mark - methods
 - (void) firstLoadFrontpageData {
-    [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"讀取中..." delayToHide:-1];
-    
     if (!_frontpageModel) {
         _frontpageModel = [[FrontpageModel alloc] init];
         _frontpageModel.delegate = self;
@@ -138,8 +142,10 @@
     if (_loadingStartIndex != 0) {
         _loadingStartIndex = 0;
     }
-    
-    [_frontpageModel loadFrontpageData];
+    [self initMenuLayout];
+    [self initFrontpageTableView];
+
+//    [_frontpageModel loadFrontpageData];
     //    [_frontpageTableView reloadData];
 }
 
@@ -156,7 +162,7 @@
     _isLoadingMoreFrontpageData = NO;
     _loadingStartIndex = 0;
     _hasMoreFrontpageData = YES;
-    _frontpageDataArray = @[].mutableCopy;
+//    _frontpageDataArray = @[].mutableCopy;
 }
 
 
@@ -180,7 +186,7 @@
 - (void)didLoadFrontpageData:(NSArray *)data {
     [self.hud hide:YES];
     self.navigationItem.leftBarButtonItem.enabled  = YES;
-    [_frontpageDataArray addObjectsFromArray:data];
+//    [_frontpageDataArray addObjectsFromArray:data];
     
     
     if (_loadingStartIndex == 0) {
@@ -226,7 +232,8 @@
         cell = [[FrontpageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    cell.frontpageObject = _frontpageDataArray[indexPath.row];
+//    cell.frontpageObject = _frontpageDataArray[indexPath.row];
+    cell.string = _frontpageDataArray[indexPath.row];
     return cell;
 }
 

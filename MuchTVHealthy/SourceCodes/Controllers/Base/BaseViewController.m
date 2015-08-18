@@ -37,15 +37,9 @@
 
 - (void) viewWillAppear:(BOOL) animated {
     [super viewWillAppear:animated];
-    if ([KiiUser currentUser]) {
-        _currentUser = [KiiUser currentUser];
-    } else {
-        _currentUser = nil;
-    }
 }
 
-- (void) viewWillDisappear:(BOOL) animated
-{
+- (void) viewWillDisappear:(BOOL) animated {
     [super viewWillDisappear:animated];
     
     // remove notification
@@ -162,6 +156,11 @@
 }
 
 - (void) initMenuLayout {
+    if ([KiiUser currentUser]) {
+        _currentUser = [KiiUser currentUser];
+    } else {
+        _currentUser = nil;
+    }
     [self initMenuView];
     [self initAvatarImageView];
     [self initUserNameLabel];

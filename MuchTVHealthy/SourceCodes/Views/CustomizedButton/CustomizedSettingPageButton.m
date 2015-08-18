@@ -53,6 +53,13 @@
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             break;
         }
+        case SettingPageButtonTypePhoneSignUp: {
+            self.backgroundColor = [UIColor colorWithHexString:@"438a8a"];
+            [self setTitle:@"電話註冊" forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            break;
+        }
+
         case SettingPageButtonTypeSignIn: {
             self.backgroundColor = [UIColor colorWithHexString:kGooglePlusButtonColorHexString];
             [self setTitle:@"登入" forState:UIControlStateNormal];

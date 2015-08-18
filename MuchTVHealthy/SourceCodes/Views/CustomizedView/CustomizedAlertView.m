@@ -12,79 +12,29 @@
 #define MESSAGE_MAX_LINE_COUNT 5
 #define GAP 35
 #define CANCEL_BUTTON_PADDING_TOP 40
-#define CONTENT_PADDING_LEFT 25
+#define CONTENT_PADDING_LEFT 10
 #define CONTENT_PADDING_TOP 40
 #define CONTENT_PADDING_BOTTOM 25
 #define BUTTON_HEIGHT 44
 #define CONTAINER_WIDTH (kScreenWidth - 20)
 
-@class CustomizedAlertBackgroundWindow;
-
-static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
-
 @interface CustomizedAlertView ()
-
 @property (nonatomic, strong) NSMutableArray            *items;
+@property (nonatomic, strong) UIWindow                  *backgroundWindow;
 @property (nonatomic, weak) UIWindow                    *oldKeyWindow;
-//@property (nonatomic, strong) UIWindow                  *alertWindow;
 @property (nonatomic, assign) UIViewTintAdjustmentMode  oldTintAdjustmentMode;
-//@property (nonatomic, assign, getter = isVisible) BOOL  visible;
 @property (nonatomic, strong) UILabel                   *titleLabel;
 @property (nonatomic, strong) UILabel                   *messageLabel;
 @property (nonatomic, strong) UIView                    *containerView;
 @property (nonatomic, strong) NSMutableArray            *buttons;
-
-//@property (nonatomic, assign, getter = isLayoutDirty) BOOL layoutDirty;
-
-//+ (NSMutableArray *)sharedQueue;
-//+ (SIAlertView *)currentAlertView;
-
-//+ (BOOL)isAnimating;
-//+ (void)setAnimating:(BOOL)animating;
-
-+ (void)showBackground;
-+ (void)hideBackgroundAnimated:(BOOL)animated;
-
-- (void)setup;
-//- (void)invalidateLayout;
-//- (void)resetTransition;
-
-@end
-// =====================
-
-#pragma mark - CustomizedBackgroundWindow
-@interface CustomizedAlertBackgroundWindow : UIWindow
-
 @end
 
-@implementation CustomizedAlertBackgroundWindow
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.opaque = NO;
-        self.windowLevel = 1998.0;
-    }
-    return self;
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    [[UIColor colorWithWhite:0 alpha:0.5] set];
-    CGContextFillRect(context, self.bounds);
-}
-@end
 
 #pragma mark - CustomizedAlertItem
 @interface CustomizedAlertItem : NSObject
-
 @property (nonatomic, copy) NSString                            *title;
 @property (nonatomic, assign) CustomizedAlertViewButtonType     type;
 @property (nonatomic, copy) CustomizedAlertViewHandler          action;
-
 @end
 
 @implementation CustomizedAlertItem
@@ -97,75 +47,49 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
 - (id)initWithTitle:(NSString *)title andMessage:(NSString *)message {
     self = [super init];
     if (self) {
-        _title = title;
-        _message = message;
-        self.items = [[NSMutableArray alloc] init];
+        _title      = title;
+        _message    = message;
+        self.items  = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 #pragma mark - Class methods
-//+ (NSMutableArray *)sharedQueue
-//{
-//    if (!__si_alert_queue) {
-//        __si_alert_queue = [NSMutableArray array];
-//    }
-//    return __si_alert_queue;
-//}
-//
-//+ (CustomizedAlertView *)currentAlertView
-//{
-//    return __cu_alert_current_view;
-//}
-//
-//+ (void)setCurrentAlertView:(CustomizedAlertView *)alertView
-//{
-//    __cu_alert_current_view = alertView;
-//}
-//
-//+ (BOOL)isAnimating
-//{
-//    return __cu_alert_animating;
-//}
-//
-//+ (void)setAnimating:(BOOL)animating
-//{
-//    __cu_alert_animating = animating;
-//}
-
-+ (void)showBackground {
-    if (!__cu_alert_background_window) {
-        __cu_alert_background_window = [[CustomizedAlertBackgroundWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        [__cu_alert_background_window makeKeyAndVisible];
-        __cu_alert_background_window.alpha = 0;
+- (void)showBackground {
+    if (!_backgroundWindow) {
+        _backgroundWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        [_backgroundWindow makeKeyAndVisible];
+        _backgroundWindow.alpha = 0;
         [UIView animateWithDuration:0.3
                          animations:^{
-                             __cu_alert_background_window.alpha = 1;
+                             
+                             
+                             _backgroundWindow.alpha = 1;
                          }];
     }
 }
 
-+ (void)hideBackgroundAnimated:(BOOL)animated {
+- (void)hideBackgroundAnimated:(BOOL)animated {
     if (!animated) {
-        [__cu_alert_background_window removeFromSuperview];
-        __cu_alert_background_window = nil;
+        [_backgroundWindow removeFromSuperview];
+        _backgroundWindow = nil;
         return;
     }
     [UIView animateWithDuration:0.3
                      animations:^{
-                         __cu_alert_background_window.alpha = 0;
+                         _backgroundWindow.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         [__cu_alert_background_window removeFromSuperview];
-                         __cu_alert_background_window = nil;
+                         [_backgroundWindow removeFromSuperview];
+                         _backgroundWindow = nil;
                      }];
 }
 
 #pragma mark - Public
 - (void)addButtonWithTitle:(NSString *)title type:(CustomizedAlertViewButtonType)type handler:(CustomizedAlertViewHandler)handler {
     CustomizedAlertItem *item = [[CustomizedAlertItem alloc] init];
-    item.title = title;
-    item.type = type;
+    item.title  = title;
+    item.type   = type;
     item.action = handler;
     [self.items addObject:item];
 }
@@ -179,32 +103,13 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
     }
 #endif
     
-    [CustomizedAlertView showBackground];
-    
+    [self showBackground];
     [self setup];
-    
-//    if (!self.alertWindow) {
-//        UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//        window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//        window.opaque = NO;
-//        window.windowLevel = UIWindowLevelAlert;
-//        
-//        self.alertWindow = window;
-//    }
-//    [self.alertWindow makeKeyAndVisible];
-    
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(20, 100, kScreenWidth - 40, 200)];
-//    view.backgroundColor = [UIColor whiteColor];
-//    [self addSubview:view];
-    
-    
-    
-    
-    [self validateLayout];
+    [self initAlertViewLayout];
     
     CGRect rect = self.containerView.frame;
     CGRect originalRect = rect;
-    rect.origin.y = __cu_alert_background_window.bounds.size.height;
+    rect.origin.y = _backgroundWindow.bounds.size.height;
     self.containerView.frame = rect;
     [UIView animateWithDuration:0.3
                      animations:^{
@@ -216,68 +121,43 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
 }
 
 #pragma mark - Layout
-//- (void)layoutSubviews
-//{
-//    [super layoutSubviews];
-//    [self validateLayout];
-//}
-//
-//- (void)invalidateLayout
-//{
-//    self.layoutDirty = YES;
-//    [self setNeedsLayout];
-//}
-
-- (void)validateLayout {
+- (void)initAlertViewLayout {
     CGFloat height = [self preferredHeight];
-    CGFloat left = (kScreenWidth - CONTAINER_WIDTH) * 0.5;
-    CGFloat top = (kScreenHeight - height) * 0.5;
-//    CGFloat left = 10;
-//    CGFloat top = 50;
-    self.containerView.transform = CGAffineTransformIdentity;
-    self.containerView.frame = CGRectMake(left, top, CONTAINER_WIDTH, height);
+    CGFloat left   = (kScreenWidth - CONTAINER_WIDTH) * 0.5;
+    CGFloat top    = (kScreenHeight - height) * 0.5;
+    
+    self.containerView.transform        = CGAffineTransformIdentity;
+    self.containerView.frame            = CGRectMake(left, top, CONTAINER_WIDTH, height);
     self.containerView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.containerView.bounds cornerRadius:self.containerView.layer.cornerRadius].CGPath;
     
-    CGFloat y = CONTENT_PADDING_TOP;
+    CGFloat containerHeight = CONTENT_PADDING_TOP;
     if (self.titleLabel) {
-        self.titleLabel.text = self.title;
-        CGFloat height = [self heightForTitleLabel];
-        self.titleLabel.frame = CGRectMake(CONTENT_PADDING_LEFT, y, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, height);
-        y += height;
+        self.titleLabel.text  = self.title;
+        CGFloat height        = [self heightForTitleLabel];
+        self.titleLabel.frame = CGRectMake(CONTENT_PADDING_LEFT, containerHeight, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, height);
+        containerHeight += height;
     }
     if (self.messageLabel) {
-        if (y > CONTENT_PADDING_TOP) {
-            y += GAP;
+        if (containerHeight > CONTENT_PADDING_TOP) {
+            containerHeight += GAP;
         }
-        self.messageLabel.text = self.message;
-        CGFloat height = [self heightForMessageLabel];
-        self.messageLabel.frame = CGRectMake(CONTENT_PADDING_LEFT, y, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, height);
-        y += height;
+        self.messageLabel.text  = self.message;
+        CGFloat height          = [self heightForMessageLabel];
+        self.messageLabel.frame = CGRectMake(CONTENT_PADDING_LEFT, containerHeight, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, height);
+        containerHeight += height;
     }
     if (self.items.count > 0) {
-        if (y > CONTENT_PADDING_TOP) {
-            y += GAP;
+        CGFloat buttonWidth = (self.containerView.bounds.size.width - 3*CONTENT_PADDING_LEFT)/2;
+        if (containerHeight > CONTENT_PADDING_TOP) {
+            containerHeight += GAP;
         }
-//        if (self.items.count == 2 && self.buttonsListStyle == SIAlertViewButtonsListStyleNormal) {
-//            CGFloat width = (self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2 - GAP) * 0.5;
-//            UIButton *button = self.buttons[0];
-//            button.frame = CGRectMake(CONTENT_PADDING_LEFT, y, width, BUTTON_HEIGHT);
-//            button = self.buttons[1];
-//            button.frame = CGRectMake(CONTENT_PADDING_LEFT + width + GAP, y, width, BUTTON_HEIGHT);
-//        } else {
             for (NSUInteger i = 0; i < self.buttons.count; i++) {
                 UIButton *button = self.buttons[i];
-                button.frame = CGRectMake(CONTENT_PADDING_LEFT, y, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, BUTTON_HEIGHT);
+                button.frame = CGRectMake(CONTENT_PADDING_LEFT + i * (buttonWidth+CONTENT_PADDING_LEFT), containerHeight, buttonWidth, BUTTON_HEIGHT);
                 if (self.buttons.count > 1) {
-//                    if (i == self.buttons.count - 1 && ((CustomizedAlertItem *)self.items[i]).type == CustomizedAlertViewButtonTypeCancel) {
-//                        CGRect rect = button.frame;
-//                        rect.origin.y += CANCEL_BUTTON_PADDING_TOP;
-//                        button.frame = rect;
-//                    }
-                    y += BUTTON_HEIGHT + GAP;
+//                    containerHeight += BUTTON_HEIGHT + GAP;
                 }
             }
-//        }
     }
 }
 
@@ -296,14 +176,11 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
         if (height > CONTENT_PADDING_TOP) {
             height += GAP;
         }
-//        if (self.items.count <= 2 && self.buttonsListStyle == SIAlertViewButtonsListStyleNormal) {
-//            height += BUTTON_HEIGHT;
-//        } else {
-            height += (BUTTON_HEIGHT + GAP) * self.items.count - GAP;
+//            height += (BUTTON_HEIGHT + GAP) * self.items.count - GAP;
+            height += BUTTON_HEIGHT;
             if (self.buttons.count > 2 && ((CustomizedAlertItem *)[self.items lastObject]).type == CustomizedAlertViewButtonTypeCancel) {
                 height += CANCEL_BUTTON_PADDING_TOP;
             }
-//        }
     }
     height += CONTENT_PADDING_BOTTOM;
     return height;
@@ -311,11 +188,6 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
 
 - (CGFloat)heightForTitleLabel {
     if (self.titleLabel) {
-//        CGSize size = [self.title sizeWithFont:self.titleLabel.font
-//                                   minFontSize:self.titleLabel.font.pointSize * self.titleLabel.minimumScaleFactor
-//                                actualFontSize:nil
-//                                      forWidth:CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2
-//                                 lineBreakMode:self.titleLabel.lineBreakMode];
         CGSize maximumLabelSize = CGSizeMake(CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2, MAXFLOAT);
         
         NSStringDrawingOptions options = NSStringDrawingUsesFontLeading |
@@ -336,9 +208,6 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
     CGFloat minHeight = MESSAGE_MIN_LINE_COUNT * self.messageLabel.font.lineHeight;
     if (self.messageLabel) {
         CGFloat maxHeight = MESSAGE_MAX_LINE_COUNT * self.messageLabel.font.lineHeight;
-//        CGSize size = [self.message sizeWithFont:self.messageLabel.font
-//                               constrainedToSize:CGSizeMake(CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2, maxHeight)
-//                                   lineBreakMode:self.messageLabel.lineBreakMode];
         CGSize maximumLabelSize = CGSizeMake(CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2, maxHeight);
         
         NSStringDrawingOptions options = NSStringDrawingUsesFontLeading |
@@ -350,7 +219,8 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
                                                    attributes:attr
                                                       context:nil];
         
-        return MAX(minHeight, labelBounds.size.height);
+        return labelBounds.size.height;
+//        return MAX(minHeight, labelBounds.size.height);
     }
     return minHeight;
 }
@@ -361,43 +231,26 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
     [self updateTitleLabel];
     [self updateMessageLabel];
     [self setupButtons];
-//    [self invalidateLayout];
 }
 
-//- (void)teardown
-//{
-//    [self.containerView removeFromSuperview];
-//    self.containerView = nil;
-//    self.titleLabel = nil;
-//    self.messageLabel = nil;
-//    [self.buttons removeAllObjects];
-//    [self.alertWindow removeFromSuperview];
-//    self.alertWindow = nil;
-//    self.layoutDirty = NO;
-//}
 
 - (void)setupContainerView {
-    self.containerView = [[UIView alloc] initWithFrame:self.bounds];
-    self.containerView.backgroundColor = [UIColor whiteColor];
-//    self.containerView.layer.cornerRadius = 2;
-//    self.containerView.layer.shadowOffset = CGSizeZero;
-    self.containerView.layer.shadowRadius = 2;
-    self.containerView.layer.shadowOpacity = 0.5;
-//    self.containerView.layer.borderWidth = 5;
-//    self.containerView.layer.borderColor = [UIColor colorWithHexString:@"ffd955"].CGColor;
-//    [self addSubview:self.containerView];
-    [__cu_alert_background_window addSubview:_containerView];
+    self.containerView                      = [[UIView alloc] initForAutolayout];
+    self.containerView.backgroundColor      = [UIColor whiteColor];
+    self.containerView.layer.shadowRadius   = 2;
+    self.containerView.layer.shadowOpacity  = 0.5;
+    [_backgroundWindow addSubview:_containerView];
 }
 
 - (void)updateTitleLabel {
     if (self.title) {
         if (!self.titleLabel) {
-            self.titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
-            self.titleLabel.textAlignment = NSTextAlignmentCenter;
-            self.titleLabel.backgroundColor = [UIColor clearColor];
-            self.titleLabel.font = [UIFont boldSystemFontOfSize:26];
-            self.titleLabel.textColor = [UIColor colorWithHexString:@"#2f2b2b"];
-            self.titleLabel.adjustsFontSizeToFitWidth = YES;
+            self.titleLabel                             = [[UILabel alloc] initWithFrame:self.bounds];
+            self.titleLabel.textAlignment               = NSTextAlignmentCenter;
+            self.titleLabel.backgroundColor             = [UIColor clearColor];
+            self.titleLabel.font                        = [UIFont boldSystemFontOfSize:26];
+            self.titleLabel.textColor                   = [UIColor colorWithHexString:@"#2f2b2b"];
+            self.titleLabel.adjustsFontSizeToFitWidth   = YES;
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
             self.titleLabel.minimumScaleFactor = 0.75;
 #else
@@ -413,20 +266,19 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
         [self.titleLabel removeFromSuperview];
         self.titleLabel = nil;
     }
-//    [self invalidateLayout];
 }
 
 - (void)updateMessageLabel {
     if (self.message) {
         if (!self.messageLabel) {
-            self.messageLabel = [[UILabel alloc] initWithFrame:self.bounds];
-            self.messageLabel.textAlignment = NSTextAlignmentCenter;
-            self.messageLabel.backgroundColor = [UIColor clearColor];
-            self.messageLabel.font = [UIFont systemFontOfSize:20];
-            self.messageLabel.textColor = [UIColor colorWithHexString:@"#2f2b2b"];
-            self.messageLabel.numberOfLines = MESSAGE_MAX_LINE_COUNT;
+            self.messageLabel                           = [[UILabel alloc] initWithFrame:self.bounds];
+            self.messageLabel.textAlignment             = NSTextAlignmentCenter;
+            self.messageLabel.backgroundColor           = [UIColor clearColor];
+            self.messageLabel.font                      = [UIFont systemFontOfSize:20];
+            self.messageLabel.textColor                 = [UIColor colorWithHexString:@"#2f2b2b"];
+            self.messageLabel.numberOfLines             = MESSAGE_MAX_LINE_COUNT;
             self.messageLabel.adjustsFontSizeToFitWidth = YES;
-            self.messageLabel.minimumScaleFactor = 0.75;
+            self.messageLabel.minimumScaleFactor        = 0.75;
             [self.containerView addSubview:self.messageLabel];
 #if DEBUG_LAYOUT
             self.messageLabel.backgroundColor = [UIColor redColor];
@@ -437,7 +289,6 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
         [self.messageLabel removeFromSuperview];
         self.messageLabel = nil;
     }
-//    [self invalidateLayout];
 }
 
 - (void)setupButtons {
@@ -489,7 +340,6 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
 #pragma mark - Actions
 
 - (void)buttonAction:(UIButton *)button {
-//    [CustomizedAlertView setAnimating:YES]; // set this flag to YES in order to prevent showing another alert in action block
     CustomizedAlertItem *item = self.items[button.tag];
     if (item.action) {
         item.action(self);
@@ -503,13 +353,8 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
 }
 
 - (void)dismissAnimated:(BOOL)animated cleanup:(BOOL)cleanup {
-//    void (^dismissComplete)(void) = ^{
-//        [self teardown];
-//    };
-//    
-//    dismissComplete();
     CGRect rect = self.containerView.frame;
-    rect.origin.y = __cu_alert_background_window.bounds.size.height;
+    rect.origin.y = _backgroundWindow.bounds.size.height;
     [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationOptionCurveEaseIn
@@ -520,7 +365,7 @@ static CustomizedAlertBackgroundWindow *__cu_alert_background_window;
                          
                      }];
     
-    [CustomizedAlertView hideBackgroundAnimated:YES];
+    [self hideBackgroundAnimated:YES];
     
     UIWindow *window = self.oldKeyWindow;
 #ifdef __IPHONE_7_0

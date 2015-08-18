@@ -9,6 +9,7 @@
 #import "PostNewDiscussionViewController.h"
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
+#import "CustomizedAlertView.h"
 //#import "DiscussionModel.h"
 
 @interface PostNewDiscussionViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIActionSheetDelegate>
@@ -34,11 +35,12 @@
 @property (nonatomic, strong) UIButton                  *categoryButton;
 @property (nonatomic, strong) UIImageView               *categoryArrow;
 
-@property (nonatomic, strong) NSMutableArray        *imageArray;
+@property (nonatomic, strong) NSMutableArray            *imageArray;
 
-@property (nonatomic) BOOL                          isFirstLoad;
-@property (nonatomic) BOOL                          needScrollToBottom;
+@property (nonatomic) BOOL                              isFirstLoad;
+@property (nonatomic) BOOL                              needScrollToBottom;
 
+@property (nonatomic, strong) CustomizedAlertView       *notFinishedAlert;
 //@property (nonatomic, strong) DiscussionModel       *discussionModel;
 @end
 
@@ -854,14 +856,27 @@
     }
 }
 
-//- (void) backButtonPressed:(id) sender {
-//    if ([_titleTextField isFirstResponder]) {
-//        [_titleTextField endEditing:YES];
-//    }
-//    if ([_contentTextView isFirstResponder]) {
-//        [_contentTextView endEditing:YES];
-//    }
-//    
+- (void) backButtonPressed:(id) sender {
+    if ([_titleTextField isFirstResponder]) {
+        [_titleTextField endEditing:YES];
+    }
+    if ([_contentTextView isFirstResponder]) {
+        [_contentTextView endEditing:YES];
+    }
+    
+    _notFinishedAlert = [[CustomizedAlertView alloc] initWithTitle:@"注意" andMessage:@"尚未完成，\n您確定要離開了嗎？"];
+    [_notFinishedAlert addButtonWithTitle:@"停留"
+                                     type:CustomizedAlertViewButtonTypeDefaultLightGreen
+                                  handler:nil];
+    
+    [_notFinishedAlert addButtonWithTitle:@"離開"
+                                     type:CustomizedAlertViewButtonTypeDefaultGreen
+                                  handler:^(CustomizedAlertView *alertView) {
+                                      [self.navigationController popViewControllerAnimated:YES];
+                                  }];
+    
+    [_notFinishedAlert show];
+
 //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"注意"
 //                                                                   message:@"尚未完成，\n您確定要離開了嗎？"
 //                                                            preferredStyle:UIAlertControllerStyleAlert];
@@ -879,7 +894,7 @@
 //    [alert addAction:leaveAction];
 //    
 //    [self presentViewController:alert animated:YES completion:nil];
-//}
+}
 
 - (void) deleteImageButtonPressed:(id)sender {
     UIButton *deleteButton = sender;

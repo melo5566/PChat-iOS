@@ -11,4 +11,5 @@
 
 @interface FrontpageTableViewCell : UITableViewCell
 @property (nonatomic, strong) FrontpageObject                   *frontpageObject;
+@property (nonatomic, strong) NSString                          *string;
 @end

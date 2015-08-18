@@ -14,6 +14,7 @@ typedef enum SettingPageButtonType : NSUInteger {
     SettingPageButtonTypePhoneLogin,
     SettingPageButtonTypeLogout,
     SettingPageButtonTypeSignUp,
+    SettingPageButtonTypePhoneSignUp,
     SettingPageButtonTypeSignIn,
     SettingPageButtonTypeConfirm,
 } SettingPageButtonType;

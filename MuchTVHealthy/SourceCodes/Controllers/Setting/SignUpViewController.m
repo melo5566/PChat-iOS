@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarCloseButtonAtLeft];
-//    [self.navigationItem setTitle:@"註冊"];
+    [self.navigationItem setTitle:@"註冊"];
     // Do any additional setup after loading the view.
 }
 
@@ -98,7 +98,6 @@
         
         [self.view addConstraints:signUpUserNameConstraint];
     }
-    
 }
 
 
@@ -108,7 +107,6 @@
         _signUpAccountTextField.backgroundColor = [UIColor whiteColor];
         _signUpAccountTextField.borderStyle = UITextBorderStyleRoundedRect;
         _signUpAccountTextField.font = [UIFont systemFontOfSize:15];
-        _signUpAccountTextField.placeholder = @"Please enter account";
         _signUpAccountTextField.autocorrectionType = UITextAutocorrectionTypeNo;
         _signUpAccountTextField.keyboardType = UIKeyboardTypeDefault;
         _signUpAccountTextField.returnKeyType = UIReturnKeyDone;
@@ -147,7 +145,11 @@
         
         [self.view addConstraints:signUpAccountConstraint];
     }
-    
+    if ([_signUpType isEqualToString:@"normal"]) {
+        _signUpAccountTextField.placeholder = @"Please enter account";
+    } else {
+        _signUpAccountTextField.placeholder = @"Please enter your phone number";
+    }
 }
 
 
@@ -245,22 +247,49 @@
 
 - (void)confirmButtonClicked:(id)sender {
     if (_signUpAccountTextField.text.length > 0 && _signUpPasswordTextField.text.length > 0 && _signUpUserNameTextField.text.length > 0) {
-        [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"註冊中..." delayToHide:-1];
-        _account  = [[NSString alloc] initWithString:_signUpAccountTextField.text];
-        _password = [[NSString alloc] initWithString:_signUpPasswordTextField.text];
-        _userName = [[NSString alloc] initWithString:_signUpUserNameTextField.text];
         _signUpAndSignInModel = [SignUpAndSignInModel new];
         _signUpAndSignInModel.delegate = self;
-        [_signUpAndSignInModel kiiUserSignUp:_userName account:_account password:_password];
-        
-    } else {
-        [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"請輸入名稱，帳號和密碼" delayToHide:1];
-    }
-}
+        [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"註冊中..." delayToHide:-1];
+        if ([_signUpType isEqualToString:@"normal"]) {
+            NSLog(@"normal signup");
+            [_signUpAndSignInModel kiiUserSignUp:[[NSString alloc] initWithString:_signUpUserNameTextField.text]
+                                         account:[[NSString alloc] initWithString:_signUpAccountTextField.text]
+                                        password:[[NSString alloc] initWithString:_signUpPasswordTextField.text]
+                                   CompleteBlock:^(KiiUser *user, NSError *error) {
+                                       [self.hud hide:YES];
+                                       if (error != nil) {
+                                           NSLog(@"# ERROR : %@",error.userInfo[@"server_message"]);
+                                           NSLog(@"# ERROR CODE : %ld",(long)error.code);
+                                           return;
+                                       }
+                                       [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"註冊成功" delayToHide:1];
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
+                                       [self dismissViewControllerAnimated:YES completion:nil];
 
-- (void)didSignUp {
-    [self.hud hide:YES];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
+        } else {
+            [_signUpAndSignInModel signUpWithPhoneNumber:[[NSString alloc] initWithString:_signUpUserNameTextField.text]
+                                             phoneNumber:[[NSString alloc] initWithString:_signUpAccountTextField.text]
+                                                password:[[NSString alloc] initWithString:_signUpPasswordTextField.text]
+                                           CompleteBlock:^(KiiUser *user, NSError *error) {
+                                               [self.hud hide:YES];
+                                               if (error != nil) {
+                                                   NSLog(@"# ERROR : %@",error.userInfo[@"server_message"]);
+                                                   NSLog(@"# ERROR CODE : %ld",(long)error.code);
+                                                   return;
+                                               }
+                                               [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"註冊成功" delayToHide:1];
+                                               [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
+                                               [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+        }
+    } else {
+        if ([_signUpType isEqualToString:@"normal"])
+            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"請輸入名稱，帳號和密碼" delayToHide:1];
+        else
+            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"請輸入名稱，電話號碼和密碼" delayToHide:1];
+    }
+    
 }
 
 - (void)dismissKeyboard {
