@@ -23,7 +23,6 @@
 
 - (void)setConnoisseurDataObject:(ConnoisseurDataObject *)connoisseurDataObject {
     self.backgroundColor = [UIColor clearColor];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
     _connoisseurDataObject = connoisseurDataObject;
     [self initFrameView];
     [self initImageView];
