@@ -34,9 +34,13 @@
 		1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */; };
 		13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13619F1D1B7B2F5000B79CEC /* .gitignore */; };
 		2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */; };
+		2673259E1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2673259D1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m */; };
+		267325A11B7DF465009641D1 /* RelativeDiscussionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 267325A01B7DF465009641D1 /* RelativeDiscussionTableViewCell.m */; };
+		267325A71B7DF53F009641D1 /* ConnoisseurSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 267325A61B7DF53F009641D1 /* ConnoisseurSingleViewController.m */; };
 		2689A3ED1B7B34BB00B4F708 /* ConnoisseurListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3EC1B7B34BB00B4F708 /* ConnoisseurListViewController.m */; };
 		2689A3F11B7B3BAA00B4F708 /* ConnoisseurModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3F01B7B3BAA00B4F708 /* ConnoisseurModel.m */; };
 		2689A3F41B7B41DC00B4F708 /* ConnoisseurObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3F31B7B41DC00B4F708 /* ConnoisseurObject.m */; };
+		26EA55751B81A2DD0053564F /* icon_issue.png in Resources */ = {isa = PBXBuildFile; fileRef = 26EA55741B81A2DD0053564F /* icon_issue.png */; };
 		2AEE06F5EB4218866127775F /* libPods-MuchTVHealthy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */; };
 		D05958BA1B7C8BCE008C102C /* btn_fanzytv.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958AC1B7C8BCE008C102C /* btn_fanzytv.png */; };
 		D05958BB1B7C8BCE008C102C /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958AD1B7C8BCE008C102C /* checkbox.png */; };
@@ -133,12 +137,19 @@
 		13619F1D1B7B2F5000B79CEC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2672BD241B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurListTableViewCell.h; sourceTree = "<group>"; };
 		2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurListTableViewCell.m; sourceTree = "<group>"; };
+		2673259C1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurImageTableViewCell.h; sourceTree = "<group>"; };
+		2673259D1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurImageTableViewCell.m; sourceTree = "<group>"; };
+		2673259F1B7DF465009641D1 /* RelativeDiscussionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelativeDiscussionTableViewCell.h; sourceTree = "<group>"; };
+		267325A01B7DF465009641D1 /* RelativeDiscussionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelativeDiscussionTableViewCell.m; sourceTree = "<group>"; };
+		267325A51B7DF53F009641D1 /* ConnoisseurSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurSingleViewController.h; sourceTree = "<group>"; };
+		267325A61B7DF53F009641D1 /* ConnoisseurSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurSingleViewController.m; sourceTree = "<group>"; };
 		2689A3EB1B7B34BB00B4F708 /* ConnoisseurListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurListViewController.h; sourceTree = "<group>"; };
 		2689A3EC1B7B34BB00B4F708 /* ConnoisseurListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurListViewController.m; sourceTree = "<group>"; };
 		2689A3EF1B7B3BAA00B4F708 /* ConnoisseurModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurModel.h; sourceTree = "<group>"; };
 		2689A3F01B7B3BAA00B4F708 /* ConnoisseurModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurModel.m; sourceTree = "<group>"; };
 		2689A3F21B7B41DC00B4F708 /* ConnoisseurObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurObject.h; sourceTree = "<group>"; };
 		2689A3F31B7B41DC00B4F708 /* ConnoisseurObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurObject.m; sourceTree = "<group>"; };
+		26EA55741B81A2DD0053564F /* icon_issue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_issue.png; path = Resources/icon_issue.png; sourceTree = "<group>"; };
 		5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.release.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.release.xcconfig"; sourceTree = "<group>"; };
 		9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.debug.xcconfig"; sourceTree = "<group>"; };
 		D05958AC1B7C8BCE008C102C /* btn_fanzytv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_fanzytv.png; path = Resources/btn_fanzytv.png; sourceTree = "<group>"; };
@@ -443,6 +454,10 @@
 			children = (
 				2672BD241B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.h */,
 				2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */,
+				2673259C1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.h */,
+				2673259D1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m */,
+				2673259F1B7DF465009641D1 /* RelativeDiscussionTableViewCell.h */,
+				267325A01B7DF465009641D1 /* RelativeDiscussionTableViewCell.m */,
 			);
 			path = Connoisseur;
 			sourceTree = "<group>";
@@ -452,6 +467,8 @@
 			children = (
 				2689A3EB1B7B34BB00B4F708 /* ConnoisseurListViewController.h */,
 				2689A3EC1B7B34BB00B4F708 /* ConnoisseurListViewController.m */,
+				267325A51B7DF53F009641D1 /* ConnoisseurSingleViewController.h */,
+				267325A61B7DF53F009641D1 /* ConnoisseurSingleViewController.m */,
 			);
 			path = Connoisseur;
 			sourceTree = "<group>";
@@ -570,6 +587,7 @@
 		D0D295E61B68C66400671449 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				26EA55741B81A2DD0053564F /* icon_issue.png */,
 				D05958DD1B7DA952008C102C /* icon_delete.png */,
 				D05958DE1B7DA952008C102C /* icon_fncamera.png */,
 				D05958DF1B7DA952008C102C /* icon_fnphoto.png */,
@@ -732,6 +750,7 @@
 				D05958ED1B7DCA3A008C102C /* icon_category.png in Resources */,
 				D05958BB1B7C8BCE008C102C /* checkbox.png in Resources */,
 				13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */,
+				26EA55751B81A2DD0053564F /* icon_issue.png in Resources */,
 				D05958C61B7C8BCE008C102C /* image_preset_avatar.png in Resources */,
 				134370B91B68B19000AE7FA7 /* LaunchScreen.xib in Resources */,
 				D05958DA1B7DA1BA008C102C /* icon_time.png in Resources */,
@@ -806,6 +825,7 @@
 				D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */,
 				D0D296031B69D4D300671449 /* BaseModel.m in Sources */,
 				D05958F41B7DF156008C102C /* CustomizedAlertView.m in Sources */,
+				267325A11B7DF465009641D1 /* RelativeDiscussionTableViewCell.m in Sources */,
 				D0D296181B6A128500671449 /* SignUpViewController.m in Sources */,
 				D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */,
 				D0D295FD1B69D2B800671449 /* FrontpageModel.m in Sources */,
@@ -823,10 +843,12 @@
 				134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */,
 				134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */,
 				D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */,
+				267325A71B7DF53F009641D1 /* ConnoisseurSingleViewController.m in Sources */,
 				134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */,
 				2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */,
 				134370AB1B68B19000AE7FA7 /* main.m in Sources */,
 				134371071B68B67F00AE7FA7 /* UIColor+HexColor.m in Sources */,
+				2673259E1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

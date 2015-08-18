@@ -8,6 +8,7 @@
 
 #import "ConnoisseurListViewController.h"
 #import "ConnoisseurModel.h"
+#import "ConnoisseurSingleViewController.h"
 #import "ConnoisseurListTableViewCell.h"
 @interface ConnoisseurListViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic,strong) UITableView                *connoisseurListTableView;
@@ -22,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initWholeButton];
     self.title = @"達人專區";
     _isFirstLoad = YES;
     [self initModels];
@@ -36,6 +38,13 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+        [self initMenuLayout];
+}
+
+- (void) viewDidDisappear:(BOOL)animated {
+    [self dismissMenu];
+}
 
 - (void)initConnoisseurTableView {
     if(!_connoisseurListTableView) {
@@ -130,16 +139,12 @@
     return  kScreenWidth;
 }
 
-- (void) initLeftBarButton {
-    UIButton *customizedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    customizedButton.backgroundColor = [UIColor clearColor];
-    customizedButton.frame = CGRectMake(0, 0, 25, 25);
-    UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"icon_whole"]];
-    [customizedButton setImage:iconImage forState:UIControlStateNormal];
-    [customizedButton addTarget:self action:@selector(leftBarButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *navigatinBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customizedButton];
-    self.navigationItem.rightBarButtonItem = navigatinBarButtonItem;
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ConnoisseurSingleViewController     *connoisseurSingleViewController = [ConnoisseurSingleViewController new];
+    [self.navigationController pushViewController:connoisseurSingleViewController animated:YES];
+    connoisseurSingleViewController.connoisseurDataObject = _connoisseurObject.dataArray[indexPath.row];
 }
+
 
 /*
 #pragma mark - Navigation
