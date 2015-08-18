@@ -31,3 +31,60 @@
     return self;
 }
 @end
+
+@implementation ConnoisseurSinglePageObject
+
+- (id) init {
+    self = [super init];
+    _discussionArray = [[NSMutableArray alloc] init];
+    _aboutArray = [[NSMutableArray alloc] init];
+    _facebookArray = [[NSMutableArray alloc] init];
+    _recommendArray = [[NSMutableArray alloc] init];
+    return self;
+}
+
+@end
+
+@implementation ConnoisseurDiscussionDataObject
+
+- (id) initWithDictionaryObject:(NSMutableDictionary *)data {
+    self = [super init];
+    if (self) {
+        _dataType        = @"Disscussion";
+        _discussionTitle = isNotNullValue([data valueForKey:@"discussionTitle"])?[data valueForKey:@"discussionTitle"]:@"";
+        _discussionImageUrl = isNotNullValue([data valueForKey:@"discussionImage"])?[data valueForKey:@"discussionImage"]:@"";
+        _discussionDate = isNotNullValue([data valueForKey:@"discussionTime"])?[data valueForKey:@"discussionTime"]:@"";
+    }
+    return self;
+}
+
+@end
+
+@implementation ConnoisseurAboutDataObject
+
+- (id) initWithDictionaryObject:(NSMutableDictionary *)data {
+    self = [super init];
+    if (self) {
+        _dataType        = @"About";
+        _AboutData = isNotNullValue([data valueForKey:@"discussionTitle"])?[data valueForKey:@"AboutContent"]:@"";
+    }
+    return self;
+}
+
+@end
+
+@implementation ConnoisseurRecommendDataObject
+
+- (id) initWithDictionaryObject:(NSMutableDictionary *)data {
+    self = [super init];
+    if (self) {
+        _dataType       = @"Recommend";
+        _productImage   = isNotNullValue([data valueForKey:@"productImage"])?[data valueForKey:@"productImage"]:@"";
+        _productName    = isNotNullValue([data valueForKey:@"productName"])?[data valueForKey:@"productName"]:@"";
+        _productSize    = isNotNullValue([data valueForKey:@"productSize"])?[data valueForKey:@"productSize"]:@"";
+        _productPrice   = isNotNullValue([data valueForKey:@"productPrice"])?[data valueForKey:@"productPrice"]:@"";
+    }
+    return self;
+}
+
+@end

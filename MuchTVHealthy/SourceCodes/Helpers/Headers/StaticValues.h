@@ -20,6 +20,7 @@ static NSString * const kFacebookButtonColorHexString                           
 static NSString * const kGooglePlusButtonColorHexString                                 = @"#F05343";
 static NSString * const kPhoneButtonColorHexString                                      = @"#2331B0";
 static NSString * const kVoteViewColorHexString                                         = @"#4A90E2";
+static NSString * const kColorAllBackgrounfColorHexString                               = @"#ECF8F7";
 
 static NSString * const kListTableViewCellBackGroundColorHexString                      = @"#FAFACD";
 static NSString * const kListTableViewSeperatorLineColorHexString                       = @"#CCCCCC";
@@ -174,6 +175,8 @@ static CGFloat    const kNotificationAlertViewPadding               = 8.0f;
 
 // ** CHATROOM ** //
 // color hex string
+static NSString * const kConnoisseurSinglePagePostDicussionTextColor    = @"#109BAC";
+static NSString * const kConnoisseurSinglePageDiscussionCellBorderColor = @"#DAEDEE";
 static NSString * const kConnoisseurCellNameTextColor                   = @"1D1D1D";
 static NSString * const kConnoisseurCellSubtitleTextColor               = @"6D6D6D";
 static NSString * const kConnoisseurListBackgroundColor                 = @"#FAFAFA";
@@ -204,6 +207,21 @@ static CGFloat const kChatroomContentFontSize                           = 14.0f;
 static CGFloat const kChatroomTimeFontSize                              = 12.0f;
 
 
+// **CONNOISSUER **//
+static NSString * const kConnoisseurDiscussionDateColor                 = @"#FFA200";
+static NSString * const kConnoisseurDiscussionTitleColor                = @"#6D6D6D";
+static CGFloat const kConnoisseurDiscussionImageViewLeftPadding         = 25/3;
+static CGFloat const kConnoisseurDiscussionImageViewTopPadding          = 20/3;
+static CGFloat const kConnoisseurDiscussionImageViewHeight              = 265/3-2*kConnoisseurDiscussionImageViewTopPadding;
+static CGFloat const kConnoisseurDiscussionImageViewWidth               = kConnoisseurDiscussionImageViewHeight;
+static CGFloat const kConnoisseurDiscussionTitleLabelRightPadding       = kConnoisseurDiscussionImageViewWidth;
+static CGFloat const kConnoisseurDiscussionTitleLabelTopPadding         = 10.0f;
+static CGFloat const kConnoisseurDiscussionTitleLabelHeight             = 35.0f;
+static CGFloat const kConnousseurPostDiscussionButtonTitleLeftPadding   = 30.0f;
+static CGFloat const kConnoisseurPostDiscussionTitleFontSize            = 20.0f;
+static CGFloat const kConnoisseurPostDiscussionButtonTitleFontSize      = 40/3;
+static CGFloat const kConnoisseurDiscussionTitleFontSize                = 18.0f;
+static CGFloat const kConnoisseurDiscussionDateFontSize                 = 11.0f;
 
 
 
