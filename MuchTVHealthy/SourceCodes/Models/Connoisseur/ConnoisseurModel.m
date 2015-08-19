@@ -13,7 +13,7 @@
 - (void) loadConnoisseurDataWithBlock :(ConnoissuerDataLoadingHandler)handler{
     // fake Kii data instead load kii data
     _connoisseurFakeKiiArray  = @[].mutableCopy;
-    for (int i=0;i<3;i++) {
+    for (int i=0;i<5;i++) {
         NSMutableDictionary   *connoisseurFakeData = [[NSMutableDictionary alloc]init];
         [connoisseurFakeData setValue:@"王天實" forKey:@"ConnoisseurName"];
         [connoisseurFakeData setValue:@"冬粉達人" forKey:@"ConnoisseurSubtitle"];
@@ -23,8 +23,8 @@
     if(!_connoisseurObject) {
         _connoisseurObject = [[ConnoisseurObject alloc]init];
     }
-    for (NSMutableDictionary* object in _connoisseurFakeKiiArray) {
-        ConnoisseurDataObject    *connoisseurDataObject = [[ConnoisseurDataObject alloc]initWithDictionaryobject:object];
+    for (int i=0;i<3;i++) {
+        ConnoisseurDataObject    *connoisseurDataObject = [[ConnoisseurDataObject alloc]initWithDictionaryobject:_connoisseurFakeKiiArray[i]];
         [_connoisseurObject.dataArray    addObject:connoisseurDataObject];
     }
     BOOL hasMore;

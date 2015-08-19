@@ -103,7 +103,6 @@
 - (void)initModels {
     if(!_connoisseurModel) {
         _connoisseurModel = [[ConnoisseurModel alloc]init];
-        _connoisseurModel.delegate = self;
     }
 }
 
@@ -135,6 +134,20 @@
     return cell;
 }
 
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == _connoisseurObject.dataArray.count - 1 && _hadMoreConnoisseurData) {
+        dispatch_async(dispatch_get_main_queue(),^{
+            NSRange range = NSMakeRange(0, 1);
+            NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+            [_connoisseurListTableView reloadSections:section withRowAnimation:UITableViewRowAnimationNone];
+        });
+        
+        [self loadMoreConnoisseurData];
+        
+    }
+
+}
+
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return  kScreenWidth;
 }
@@ -145,6 +158,10 @@
     connoisseurSingleViewController.connoisseurDataObject = _connoisseurObject.dataArray[indexPath.row];
 }
 
+
+- (void) loadMoreConnoisseurData {
+    
+}
 
 /*
 #pragma mark - Navigation
