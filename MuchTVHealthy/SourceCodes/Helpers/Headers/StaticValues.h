@@ -208,17 +208,29 @@ static CGFloat const kChatroomTimeFontSize                              = 12.0f;
 
 
 // **CONNOISSUER **//
+static NSString * const kConnoisseurAboutPageTitleTextColor             = @"#109BAC";
 static NSString * const kConnoisseurDiscussionDateColor                 = @"#FFA200";
 static NSString * const kConnoisseurDiscussionTitleColor                = @"#6D6D6D";
+static NSString * const kConnoisseurAboutTitleColor                     = @"#109BAC";
+static NSString * const kConnoisseurAboutContentColor                   = @"#6D6D6D";
+static NSString * const kConnoisseurRecommendTitleColor                 = @"#6D6D6D";
+static NSString * const kConnoisseurRecommendPriceColor                 = @"#FFA200";
+static CGFloat const kConnoisseurRecommendLabelRightPadding             = 35.0f;
+static CGFloat const kConnoisseurRecommendTitleFontSize                 = 16.0f;
+static CGFloat const kConnoisseurRecommendPriceFontSize                 = 16.0f;
+static CGFloat const kConnoisseurRecommendListCellheight                = 240/3;
+static CGFloat const kConnoisseurFacebookListCellheight                 = 240/3;
 static CGFloat const kConnoisseurDiscussionImageViewLeftPadding         = 25/3;
 static CGFloat const kConnoisseurDiscussionImageViewTopPadding          = 20/3;
 static CGFloat const kConnoisseurDiscussionImageViewHeight              = 265/3-2*kConnoisseurDiscussionImageViewTopPadding;
 static CGFloat const kConnoisseurDiscussionImageViewWidth               = kConnoisseurDiscussionImageViewHeight;
 static CGFloat const kConnoisseurDiscussionTitleLabelRightPadding       = kConnoisseurDiscussionImageViewWidth;
 static CGFloat const kConnoisseurDiscussionTitleLabelTopPadding         = 10.0f;
-static CGFloat const kConnoisseurDiscussionTitleLabelHeight             = 35.0f;
+static CGFloat const kConnoisseurDiscussionTitleLabelHeight             = 45.0f;
 static CGFloat const kConnousseurPostDiscussionButtonTitleLeftPadding   = 30.0f;
 static CGFloat const kConnoisseurPostDiscussionTitleFontSize            = 20.0f;
+static CGFloat const kConnoisseurAboutTitleFontSize                     = 20.0f;
+static CGFloat const kConnoisseurAboutContentFontSize                   = 16.0f;
 static CGFloat const kConnoisseurPostDiscussionButtonTitleFontSize      = 40/3;
 static CGFloat const kConnoisseurDiscussionTitleFontSize                = 18.0f;
 static CGFloat const kConnoisseurDiscussionDateFontSize                 = 11.0f;

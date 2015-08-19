@@ -42,7 +42,7 @@
     NSMutableArray          *discussionArray = @[].mutableCopy;
     for(int i=0;i<3;i++) {
         NSMutableDictionary *connoisseurDiscussionData = [[NSMutableDictionary alloc]init];
-        [connoisseurDiscussionData setValue:@"titietitietitietitie" forKey:@"discussionTitle"];
+        [connoisseurDiscussionData setValue:@"titietitietitietitietitietitietitietitietitietitietitietitietitietitietitietitie" forKey:@"discussionTitle"];
         [connoisseurDiscussionData setValue:@"http://www.iheartfood4thought.com/wp-content/uploads/2015/03/Food-for-thought-1.jpeg" forKey:@"discussionImage"];
         [connoisseurDiscussionData setValue:@"2015/06/13 14:12" forKey:@"discussionTime"];
         [discussionArray addObject:connoisseurDiscussionData];
@@ -50,7 +50,8 @@
     
     // input AboutData
     NSMutableDictionary *connoisseurAboutData = [[NSMutableDictionary alloc]init];
-    [connoisseurAboutData setValue:@"ContentContentContentContentContent" forKey:@"AboutContent"];
+    [connoisseurAboutData setValue:@"TitleTitle" forKey:@"aboutTitle"];
+    [connoisseurAboutData setValue:@"ContentContentContentContentContentContentContentContentContentContentContentContentContentContentContentCont" forKey:@"aboutContent"];
     
     // input recommendData
     NSMutableArray          *recommendArray = @[].mutableCopy;
@@ -62,11 +63,19 @@
         [connoisseurRecommmendData setValue:@"12344455" forKey:@"productPrice"];
         [recommendArray addObject:connoisseurRecommmendData];
     }
+    NSMutableArray          *facebookArray = @[].mutableCopy;
+    for(int i=0;i<3;i++) {
+        NSMutableDictionary *connoisseurFacebookData = [[NSMutableDictionary alloc]init];
+        [connoisseurFacebookData setValue:@"titietitietitietitietitietitietitietitietitietitietitietitietitietitietitietitie" forKey:@"facebookTitle"];
+        [connoisseurFacebookData setValue:@"http://www.iheartfood4thought.com/wp-content/uploads/2015/03/Food-for-thought-1.jpeg" forKey:@"facebookImage"];
+        [connoisseurFacebookData setValue:@"2015/06/13 14:12" forKey:@"facebookTime"];
+        [facebookArray addObject:connoisseurFacebookData];
+    }
     
     if(!_connoisseurSinglePageObject) {
         _connoisseurSinglePageObject = [[ConnoisseurSinglePageObject alloc]init];
     }
-    
+    /////   input data to connoisseurSinglePageObject /////
     for (NSMutableDictionary* object in discussionArray) {
         ConnoisseurDiscussionDataObject    *connoisseurDiscussionDataObject = [[ConnoisseurDiscussionDataObject alloc]initWithDictionaryObject:object];
         [_connoisseurSinglePageObject.discussionArray   addObject:connoisseurDiscussionDataObject];
@@ -80,9 +89,15 @@
         ConnoisseurRecommendDataObject    *connoisseurRecommendDataObject = [[ConnoisseurRecommendDataObject alloc]initWithDictionaryObject:object];
         [_connoisseurSinglePageObject.recommendArray   addObject:connoisseurRecommendDataObject];
     }
+
+    for (NSMutableDictionary* object in facebookArray) {
+        ConnoisseurFacebookDataObject    *connoisseurFacebookDataObject = [[ConnoisseurFacebookDataObject alloc]initWithDictionaryObject:object];
+        [_connoisseurSinglePageObject.facebookArray   addObject:connoisseurFacebookDataObject];
+    }
     BOOL hasMoreDiscussoin =YES;
-    BOOL hasMoreRecommend = NO;
-    BOOL hasMoreFacebook = NO;
+    BOOL hasMoreRecommend = YES;
+    BOOL hasMoreFacebook = YES;
+    ///////////////////////////////////////////////////////
     handler(_connoisseurSinglePageObject,hasMoreDiscussoin,hasMoreRecommend,hasMoreFacebook);
 }
 

@@ -65,8 +65,9 @@
 - (id) initWithDictionaryObject:(NSMutableDictionary *)data {
     self = [super init];
     if (self) {
-        _dataType        = @"About";
-        _AboutData = isNotNullValue([data valueForKey:@"discussionTitle"])?[data valueForKey:@"AboutContent"]:@"";
+        _dataType           = @"About";
+        _aboutTitle         = isNotNullValue([data valueForKey:@"aboutTitle"])?[data valueForKey:@"aboutTitle"]:@"";
+        _aboutContent       = isNotNullValue([data valueForKey:@"aboutContent"])?[data valueForKey:@"aboutContent"]:@"";
     }
     return self;
 }
@@ -83,6 +84,21 @@
         _productName    = isNotNullValue([data valueForKey:@"productName"])?[data valueForKey:@"productName"]:@"";
         _productSize    = isNotNullValue([data valueForKey:@"productSize"])?[data valueForKey:@"productSize"]:@"";
         _productPrice   = isNotNullValue([data valueForKey:@"productPrice"])?[data valueForKey:@"productPrice"]:@"";
+    }
+    return self;
+}
+
+@end
+
+@implementation ConnoisseurFacebookDataObject
+
+- (id) initWithDictionaryObject:(NSMutableDictionary *)data {
+    self = [super init];
+    if (self) {
+        _dataType       = @"facebook";
+        _facebookImage   = isNotNullValue([data valueForKey:@"facebookImage"])?[data valueForKey:@"facebookImage"]:@"";
+        _facebookTime    = isNotNullValue([data valueForKey:@"facebookTime"])?[data valueForKey:@"facebookTime"]:@"";
+        _facebookTitle   = isNotNullValue([data valueForKey:@"facebookTitle"])?[data valueForKey:@"facebookTitle"]:@"";
     }
     return self;
 }

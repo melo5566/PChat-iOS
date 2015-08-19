@@ -29,6 +29,7 @@
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@-%@",_connoisseurDataObject.connoisseurSubtitle,_connoisseurDataObject.connoisseurName];
     _isFirstLoad = YES;
+    [self initNavigationBarBackButtonAtLeft];
     [self initModels];
 
     // Do any additional setup after loading the view.
@@ -104,7 +105,7 @@
 
 
 - (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section{
-    return 2 ;
+    return 5;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -130,29 +131,31 @@
     }
     else if( indexPath.row == 2) {
         cellID = @"ConnoisseurAboutViewCell";
-        RelativeDiscussionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        AboutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
         if (!cell) {
-            cell = [[RelativeDiscussionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            cell = [[AboutTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         }
-        cell.relativeDiscussionList = _connoisseurSinglePageObject.discussionArray;
+        cell.aboutList = _connoisseurSinglePageObject.aboutArray;
         return cell;
     }
     else if( indexPath.row == 3) {
         cellID = @"ConnoisseurRecommendViewCell";
-        RelativeDiscussionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        RecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
         if (!cell) {
-            cell = [[RelativeDiscussionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            cell = [[RecommendTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         }
-        cell.relativeDiscussionList = _connoisseurSinglePageObject.discussionArray;
+        cell.hasMoreRecommend = _hasMoreRecommendData;
+        cell.recommendList = _connoisseurSinglePageObject.recommendArray;
         return cell;
     }
     else {
         cellID = @"ConnoisseurFacebookViewCell";
-        RelativeDiscussionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        FacebookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
         if (!cell) {
-            cell = [[RelativeDiscussionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            cell = [[FacebookTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         }
-        cell.relativeDiscussionList = _connoisseurSinglePageObject.discussionArray;
+        cell.hasMoreFacebook = _hasMoreFacebookData;
+        cell.facebookList = _connoisseurSinglePageObject.facebookArray;
         return cell;
     }
 }
@@ -176,6 +179,14 @@
 }
 
 - (void) calcCellHeight {
+    [self calcRelativeDiscussionCellHeight];
+    [self calcAboutListCellHeight];
+    [self calcRecommendListCellHeight];
+    [self calcFacebookListCellHeight];
+ 
+}
+
+- (void) calcRelativeDiscussionCellHeight {
     if(_hasMoreDicussionData) {
         _relativeDiscussionListCellHeight = 400;
     }
@@ -183,7 +194,33 @@
         _relativeDiscussionListCellHeight = 400-100/3;
     }
 }
+- (void) calcRecommendListCellHeight {
+    if(_hasMoreRecommendData) {
+        _recommendListCellHeight = 320;
+    }
+    else {
+        _recommendListCellHeight = 100/3 + _connoisseurSinglePageObject.recommendArray.count*80 +40/3;
+    }
+}
 
+- (void) calcAboutListCellHeight {
+    _aboutListCellHeight = 100/3 + 40/3 ;
+    CGFloat constrainedWidth = kScreenWidth-30;
+    for(ConnoisseurAboutDataObject* object in _connoisseurSinglePageObject.aboutArray) {
+        CGSize sizeOfText=[object.aboutContent sizeWithFont:[UIFont fontWithName:@"STHeitiTC-Light" size:kConnoisseurAboutContentFontSize] constrainedToSize:CGSizeMake(constrainedWidth, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+            _aboutListCellHeight += sizeOfText.height;
+        }
+    _aboutListCellHeight +=20.0f;
+}
+
+- (void) calcFacebookListCellHeight {
+    if(_hasMoreFacebookData) {
+        _facebookListCellHeight = 320;
+    }
+    else {
+         _facebookListCellHeight = 100/3 + _connoisseurSinglePageObject.facebookArray.count*80 +40/3;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

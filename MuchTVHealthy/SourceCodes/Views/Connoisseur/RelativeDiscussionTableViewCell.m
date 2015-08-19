@@ -159,7 +159,6 @@
 - (void) initDiscussionDateLabel {
     if (!_discussionDateLabel) {
         _discussionDateLabel        = [[UILabel alloc]initForAutolayout];
-        _discussionDateLabel.text  = _connoisseurDiscussionDataObject.discussionDate;
         _discussionDateLabel.textColor = [UIColor colorWithHexString:kConnoisseurDiscussionDateColor];
         _discussionDateLabel.font      = [UIFont fontWithName:@"Arial" size:kConnoisseurDiscussionDateFontSize];
          [self.contentView addSubview:_discussionDateLabel];
@@ -190,9 +189,8 @@
                                                                            multiplier:1.0f constant:10.5f]];
         
         [self.contentView addConstraints:discussionDateLabelConstraint];
-
     }
-    
+    _discussionDateLabel.text = _connoisseurDiscussionDataObject.discussionDate;
 }
 
 
@@ -202,6 +200,7 @@
         _relativeDiscussionListTableView.backgroundColor = [UIColor clearColor];
         _relativeDiscussionListTableView.delegate = self;
         _relativeDiscussionListTableView.dataSource = self;
+        _relativeDiscussionListTableView.scrollEnabled = NO;
         _relativeDiscussionListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_relativeDiscussionListTableView.layer setShadowColor:[UIColor blackColor].CGColor];
         _relativeDiscussionListTableView.layer.shadowOffset = CGSizeMake(1.5, 1.5);
