@@ -146,7 +146,7 @@
         self.messageLabel.frame = CGRectMake(CONTENT_PADDING_LEFT, containerHeight, self.containerView.bounds.size.width - CONTENT_PADDING_LEFT * 2, height);
         containerHeight += height;
     }
-    if (self.items.count > 0) {
+    if (self.items.count > 1) {
         CGFloat buttonWidth = (self.containerView.bounds.size.width - 3*CONTENT_PADDING_LEFT)/2;
         if (containerHeight > CONTENT_PADDING_TOP) {
             containerHeight += GAP;
@@ -158,6 +158,13 @@
 //                    containerHeight += BUTTON_HEIGHT + GAP;
                 }
             }
+    } else {
+        CGFloat buttonWidth = (self.containerView.bounds.size.width - 12*CONTENT_PADDING_LEFT);
+        if (containerHeight > CONTENT_PADDING_TOP) {
+            containerHeight += GAP;
+        }
+        UIButton *button = self.buttons[0];
+        button.frame = CGRectMake(6*CONTENT_PADDING_LEFT, containerHeight, buttonWidth, BUTTON_HEIGHT);
     }
 }
 

@@ -21,7 +21,7 @@
 @interface BaseViewController : UIViewController <NoNetworkAlertDelegate, BaseModelDelegate, UIAlertViewDelegate>
 
 - (void) initMenuLayout;
-- (void) initWholeButton;
+- (void) initListButton;
 - (void) dismissMenu;
 
 - (void) initNavigationBarCloseButtonAtLeft;

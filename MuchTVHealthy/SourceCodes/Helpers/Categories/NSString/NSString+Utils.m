@@ -266,4 +266,21 @@
     return [NSDate dateWithTimeIntervalSince1970:timeInterval];
 }
 
+- (BOOL) isPhoneNumber
+{
+    NSString *phoneRegex = @"09[0-9]{8}";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    
+    return [test evaluateWithObject:self];
+}
+
+- (BOOL) isPassword
+{
+    NSString* passwordRegex = @"^[a-z0－9A-Z]*$";
+    NSPredicate* passwordTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", passwordRegex];
+    
+    return [passwordTest evaluateWithObject:self];
+}
+
+
 @end

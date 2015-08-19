@@ -65,6 +65,9 @@
 @property (nonatomic, strong) UIImage                           *tempImageForReupload;
 
 @property (nonatomic, strong) CustomizedAlertView               *changeAvatarAlertView;
+
+@property (nonatomic) BOOL                                      isAccountValid;
+@property (nonatomic) BOOL                                      isPasswordValid;
 @end
 
 @implementation PersonalSettingViewController
@@ -106,6 +109,16 @@
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self removeNotificationObservers];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (_checkboxSelected) {
+        [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
+        [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
+        [defaults setObject:@"YES" forKey:@"rememberMe"];
+    } else {
+        [defaults setObject:nil forKey:@"account"];
+        [defaults setObject:nil forKey:@"password"];
+        [defaults setObject:nil forKey:@"rememberMe"];
+    }
 }
 
 - (void) dealloc {
@@ -828,6 +841,9 @@
         _signInAccountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _signInAccountTextField.leftViewMode             = UITextFieldViewModeAlways;
         _signInAccountTextField.delegate                 = self;
+        [_signInAccountTextField addTarget:self
+                                    action:@selector(signInAccountTextFieldDidChange:)
+                          forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:_signInAccountTextField];
         
         NSMutableArray *signInAccountConstraint = @[].mutableCopy;
@@ -882,6 +898,9 @@
         _signInPasswordTextField.contentVerticalAlignment   = UIControlContentVerticalAlignmentCenter;
         _signInPasswordTextField.leftViewMode               = UITextFieldViewModeAlways;
         _signInPasswordTextField.delegate                   = self;
+        [_signInPasswordTextField addTarget:self
+                                     action:@selector(signInPasswordTextFieldDidChange:)
+                           forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:_signInPasswordTextField];
         
         NSMutableArray *signInPasswordConstraint = @[].mutableCopy;
@@ -1197,6 +1216,16 @@
                                   if (error != nil) {
                                       NSLog(@"# ERROR : %@",error.userInfo[@"server_message"]);
                                       NSLog(@"# ERROR CODE : %ld",(long)error.code);
+                                      if (error.code == 302) {
+                                          _changeAvatarAlertView = [[CustomizedAlertView alloc] initWithTitle:nil andMessage:@"輸入錯誤"];
+                                          [_changeAvatarAlertView addButtonWithTitle:@"確定" type:CustomizedAlertViewButtonTypeDefaultGreen handler:^(CustomizedAlertView *alertView) {
+                                          
+                                          }];
+                                          [_changeAvatarAlertView show];
+                                          } else {
+                                          [self hasNoNetworkConnection];
+                                      }
+
                                       return;
                                   }
                                   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1271,6 +1300,18 @@
     }
     else {
         [super backButtonPressed:sender];
+    }
+}
+
+
+- (void) checkValidation {
+    if (_isAccountValid && _isPasswordValid) {
+        _signInButton.alpha   = 1.0;
+        _signInButton.enabled = YES;
+    }
+    else {
+        _signInButton.alpha   = 0.3;
+        _signInButton.enabled = NO;
     }
 }
 
@@ -1540,10 +1581,49 @@
     }
 }
 
+- (void) signInPasswordTextFieldDidChange:(id)sender {
+    UITextField *textField = sender;
+    if (isNullValue([textField markedTextRange])) {
+        if (textField.text.length > 8) {
+            NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+            textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
+        }
+        
+        if (textField.text.length >= 6) {
+            _isPasswordValid = YES;
+        } else {
+            _isPasswordValid = NO;
+        }
+        
+        [self checkValidation];
+    }
+
+}
+
+- (void) signInAccountTextFieldDidChange:(id)sender {
+    UITextField *textField = sender;
+    if (isNullValue([textField markedTextRange])) {
+        if (textField.text.length > 10) {
+            NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+            textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
+        }
+        
+        if (textField.text.length >=6) {
+            _isAccountValid = YES;
+        } else {
+            _isAccountValid = NO;
+        }
+        
+        [self checkValidation];
+    }
+
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField endEditing:YES];
     return YES;
 }
+
 
 #pragma mark - image picker delegate
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info

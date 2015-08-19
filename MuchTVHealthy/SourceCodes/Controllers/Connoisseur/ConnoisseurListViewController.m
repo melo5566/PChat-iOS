@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initWholeButton];
+    [self initListButton];
     self.title = @"達人專區";
     _isFirstLoad = YES;
     [self initModels];

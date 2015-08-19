@@ -1,24 +1,24 @@
 //
-//  FrontpageTableViewCell.m
+//  RecipeTableViewCell.m
 //  MuchTVHealthy
 //
-//  Created by Peter on 2015/7/29.
+//  Created by Peter on 2015/8/18.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
-#import "FrontpageTableViewCell.h"
+#import "RecipeTableViewCell.h"
 
-@interface FrontpageTableViewCell()
+@interface RecipeTableViewCell()
 
-@property (nonatomic, strong) UIImageView           *frontpageImageView;
+@property (nonatomic, strong) UIImageView           *recipeImageView;
 @property (nonatomic, strong) UILabel               *titleLabel;
 @property (nonatomic, strong) UILabel               *timeLabel;
-@property (nonatomic, strong) UIView                *frontpageView;
+@property (nonatomic, strong) UIView                *recipeView;
 @property (nonatomic, strong) UIImageView           *timeImageView;
 
 @end
 
-@implementation FrontpageTableViewCell
+@implementation RecipeTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -33,110 +33,104 @@
 }
 
 
-//- (void) setFrontpageObject:(FrontpageObject *)frontpageObject {
-//    _frontpageObject = frontpageObject;
-//    [self initFrontpageView];
-//    [self initFrontpageImageView];
-//    [self initFrontpageTitleLabel];
-//    [self initFrontpageTimeImageView];
-//    [self initFrontpageTimeLabel];
-//}
-
 - (void) setString:(NSString *)string {
     _string = string;
-    [self initFrontpageView];
-    [self initFrontpageImageView];
-    [self initFrontpageTitleLabel];
-    [self initFrontpageTimeImageView];
-    [self initFrontpageTimeLabel];
+    [self initRecipeView];
+    [self initRecipeImageView];
+    [self initRecipeTitleLabel];
+    [self initRecipeTimeImageView];
+    [self initRecipeTimeLabel];
 }
 
-- (void) initFrontpageView {
-    if (!_frontpageView) {
-        _frontpageView = [[UIView alloc] initForAutolayout];
-        _frontpageView.backgroundColor = [UIColor clearColor];
-        _frontpageView.layer.borderColor = [UIColor colorWithHexString:kFrontpageCardBoderColorHexString].CGColor;
-        _frontpageView.layer.borderWidth = 1.0f;
-        [self.contentView addSubview:_frontpageView];
+- (void) initRecipeView {
+    if (!_recipeView) {
+        _recipeView = [[UIView alloc] initForAutolayout];
+        _recipeView.backgroundColor     = [UIColor whiteColor];
+        _recipeView.layer.borderColor   = [UIColor colorWithHexString:kFrontpageCardBoderColorHexString].CGColor;
+        _recipeView.layer.borderWidth   = 1.0f;
+        _recipeView.layer.shadowColor   = [UIColor blackColor].CGColor;
+        _recipeView.layer.shadowOpacity = 0.5;
+        _recipeView.layer.shadowOffset  = CGSizeMake(0, 0.5);
+        [self.contentView addSubview:_recipeView];
         
-        NSMutableArray *frontpageViewConstraint = [[NSMutableArray alloc] init];
+        NSMutableArray *recipeViewConstraint = [[NSMutableArray alloc] init];
         
-        [frontpageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageView
+        [recipeViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeView
                                                                         attribute:NSLayoutAttributeLeft
                                                                         relatedBy:NSLayoutRelationEqual
                                                                            toItem:self.contentView
                                                                         attribute:NSLayoutAttributeLeft
                                                                        multiplier:1.0f constant:0.0f]];
-        [frontpageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageView
+        [recipeViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeView
                                                                         attribute:NSLayoutAttributeTop
                                                                         relatedBy:NSLayoutRelationEqual
                                                                            toItem:self.contentView
                                                                         attribute:NSLayoutAttributeTop
                                                                        multiplier:1.0f constant:7.5f]];
-        [frontpageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageView
+        [recipeViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeView
                                                                         attribute:NSLayoutAttributeRight
                                                                         relatedBy:NSLayoutRelationEqual
                                                                            toItem:self.contentView
                                                                         attribute:NSLayoutAttributeRight
                                                                        multiplier:1.0f constant:0.0f]];
-        [frontpageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageView
+        [recipeViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeView
                                                                         attribute:NSLayoutAttributeBottom
                                                                         relatedBy:NSLayoutRelationEqual
                                                                            toItem:self.contentView
                                                                         attribute:NSLayoutAttributeBottom
                                                                        multiplier:1.0f constant:-7.5f]];
         
-        [self addConstraints:frontpageViewConstraint];
+        [self addConstraints:recipeViewConstraint];
         
     }
 }
 
-- (void) initFrontpageImageView {
-    if (!_frontpageImageView) {
-        _frontpageImageView = [[UIImageView alloc] initForAutolayout];
-        _frontpageImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _frontpageImageView.clipsToBounds = YES;
-        [_frontpageView addSubview:_frontpageImageView];
+- (void) initRecipeImageView {
+    if (!_recipeImageView) {
+        _recipeImageView = [[UIImageView alloc] initForAutolayout];
+        _recipeImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _recipeImageView.clipsToBounds = YES;
+        [_recipeView addSubview:_recipeImageView];
         
-        NSMutableArray *frontpageImageViewConstraint = [[NSMutableArray alloc] init];
+        NSMutableArray *recipeImageViewConstraint = [[NSMutableArray alloc] init];
         
-        [frontpageImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageImageView
+        [recipeImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeImageView
                                                                              attribute:NSLayoutAttributeLeft
                                                                              relatedBy:NSLayoutRelationEqual
-                                                                                toItem:_frontpageView
+                                                                                toItem:_recipeView
                                                                              attribute:NSLayoutAttributeLeft
-                                                                            multiplier:1.0f constant:2.5f]];
-        [frontpageImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageImageView
+                                                                            multiplier:1.0f constant:10.0f]];
+        [recipeImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeImageView
                                                                              attribute:NSLayoutAttributeTop
                                                                              relatedBy:NSLayoutRelationEqual
-                                                                                toItem:_frontpageView
+                                                                                toItem:_recipeView
                                                                              attribute:NSLayoutAttributeTop
-                                                                            multiplier:1.0f constant:2.5f]];
-        [frontpageImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageImageView
+                                                                            multiplier:1.0f constant:10.0f]];
+        [recipeImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeImageView
                                                                              attribute:NSLayoutAttributeRight
                                                                              relatedBy:NSLayoutRelationEqual
-                                                                                toItem:_frontpageView
+                                                                                toItem:_recipeView
                                                                              attribute:NSLayoutAttributeRight
-                                                                            multiplier:1.0f constant:-2.5f]];
-        [frontpageImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_frontpageImageView
+                                                                            multiplier:1.0f constant:-10.0f]];
+        [recipeImageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeImageView
                                                                              attribute:NSLayoutAttributeHeight
                                                                              relatedBy:NSLayoutRelationEqual
                                                                                 toItem:nil
                                                                              attribute:NSLayoutAttributeNotAnAttribute
                                                                             multiplier:1.0f constant:(kScreenWidth- 30 - 5)*3/4]];
         
-        [self addConstraints:frontpageImageViewConstraint];
+        [self addConstraints:recipeImageViewConstraint];
         
     }
-    [_frontpageImageView setImageWithURL:[NSURL URLWithString:_frontpageObject.imageUrl]
+    [_recipeImageView setImageWithURL:[NSURL URLWithString:@""]
                     withPlaceholderImage:[UIImage imageNamed:@"image_placeholder_4x3"]
                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
                                    if (image) {
-                                       [_frontpageImageView setImage:image];
-                                       _frontpageImageView.alpha = 0;
+                                       [_recipeImageView setImage:image];
+                                       _recipeImageView.alpha = 0;
                                        [UIView animateWithDuration:0.3 animations:^(){
-                                           [_frontpageImageView setImage:image];
-                                           _frontpageImageView.alpha = 0.9;
+                                           [_recipeImageView setImage:image];
+                                           _recipeImageView.alpha = 0.9;
                                        }];
                                    } else {
                                        NSLog(@"Error");
@@ -146,7 +140,7 @@
 }
 
 
-- (void) initFrontpageTitleLabel {
+- (void) initRecipeTitleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initForAutolayout];
         _titleLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -154,25 +148,25 @@
         _titleLabel.numberOfLines = 2;
         _titleLabel.textColor = [UIColor colorWithHexString:kListTableViewTitleColorHexString];
         _titleLabel.font = [UIFont fontWithName:@"Arial" size:17.0];
-        [_frontpageView addSubview:_titleLabel];
+        [_recipeView addSubview:_titleLabel];
         NSMutableArray *titleLabelViewConstraint = [[NSMutableArray alloc] init];
         
         [titleLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_titleLabel
                                                                          attribute:NSLayoutAttributeLeft
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:_frontpageView
+                                                                            toItem:_recipeView
                                                                          attribute:NSLayoutAttributeLeft
                                                                         multiplier:1.0f constant:9.8f]];
         [titleLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_titleLabel
                                                                          attribute:NSLayoutAttributeTop
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:_frontpageImageView
+                                                                            toItem:_recipeImageView
                                                                          attribute:NSLayoutAttributeBottom
                                                                         multiplier:1.0f constant:7.8f]];
         [titleLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_titleLabel
                                                                          attribute:NSLayoutAttributeRight
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:_frontpageView
+                                                                            toItem:_recipeView
                                                                          attribute:NSLayoutAttributeRight
                                                                         multiplier:1.0f constant:-10.0f]];
         [titleLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_titleLabel
@@ -185,15 +179,15 @@
         [self addConstraints:titleLabelViewConstraint];
         
     }
-    _titleLabel.text = @"Title";
+    _titleLabel.text = _string;
 }
 
-- (void) initFrontpageTimeLabel {
+- (void) initRecipeTimeLabel {
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] initForAutolayout];
         _timeLabel.font = [UIFont fontWithName:@"Arial" size:12.0];
         _timeLabel.textColor = [UIColor colorWithHexString:kListTableViewTimeColorHexString];
-        [_frontpageView addSubview:_timeLabel];
+        [_recipeView addSubview:_timeLabel];
         NSMutableArray *timeLabelViewConstraint = [[NSMutableArray alloc] init];
         
         [timeLabelViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeLabel
@@ -223,21 +217,21 @@
         
         [self addConstraints:timeLabelViewConstraint];
     }
-    _timeLabel.text = @"2015/08/17";
+    _timeLabel.text = @"2015/08/18";
     
 }
 
-- (void) initFrontpageTimeImageView {
+- (void) initRecipeTimeImageView {
     if (!_timeImageView) {
         _timeImageView       = [[UIImageView alloc] initForAutolayout];
         _timeImageView.image = [UIImage imageNamed:@"icon_time"];
-        [_frontpageView addSubview:_timeImageView];
+        [_recipeView addSubview:_timeImageView];
         NSMutableArray *timeImageViewViewConstraint = [[NSMutableArray alloc] init];
         
         [timeImageViewViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeImageView
                                                                             attribute:NSLayoutAttributeLeft
                                                                             relatedBy:NSLayoutRelationEqual
-                                                                               toItem:_frontpageView
+                                                                               toItem:_recipeView
                                                                             attribute:NSLayoutAttributeLeft
                                                                            multiplier:1.0f constant:9.8f]];
         [timeImageViewViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_timeImageView

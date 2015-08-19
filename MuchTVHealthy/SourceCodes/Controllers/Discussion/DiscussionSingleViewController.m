@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
-    [self initWholeButton];
+    [self initListButton];
     self.navigationItem.title = @"Title";
     
     _totalCommentDataArray = @[].mutableCopy;

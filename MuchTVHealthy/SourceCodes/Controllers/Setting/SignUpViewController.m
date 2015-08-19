@@ -15,10 +15,13 @@
 @property (nonatomic, strong) UITextField                                   *signUpPasswordTextField;
 @property (nonatomic, strong) UITextField                                   *signUpUserNameTextField;
 @property (nonatomic, strong) CustomizedSettingPageButton                   *confirmButton;
-@property (nonatomic, strong) NSString                                      *account;
-@property (nonatomic, strong) NSString                                      *password;
-@property (nonatomic, strong) NSString                                      *userName;
+@property (nonatomic, strong) UILabel                                       *userNameLabel;
+@property (nonatomic, strong) UILabel                                       *accountLabel;
+@property (nonatomic, strong) UILabel                                       *passwordLabel;
 @property (nonatomic, strong) SignUpAndSignInModel                          *signUpAndSignInModel;
+@property (nonatomic) BOOL                                                  isAccountValid;
+@property (nonatomic) BOOL                                                  isPasswordValid;
+@property (nonatomic) BOOL                                                  isUserNameValid;
 @end
 
 @implementation SignUpViewController
@@ -26,7 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarCloseButtonAtLeft];
-    [self.navigationItem setTitle:@"註冊"];
+    if ([_signUpType isEqualToString:@"normal"])
+        [self.navigationItem setTitle:@"註冊"];
+    else
+        [self.navigationItem setTitle:@"電話註冊"];
     // Do any additional setup after loading the view.
 }
 
@@ -42,13 +48,21 @@
     [self initLayout];
 }
 
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_signUpAccountTextField resignFirstResponder];
+    [_signUpPasswordTextField resignFirstResponder];
+    [_signUpUserNameTextField resignFirstResponder];
+}
 
 
 #pragma mark - init
 - (void) initLayout {
+    [self initUserNameLabel];
     [self initSignUpUserNameTextField];
+    [self initAccountLabel];
     [self initSignUpAccountTextField];
+    [self initPasswordLabel];
     [self initSignUpPasswordTextField];
     [self initConfirmButton];
 }
@@ -67,6 +81,9 @@
         _signUpUserNameTextField.contentVerticalAlignment   = UIControlContentVerticalAlignmentCenter;
         _signUpUserNameTextField.leftViewMode               = UITextFieldViewModeAlways;
         _signUpUserNameTextField.delegate                   = self;
+        [_signUpUserNameTextField addTarget:self
+                                    action:@selector(signUpUserNameTextFieldDidChange:)
+                          forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:_signUpUserNameTextField];
         
         NSMutableArray *signUpUserNameConstraint = @[].mutableCopy;
@@ -74,9 +91,9 @@
         [signUpUserNameConstraint addObject:[NSLayoutConstraint constraintWithItem:_signUpUserNameTextField
                                                                          attribute:NSLayoutAttributeTop
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.view
-                                                                         attribute:NSLayoutAttributeTop
-                                                                        multiplier:1.0f constant:100.0f]];
+                                                                            toItem:_userNameLabel
+                                                                         attribute:NSLayoutAttributeBottom
+                                                                        multiplier:1.0f constant:0.0f]];
         [signUpUserNameConstraint addObject:[NSLayoutConstraint constraintWithItem:_signUpUserNameTextField
                                                                          attribute:NSLayoutAttributeRight
                                                                          relatedBy:NSLayoutRelationEqual
@@ -108,12 +125,14 @@
         _signUpAccountTextField.borderStyle = UITextBorderStyleRoundedRect;
         _signUpAccountTextField.font = [UIFont systemFontOfSize:15];
         _signUpAccountTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-        _signUpAccountTextField.keyboardType = UIKeyboardTypeDefault;
         _signUpAccountTextField.returnKeyType = UIReturnKeyDone;
         _signUpAccountTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _signUpAccountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _signUpAccountTextField.leftViewMode = UITextFieldViewModeAlways;
         _signUpAccountTextField.delegate = self;
+        [_signUpAccountTextField addTarget:self
+                                     action:@selector(signUpAccountTextFieldDidChange:)
+                           forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:_signUpAccountTextField];
         
         NSMutableArray *signUpAccountConstraint = @[].mutableCopy;
@@ -121,9 +140,9 @@
         [signUpAccountConstraint addObject:[NSLayoutConstraint constraintWithItem:_signUpAccountTextField
                                                                         attribute:NSLayoutAttributeTop
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:_signUpUserNameTextField
+                                                                           toItem:_accountLabel
                                                                         attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0f constant:15.0f]];
+                                                                       multiplier:1.0f constant:0.0f]];
         [signUpAccountConstraint addObject:[NSLayoutConstraint constraintWithItem:_signUpAccountTextField
                                                                         attribute:NSLayoutAttributeRight
                                                                         relatedBy:NSLayoutRelationEqual
@@ -146,8 +165,10 @@
         [self.view addConstraints:signUpAccountConstraint];
     }
     if ([_signUpType isEqualToString:@"normal"]) {
+        _signUpAccountTextField.keyboardType = UIKeyboardTypeDefault;
         _signUpAccountTextField.placeholder = @"Please enter account";
     } else {
+        _signUpAccountTextField.keyboardType = UIKeyboardTypeNumberPad;
         _signUpAccountTextField.placeholder = @"Please enter your phone number";
     }
 }
@@ -168,6 +189,9 @@
         _signUpPasswordTextField.contentVerticalAlignment   = UIControlContentVerticalAlignmentCenter;
         _signUpPasswordTextField.leftViewMode               = UITextFieldViewModeAlways;
         _signUpPasswordTextField.delegate                   = self;
+        [_signUpPasswordTextField addTarget:self
+                                     action:@selector(signUpPasswordTextFieldDidChange:)
+                           forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:_signUpPasswordTextField];
         
         NSMutableArray *signUpPasswordConstraint = @[].mutableCopy;
@@ -175,9 +199,9 @@
         [signUpPasswordConstraint addObject:[NSLayoutConstraint constraintWithItem:_signUpPasswordTextField
                                                                          attribute:NSLayoutAttributeTop
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:_signUpAccountTextField
+                                                                            toItem:_passwordLabel
                                                                          attribute:NSLayoutAttributeBottom
-                                                                        multiplier:1.0f constant:15.0f]];
+                                                                        multiplier:1.0f constant:0.0f]];
         [signUpPasswordConstraint addObject:[NSLayoutConstraint constraintWithItem:_signUpPasswordTextField
                                                                          attribute:NSLayoutAttributeRight
                                                                          relatedBy:NSLayoutRelationEqual
@@ -202,8 +226,6 @@
     
 }
 
-
-
 - (void) initConfirmButton {
     if (!_confirmButton) {
         _confirmButton                       = [[CustomizedSettingPageButton alloc] init];
@@ -216,32 +238,152 @@
         NSMutableArray *confirmButtonConstraint = @[].mutableCopy;
         
         [confirmButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_confirmButton
-                                                                       attribute:NSLayoutAttributeTop
-                                                                       relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                                          toItem:_signUpPasswordTextField
-                                                                       attribute:NSLayoutAttributeBottom
-                                                                      multiplier:1.0f constant:50.0f]];
+                                                                        attribute:NSLayoutAttributeTop
+                                                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                           toItem:_signUpPasswordTextField
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0f constant:40.0f]];
         [confirmButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_confirmButton
-                                                                       attribute:NSLayoutAttributeRight
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:self.view
-                                                                       attribute:NSLayoutAttributeRight
-                                                                      multiplier:1.0f constant:-20.0f]];
+                                                                        attribute:NSLayoutAttributeRight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeRight
+                                                                       multiplier:1.0f constant:-20.0f]];
         [confirmButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_confirmButton
-                                                                       attribute:NSLayoutAttributeLeft
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:self.view
-                                                                       attribute:NSLayoutAttributeLeft
-                                                                      multiplier:1.0f constant:20.0f]];
+                                                                        attribute:NSLayoutAttributeLeft
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeLeft
+                                                                       multiplier:1.0f constant:20.0f]];
         [confirmButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_confirmButton
-                                                                       attribute:NSLayoutAttributeHeight
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:nil
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                      multiplier:1.0f constant:50.0f]];
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeWidth
+                                                                       multiplier:1.0f constant:50.0f]];
         
         [self.view addConstraints:confirmButtonConstraint];
     }
+}
+
+- (void) initUserNameLabel {
+    if (!_userNameLabel) {
+        _userNameLabel                 = [[UILabel alloc] initForAutolayout];
+        _userNameLabel.backgroundColor = [UIColor clearColor];
+        _userNameLabel.textColor       = [UIColor blackColor];
+        [self.view addSubview:_userNameLabel];
+        
+        NSMutableArray *labelConstraint = @[].mutableCopy;
+        
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_userNameLabel
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeTop
+                                                               multiplier:1.0f constant:40.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_userNameLabel
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1.0f constant:25.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_userNameLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1.0f constant:-20.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_userNameLabel
+                                                                attribute:NSLayoutAttributeHeight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:nil
+                                                                attribute:NSLayoutAttributeWidth
+                                                               multiplier:1.0f constant:30.0f]];
+        
+        [self.view addConstraints:labelConstraint];
+    }
+    _userNameLabel.text = @"暱稱";
+}
+
+- (void) initAccountLabel {
+    if (!_accountLabel) {
+        _accountLabel                 = [[UILabel alloc] initForAutolayout];
+        _accountLabel.backgroundColor = [UIColor clearColor];
+        _accountLabel.textColor       = [UIColor blackColor];
+        [self.view addSubview:_accountLabel];
+        
+        NSMutableArray *labelConstraint = @[].mutableCopy;
+        
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_accountLabel
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_signUpUserNameTextField
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f constant:15.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_accountLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1.0f constant:-20.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_accountLabel
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1.0f constant:25.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_accountLabel
+                                                                attribute:NSLayoutAttributeHeight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:nil
+                                                                attribute:NSLayoutAttributeWidth
+                                                               multiplier:1.0f constant:30.0f]];
+        
+        [self.view addConstraints:labelConstraint];
+    }
+    if ([_signUpType isEqualToString:@"normal"])
+        _accountLabel.text = @"帳號";
+    else
+        _accountLabel.text = @"電話號碼";
+}
+
+- (void) initPasswordLabel {
+    if (!_passwordLabel) {
+        _passwordLabel                 = [[UILabel alloc] initForAutolayout];
+        _passwordLabel.backgroundColor = [UIColor clearColor];
+        _passwordLabel.textColor       = [UIColor blackColor];
+        [self.view addSubview:_passwordLabel];
+        
+        NSMutableArray *labelConstraint = @[].mutableCopy;
+        
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_passwordLabel
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_signUpAccountTextField
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f constant:15.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_passwordLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1.0f constant:-20.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_passwordLabel
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1.0f constant:25.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_passwordLabel
+                                                                attribute:NSLayoutAttributeHeight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:nil
+                                                                attribute:NSLayoutAttributeWidth
+                                                               multiplier:1.0f constant:30.0f]];
+        
+        [self.view addConstraints:labelConstraint];
+    }
+    _passwordLabel.text = @"密碼";
 }
 
 
@@ -296,6 +438,91 @@
     [_signUpUserNameTextField resignFirstResponder];
     [_signUpAccountTextField resignFirstResponder];
     [_signUpPasswordTextField resignFirstResponder];
+}
+
+- (void) checkValidation {
+    if (_isAccountValid && _isPasswordValid && _isUserNameValid) {
+        _confirmButton.alpha   = 1.0;
+        _confirmButton.enabled = YES;
+    }
+    else {
+        _confirmButton.alpha   = 0.3;
+        _confirmButton.enabled = NO;
+    }
+}
+
+- (void) signUpUserNameTextFieldDidChange:(id)sender {
+    UITextField *textField = sender;
+    if (isNullValue([textField markedTextRange])) {
+        if (textField.text.length > 8) {
+            NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+            textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
+        }
+        
+        if (textField.text.length > 0) {
+            _isUserNameValid = YES;
+        } else {
+            _isUserNameValid = NO;
+        }
+        
+        [self checkValidation];
+    }
+    
+}
+
+- (void) signUpAccountTextFieldDidChange:(id)sender {
+    UITextField *textField = sender;
+    if (isNullValue([textField markedTextRange])) {
+        if ([_signUpType isEqualToString:@"phone"]) {
+            if (textField.text.length > 10) {
+                NSRange oversteppedRange = NSMakeRange(10, textField.text.length - 10);
+                textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
+            }
+
+        } else {
+            if (textField.text.length > 8) {
+                NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+                textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
+            }
+
+        }
+        
+        if ([_signUpType isEqualToString:@"phone"]) {
+            if ([textField.text isPhoneNumber])
+                _isAccountValid = YES;
+            else
+                _isAccountValid = NO;
+        } else {
+            if (textField.text.length >= 6) {
+                _isAccountValid = YES;
+            } else {
+                _isAccountValid = NO;
+            }
+
+        }
+        
+        [self checkValidation];
+    }
+    
+}
+
+- (void) signUpPasswordTextFieldDidChange:(id)sender {
+    UITextField *textField = sender;
+    if (isNullValue([textField markedTextRange])) {
+        if (textField.text.length > 8) {
+            NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+            textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
+        }
+        
+        if ([textField.text isPassword] && textField.text.length >= 6) {
+            _isPasswordValid = YES;
+        } else {
+            _isPasswordValid = NO;
+        }
+        
+        [self checkValidation];
+    }
+
 }
 
 /*

@@ -7,8 +7,14 @@
 //
 
 #import "RecipeViewController.h"
+#import "RecipeTableViewCell.h"
 
-@interface RecipeViewController ()
+@interface RecipeViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, strong) UITableView                       *recipeTableView;
+@property (nonatomic, strong) UIButton                          *collectionButton;
+@property (nonatomic, strong) UIButton                          *totalButton;
+@property (nonatomic, strong) UIImageView                       *totalImageView;
+@property (nonatomic, strong) UIImageView                       *collectionImageView;
 @property (nonatomic, strong) UIView                            *recipeMenuView;
 @property (nonatomic, strong) UIView                            *fanzytvLogoView;
 @property (nonatomic, strong) UIView                            *classifiedView;
@@ -16,6 +22,8 @@
 @property (nonatomic, strong) UIImageView                       *fanzytvLogo;
 @property (nonatomic, strong) NSLayoutConstraint                *recipeMenuViewLeftLayoutConstraint;
 @property (nonatomic) BOOL                                      isShownRecipeMenuView;
+@property (nonatomic, strong) NSMutableArray                    *recipeDataArray;
+@property (nonatomic, strong) NSString                          *recipeType;
 @end
 
 @implementation RecipeViewController
@@ -23,11 +31,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"食譜"];
-    [self initWholeButton];
+    [self initListButton];
+    _recipeType = @"total";
     
     UIButton *customizedButton       = [UIButton buttonWithType:UIButtonTypeCustom];
     customizedButton.backgroundColor = [UIColor clearColor];
-    customizedButton.frame           = CGRectMake(0, 0, 30, 30);
+    customizedButton.frame           = CGRectMake(0, 0, 25, 25);
     UIImage *iconImage               = [UIImage imageNamed:[NSString stringWithFormat:@"icon_category"]];
     [customizedButton setImage:iconImage forState:UIControlStateNormal];
     [customizedButton addTarget:self action:@selector(recipeMenuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -40,6 +49,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _recipeDataArray = @[].mutableCopy;
+    for (int i = 0; i < 10; i ++) {
+        [_recipeDataArray addObject:@"total"];
+    }
+    
+    [self initLayout];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -59,7 +74,228 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 #pragma mark - init
+- (void) initLayout {
+    [self initTotalButton];
+    [self initCollectionButton];
+    [self initTotalImageView];
+    [self initCollectionImageView];
+    [self initRecipeTableView];
+}
+
+- (void) initTotalButton {
+    if (!_totalButton) {
+        _totalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_totalButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [_totalButton addTarget:self action:@selector(totalButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [_totalButton setTitle:@"全 部" forState:UIControlStateNormal];
+        [_totalButton.layer setShadowColor:[UIColor blackColor].CGColor];
+        [_totalButton.layer setShadowOpacity:0.5];
+        [_totalButton.layer setShadowOffset:CGSizeMake(0, 0.5)];
+        [_totalButton setBackgroundColor:[UIColor whiteColor]];
+        [_totalButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        _totalButton.titleLabel.font     = [UIFont systemFontOfSize:18];
+        [self.view addSubview:_totalButton];
+
+        
+        NSMutableArray *buttonConstraint = [[NSMutableArray alloc] init];
+        
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalButton
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalButton
+                                                                 attribute:NSLayoutAttributeLeft
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeLeft
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalButton
+                                                                 attribute:NSLayoutAttributeRight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalButton
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0f constant:40.0f]];
+        
+        [self.view addConstraints:buttonConstraint];
+
+    }
+}
+
+- (void) initCollectionButton {
+    if (!_collectionButton) {
+        _collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_collectionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [_collectionButton addTarget:self action:@selector(collectionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [_collectionButton setTitle:@"收 藏" forState:UIControlStateNormal];
+        [_collectionButton.layer setShadowColor:[UIColor blackColor].CGColor];
+        [_collectionButton.layer setShadowOpacity:0.5];
+        [_collectionButton.layer setShadowOffset:CGSizeMake(0, 0.5)];
+        [_collectionButton setBackgroundColor:[UIColor whiteColor]];
+        [_collectionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        _collectionButton.titleLabel.font     = [UIFont systemFontOfSize:18];
+        [self.view addSubview:_collectionButton];
+
+        
+        NSMutableArray *buttonConstraint = [[NSMutableArray alloc] init];
+        
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionButton
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionButton
+                                                                 attribute:NSLayoutAttributeLeft
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:_totalButton
+                                                                 attribute:NSLayoutAttributeRight
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionButton
+                                                                 attribute:NSLayoutAttributeRight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeRight
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionButton
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0f constant:40.0f]];
+        
+        [self.view addConstraints:buttonConstraint];
+        
+    }
+}
+
+- (void) initTotalImageView {
+    if (!_totalImageView) {
+        _totalImageView = [[UIImageView alloc] initForAutolayout];
+        _totalImageView.image = [UIImage imageNamed:@"icon_whole"];
+        [_totalButton addSubview:_totalImageView];
+        
+        NSMutableArray *imageViewConstraint = [[NSMutableArray alloc] init];
+        
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalImageView
+                                                                    attribute:NSLayoutAttributeCenterY
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:_totalButton
+                                                                    attribute:NSLayoutAttributeCenterY
+                                                                   multiplier:1.0f constant:0.0f]];
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalImageView
+                                                                    attribute:NSLayoutAttributeRight
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:_totalButton
+                                                                    attribute:NSLayoutAttributeCenterX
+                                                                   multiplier:1.0f constant:-25.0f]];
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalImageView
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:nil
+                                                                    attribute:NSLayoutAttributeNotAnAttribute
+                                                                   multiplier:1.0f constant:20.0f]];
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalImageView
+                                                                    attribute:NSLayoutAttributeHeight
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:_totalImageView
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                   multiplier:1.0f constant:0.0f]];
+        
+        [self.view addConstraints:imageViewConstraint];
+        
+    }
+}
+
+- (void) initCollectionImageView {
+    if (!_collectionImageView) {
+        _collectionImageView = [[UIImageView alloc] initForAutolayout];
+        _collectionImageView.image = [UIImage imageNamed:@"icon_collect"];
+        [_collectionButton addSubview:_collectionImageView];
+        
+        NSMutableArray *imageViewConstraint = [[NSMutableArray alloc] init];
+        
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionImageView
+                                                                    attribute:NSLayoutAttributeCenterY
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:_collectionButton
+                                                                    attribute:NSLayoutAttributeCenterY
+                                                                   multiplier:1.0f constant:0.0f]];
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionImageView
+                                                                    attribute:NSLayoutAttributeRight
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:_collectionButton
+                                                                    attribute:NSLayoutAttributeCenterX
+                                                                   multiplier:1.0f constant:-25.0f]];
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionImageView
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:nil
+                                                                    attribute:NSLayoutAttributeNotAnAttribute
+                                                                   multiplier:1.0f constant:20.0f]];
+        [imageViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionImageView
+                                                                    attribute:NSLayoutAttributeHeight
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:_collectionImageView
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                   multiplier:1.0f constant:0.0f]];
+        
+        [self.view addConstraints:imageViewConstraint];
+        
+    }
+
+}
+
+- (void) initRecipeTableView {
+    if (!_recipeTableView) {
+        _recipeTableView                 = [[UITableView alloc] initForAutolayout];
+        _recipeTableView.backgroundColor = [UIColor colorWithHexString:@"#ecf8f7"];
+        _recipeTableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
+        _recipeTableView.dataSource      = self;
+        _recipeTableView.delegate        = self;
+        [self.view addSubview:_recipeTableView];
+        
+        NSMutableArray *tableViewConstraint = [[NSMutableArray alloc] init];
+        
+        [tableViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeTableView
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:_totalButton
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1.0f constant:0.0f]];
+        [tableViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeTableView
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.view
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                  multiplier:1.0f constant:0.0f]];
+        [tableViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeTableView
+                                                                   attribute:NSLayoutAttributeRight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.view
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0f constant:0.0f]];
+        [tableViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_recipeTableView
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:self.view
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                   multiplier:1.0f constant:0.0f]];
+        
+        [self.view addConstraints:tableViewConstraint];
+    }
+    [_recipeTableView reloadData];
+}
+
 - (void) initRecipeMenuLayout {
     [self initRecipeMenuView];
     [self initRecipeMenuButton];
@@ -236,7 +472,7 @@
     }
 }
 
-
+#pragma mark - button action
 - (void)recideMenuButtonClicked:(id)sender {
     UIButton *button = sender;
     switch (button.tag) {
@@ -333,6 +569,72 @@
                      }];
 
 }
+
+- (void) totalButtonPressed:(id)sender {
+    if ([_recipeType isEqualToString:@"collection"]) {
+        _recipeDataArray = @[].mutableCopy;
+        for (int i = 0; i < 10; i ++) {
+            [_recipeDataArray addObject:@"total"];
+        }
+        _recipeType = @"total";
+        [_recipeTableView reloadData];
+    }
+}
+
+- (void) collectionButtonPressed:(id)sender {
+    if ([_recipeType isEqualToString:@"total"]) {
+        _recipeDataArray = @[].mutableCopy;
+        for (int i = 0; i < 10; i ++) {
+            [_recipeDataArray addObject:@"collection"];
+        }
+        _recipeType = @"collection";
+        [_recipeTableView reloadData];
+    }
+}
+
+#pragma mark - UITableView data source and delegate
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
+    return _recipeDataArray.count;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 15 + (kScreenWidth-30-5)*3.0f/4.0f + 7.8f + 43.0f + 5.0f + 30.0f;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return 0;
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"FrontpageTableViewCell";
+    RecipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    
+    if (!cell) {
+        cell = [[RecipeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    cell.string = _recipeDataArray[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 /*
 #pragma mark - Navigation
 

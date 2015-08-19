@@ -82,11 +82,11 @@
     [self initNavigationBarBackButton:@"RIGHT"];
 }
 
-- (void) initWholeButton {
+- (void) initListButton {
     UIButton *customizedButton       = [UIButton buttonWithType:UIButtonTypeCustom];
     customizedButton.backgroundColor = [UIColor clearColor];
-    customizedButton.frame           = CGRectMake(0, 0, 30, 30);
-    UIImage *iconImage               = [UIImage imageNamed:[NSString stringWithFormat:@"icon_whole"]];
+    customizedButton.frame           = CGRectMake(0, 0, 25, 25);
+    UIImage *iconImage               = [UIImage imageNamed:[NSString stringWithFormat:@"icon_list"]];
     [customizedButton setImage:iconImage forState:UIControlStateNormal];
     [customizedButton addTarget:self action:@selector(wholeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *navigatinBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customizedButton];
