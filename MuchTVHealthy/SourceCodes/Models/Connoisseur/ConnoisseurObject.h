@@ -42,7 +42,8 @@
 
 @interface ConnoisseurAboutDataObject : NSObject
 @property (nonatomic,strong) NSString                   *dataType;
-@property (nonatomic,strong) NSString                   *AboutData;
+@property (nonatomic,strong) NSString                   *aboutTitle;
+@property (nonatomic,strong) NSString                   *aboutContent;
 - (id) initWithDictionaryObject:(NSMutableDictionary *)data;
 @end
 
@@ -57,5 +58,9 @@
 @end
 
 @interface ConnoisseurFacebookDataObject : NSObject
-
+@property (nonatomic,strong) NSString                   *dataType;
+@property (nonatomic,strong) NSString                   *facebookImage;
+@property (nonatomic,strong) NSString                   *facebookTitle;
+@property (nonatomic,strong) NSString                   *facebookTime;
+- (id) initWithDictionaryObject:(NSMutableDictionary *)data;
 @end
