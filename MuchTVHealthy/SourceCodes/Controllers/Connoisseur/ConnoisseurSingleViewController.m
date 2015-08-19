@@ -8,7 +8,7 @@
 
 #import "ConnoisseurSingleViewController.h"
 
-@interface ConnoisseurSingleViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ConnoisseurSingleViewController () <UITableViewDataSource, UITableViewDelegate,RelativeDiscussionDelegate>
 @property (nonatomic,strong)UITableView                 *connoisseurSingleTableView;
 @property (nonatomic,strong)ConnoisseurModel            *connoisseurSinglePageModel;
 @property (nonatomic,strong)ConnoisseurSinglePageObject *connoisseurSinglePageObject;
@@ -125,6 +125,7 @@
         if (!cell) {
             cell = [[RelativeDiscussionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         }
+        cell.delegate = self;
         cell.hasMoreDicussion = _hasMoreDicussionData;
         cell.relativeDiscussionList = _connoisseurSinglePageObject.discussionArray;
         return cell;
@@ -191,7 +192,7 @@
         _relativeDiscussionListCellHeight = 400;
     }
     else {
-        _relativeDiscussionListCellHeight = 400-100/3;
+        _relativeDiscussionListCellHeight = 100/3 + _connoisseurSinglePageObject.discussionArray.count*80 +40/3;
     }
 }
 - (void) calcRecommendListCellHeight {
@@ -199,7 +200,7 @@
         _recommendListCellHeight = 320;
     }
     else {
-        _recommendListCellHeight = 100/3 + _connoisseurSinglePageObject.recommendArray.count*80 +40/3;
+        _recommendListCellHeight = 100/3 + _connoisseurSinglePageObject.recommendArray.count*265/3 +40/3;
     }
 }
 
@@ -222,10 +223,22 @@
     }
 }
 
+- (void) postDiscussionButtonClickedDelegateToController {
+    NSLog(@"test");
+    PostNewDiscussionViewController *controller = [PostNewDiscussionViewController new];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void) discussionCellPressedDelegate {
+    DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
+    [self.navigationController pushViewController:singleViewController animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

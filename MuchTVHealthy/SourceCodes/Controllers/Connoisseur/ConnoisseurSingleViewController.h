@@ -14,6 +14,8 @@
 #import "AboutTableViewCell.h"
 #import "RecommendTableViewCell.h"
 #import "FacebookTableViewCell.h"
+#import "PostNewDiscussionViewController.h"
+#import "DiscussionSingleViewController.h"
 
 @interface ConnoisseurSingleViewController : BaseViewController
 @property (nonatomic,strong)ConnoisseurDataObject       *connoisseurDataObject;

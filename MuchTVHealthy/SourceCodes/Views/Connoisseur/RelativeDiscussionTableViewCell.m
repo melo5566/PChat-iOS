@@ -8,7 +8,7 @@
 
 #import "RelativeDiscussionTableViewCell.h"
 
-@interface RelativeDiscussionTableViewCell() <UITableViewDataSource, UITableViewDelegate>
+@interface RelativeDiscussionTableViewCell() <UITableViewDataSource, UITableViewDelegate,RelativeDiscussionDelegate>
 @property (nonatomic,strong) UITableView        *relativeDiscussionListTableView;
 @property (nonatomic,strong) UILabel            *postRelativeDiscussion;
 @property (nonatomic,strong) UIButton           *postRelativeDiscussionButton;
@@ -279,9 +279,8 @@
         _postRelativeDiscussionButton.layer.borderWidth  = 1.0f;
         _postRelativeDiscussionButton.layer.borderColor  = [UIColor colorWithHexString:kConnoisseurSinglePagePostDicussionTextColor].CGColor;
         _postRelativeDiscussionButton.layer.cornerRadius = 20.0f;
-
+        [_postRelativeDiscussionButton addTarget:self action:@selector(postDiscussionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_postRelativeDiscussionButton];
-        
         NSMutableArray *postButtonConstraint = [[NSMutableArray alloc] init];
         
         [postButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_postRelativeDiscussionButton
@@ -414,6 +413,15 @@
     
 }
 
+- (void)postDiscussionButtonClicked:(id)sender {
+    
+    [self.delegate postDiscussionButtonClickedDelegateToCell];
+}
+
+- (void) postDiscussionButtonClickedDelegateToCell {
+    [self.delegate postDiscussionButtonClickedDelegateToController];
+}
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if(indexPath.row == 0) {
@@ -424,6 +432,7 @@
             cell = [[RelativeDiscussionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
         [cell initPostDicussionButtonLayout];
         return cell;
     }
@@ -466,5 +475,14 @@
         [self.contentView addSubview:_topBorder];
     }
 }
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row!=0&&indexPath.row!=_relativeDiscussionList.count) {
+        [self.delegate discussionCellPressedDelegate];
+    }
+
+}
+
+
 
 @end

@@ -33,6 +33,7 @@
 
 - (void) setConnoisseurRecommendDataObject:(ConnoisseurRecommendDataObject *)connoisseurRecommendDataObject {
     _connoisseurRecommendDataObject = connoisseurRecommendDataObject;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self initProductImageView];
     [self initProductTitleLabel];
     [self initProductSizeLabel];
@@ -356,6 +357,7 @@
             UIImageView *loadMoreImage = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth - kDiscussionCardLeftAndRightPadding * 2 - 20) / 2, 12, 20, 15)];
             loadMoreImage.backgroundColor = [UIColor clearColor];
             [loadMoreImage setImage:[UIImage imageNamed:@"icon_more"]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.contentView addSubview:loadMoreImage];
             [cell initTopBorder];
         }

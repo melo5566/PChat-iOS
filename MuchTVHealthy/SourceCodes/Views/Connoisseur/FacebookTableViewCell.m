@@ -32,6 +32,7 @@
 
 - (void) setConnoisseurFacebookDataObject:(ConnoisseurFacebookDataObject *)connoisseurFacebookDataObject {
     _connoisseurFacebookDataObject = connoisseurFacebookDataObject;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self initFacebookImageView];
     [self initFacebookTitleLabel];
     [self initFacebookTimeImageView];
@@ -320,6 +321,7 @@
             loadMoreImage.backgroundColor = [UIColor clearColor];
             [loadMoreImage setImage:[UIImage imageNamed:@"icon_more"]];
             [cell.contentView addSubview:loadMoreImage];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell initTopBorder];
         }
         return cell;
