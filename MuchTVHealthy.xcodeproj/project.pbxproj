@@ -79,6 +79,11 @@
 		D0D2960F1B69ECF300671449 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D2960E1B69ECF300671449 /* UserModel.m */; };
 		D0D296131B69EE0800671449 /* CustomizedSettingPageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D296121B69EE0800671449 /* CustomizedSettingPageButton.m */; };
 		D0D296181B6A128500671449 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D296171B6A128500671449 /* SignUpViewController.m */; };
+		D0EA38411B83152C00C96040 /* icon_collect.png in Resources */ = {isa = PBXBuildFile; fileRef = D0EA38401B83152C00C96040 /* icon_collect.png */; };
+		D0EA38431B8323D400C96040 /* icon_list.png in Resources */ = {isa = PBXBuildFile; fileRef = D0EA38421B8323D400C96040 /* icon_list.png */; };
+		D0EA38471B83256400C96040 /* RecipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38461B83256400C96040 /* RecipeTableViewCell.m */; };
+		D0EA38491B8336A400C96040 /* image_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D0EA38481B8336A400C96040 /* image_logo.png */; };
+		D0EA384F1B833B3E00C96040 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D0EA384E1B833B3E00C96040 /* logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +213,12 @@
 		D0D296121B69EE0800671449 /* CustomizedSettingPageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomizedSettingPageButton.m; path = CustomizedButton/CustomizedSettingPageButton.m; sourceTree = "<group>"; };
 		D0D296161B6A128500671449 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Setting/SignUpViewController.h; sourceTree = "<group>"; };
 		D0D296171B6A128500671449 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Setting/SignUpViewController.m; sourceTree = "<group>"; };
+		D0EA38401B83152C00C96040 /* icon_collect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_collect.png; path = Resources/icon_collect.png; sourceTree = "<group>"; };
+		D0EA38421B8323D400C96040 /* icon_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_list.png; path = Resources/icon_list.png; sourceTree = "<group>"; };
+		D0EA38451B83256400C96040 /* RecipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipeTableViewCell.h; path = Recipe/RecipeTableViewCell.h; sourceTree = "<group>"; };
+		D0EA38461B83256400C96040 /* RecipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipeTableViewCell.m; path = Recipe/RecipeTableViewCell.m; sourceTree = "<group>"; };
+		D0EA38481B8336A400C96040 /* image_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_logo.png; path = Resources/image_logo.png; sourceTree = "<group>"; };
+		D0EA384E1B833B3E00C96040 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Resources/logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,6 +442,7 @@
 		134371041B68B67F00AE7FA7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0EA38441B83253700C96040 /* Recipe */,
 				2672BD231B7C4388007AB9F1 /* Connoisseur */,
 				D0D030CA1B73078200046917 /* CustomizedView */,
 				D0D030C01B72FE2300046917 /* Discussion */,
@@ -588,19 +600,23 @@
 			isa = PBXGroup;
 			children = (
 				26EA55741B81A2DD0053564F /* icon_issue.png */,
+				D0EA38421B8323D400C96040 /* icon_list.png */,
 				D05958DD1B7DA952008C102C /* icon_delete.png */,
 				D05958DE1B7DA952008C102C /* icon_fncamera.png */,
 				D05958DF1B7DA952008C102C /* icon_fnphoto.png */,
 				D05958AC1B7C8BCE008C102C /* btn_fanzytv.png */,
 				D05958AD1B7C8BCE008C102C /* checkbox.png */,
 				D05958AE1B7C8BCE008C102C /* fanzytv_btn@2x.png */,
+				D0EA38481B8336A400C96040 /* image_logo.png */,
 				D05958AF1B7C8BCE008C102C /* icon_arrow_back.png */,
+				D0EA384E1B833B3E00C96040 /* logo.png */,
 				D05958B01B7C8BCE008C102C /* icon_loading.png */,
 				D05958B11B7C8BCE008C102C /* icon_more.png */,
 				D05958B21B7C8BCE008C102C /* icon_personal_setting.png */,
 				D05958EC1B7DCA3A008C102C /* icon_category.png */,
 				D05958B31B7C8BCE008C102C /* icon_share.png */,
 				D05958D91B7DA1BA008C102C /* icon_time.png */,
+				D0EA38401B83152C00C96040 /* icon_collect.png */,
 				D05958B61B7C8BCE008C102C /* icon_whole.png */,
 				D05958B71B7C8BCE008C102C /* image_placeholder_4x3.png */,
 				D05958B81B7C8BCE008C102C /* image_preset_avatar.png */,
@@ -657,6 +673,15 @@
 				D0D296121B69EE0800671449 /* CustomizedSettingPageButton.m */,
 			);
 			name = CustomizedButton;
+			sourceTree = "<group>";
+		};
+		D0EA38441B83253700C96040 /* Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				D0EA38451B83256400C96040 /* RecipeTableViewCell.h */,
+				D0EA38461B83256400C96040 /* RecipeTableViewCell.m */,
+			);
+			name = Recipe;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -743,6 +768,8 @@
 			files = (
 				D05958BA1B7C8BCE008C102C /* btn_fanzytv.png in Resources */,
 				D05958BD1B7C8BCE008C102C /* icon_arrow_back.png in Resources */,
+				D0EA384F1B833B3E00C96040 /* logo.png in Resources */,
+				D0EA38491B8336A400C96040 /* image_logo.png in Resources */,
 				D05958C01B7C8BCE008C102C /* icon_personal_setting.png in Resources */,
 				D05958BC1B7C8BCE008C102C /* fanzytv_btn@2x.png in Resources */,
 				D05958C41B7C8BCE008C102C /* icon_whole.png in Resources */,
@@ -750,6 +777,7 @@
 				D05958ED1B7DCA3A008C102C /* icon_category.png in Resources */,
 				D05958BB1B7C8BCE008C102C /* checkbox.png in Resources */,
 				13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */,
+				D0EA38411B83152C00C96040 /* icon_collect.png in Resources */,
 				26EA55751B81A2DD0053564F /* icon_issue.png in Resources */,
 				D05958C61B7C8BCE008C102C /* image_preset_avatar.png in Resources */,
 				134370B91B68B19000AE7FA7 /* LaunchScreen.xib in Resources */,
@@ -760,6 +788,7 @@
 				D05958E21B7DA952008C102C /* icon_fnphoto.png in Resources */,
 				134370B61B68B19000AE7FA7 /* Images.xcassets in Resources */,
 				D05958BE1B7C8BCE008C102C /* icon_loading.png in Resources */,
+				D0EA38431B8323D400C96040 /* icon_list.png in Resources */,
 				D05958C71B7C8BCE008C102C /* selected_checkbox.png in Resources */,
 				D05958DC1B7DA7B6008C102C /* icon_menu.png in Resources */,
 				D05958BF1B7C8BCE008C102C /* icon_more.png in Resources */,
@@ -825,6 +854,7 @@
 				D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */,
 				D0D296031B69D4D300671449 /* BaseModel.m in Sources */,
 				D05958F41B7DF156008C102C /* CustomizedAlertView.m in Sources */,
+				D0EA38471B83256400C96040 /* RecipeTableViewCell.m in Sources */,
 				267325A11B7DF465009641D1 /* RelativeDiscussionTableViewCell.m in Sources */,
 				D0D296181B6A128500671449 /* SignUpViewController.m in Sources */,
 				D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */,

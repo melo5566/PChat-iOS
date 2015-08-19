@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Utils)
-
+- (BOOL) isPhoneNumber;
+- (BOOL) isPassword;
 - (BOOL) isEmpty;
 - (BOOL) isNotEmpty;
 - (BOOL) isEmail;

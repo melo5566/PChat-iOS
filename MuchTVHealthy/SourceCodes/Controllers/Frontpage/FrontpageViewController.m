@@ -27,6 +27,7 @@
 @property (nonatomic) BOOL                                      isLoadingMoreFrontpageData;
 @property (nonatomic, strong) CustomizedAlertView               *notFinishedAlert;
 @property (nonatomic, strong) KiiUser                           *currentUser;
+@property (nonatomic) BOOL                                      isFirstLoad;
 @end
 
 
@@ -35,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"首頁"];
-    [self initWholeButton];
+    [self initListButton];
     
     UIButton *postDiscussionButton       = [UIButton buttonWithType:UIButtonTypeCustom];
     postDiscussionButton.backgroundColor = [UIColor clearColor];
@@ -57,6 +58,8 @@
         [_frontpageDataArray addObject:@"a"];
     }
     [self resetParams];
+    if (!_isFirstLoad)
+        [self initFrontpageTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -130,6 +133,7 @@
 
 #pragma mark - methods
 - (void) firstLoadFrontpageData {
+    _isFirstLoad = NO;
     if (!_frontpageModel) {
         _frontpageModel = [[FrontpageModel alloc] init];
         _frontpageModel.delegate = self;
