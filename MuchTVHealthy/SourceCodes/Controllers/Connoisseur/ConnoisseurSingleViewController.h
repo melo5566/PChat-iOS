@@ -11,6 +11,9 @@
 #import "ConnoisseurModel.h"
 #import "ConnoisseurImageTableViewCell.h"
 #import "RelativeDiscussionTableViewCell.h"
+#import "AboutTableViewCell.h"
+#import "RecommendTableViewCell.h"
+#import "FacebookTableViewCell.h"
 
 @interface ConnoisseurSingleViewController : BaseViewController
 @property (nonatomic,strong)ConnoisseurDataObject       *connoisseurDataObject;
