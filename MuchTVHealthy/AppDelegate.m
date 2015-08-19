@@ -29,7 +29,7 @@
              andSite:kiiSiteJP];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults stringForKey:@"account"] && [defaults stringForKey:@"password"]) {
+    if ([[defaults stringForKey:@"autoLogin"] isEqualToString:@"YES"]) {
         [self loginWithUserDefault];
     }
     [self setFrontpageForRootViewController];
