@@ -12,6 +12,7 @@
 #import "DiscussionSingleViewController.h"
 #import "ConnoisseurListViewController.h"
 #import "RecipeViewController.h"
+#import "MessageCenterViewController.h"
 
 @interface BaseViewController ()
 @property (nonatomic, strong) UIAlertView                       *loginAlertView;
@@ -92,6 +93,16 @@
     UIBarButtonItem *navigatinBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customizedButton];
     navigatinBarButtonItem.enabled = YES;
     self.navigationItem.leftBarButtonItem = navigatinBarButtonItem;
+}
+
+- (void) initGestureRecognizer {
+    UIScreenEdgePanGestureRecognizer *swipeRight = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self
+                                                                                              action:@selector(swipeRight)];
+    [swipeRight setEdges:UIRectEdgeLeft];
+    [self.view addGestureRecognizer:swipeRight];
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft)];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [_menuView addGestureRecognizer:swipeLeft];
 }
 
 - (void) initNavigationBarCloseButton:(NSString *)position {
@@ -502,12 +513,13 @@
         }
         case 1: {
             // 訊息
-            NSLog(@"%lu",button.tag);
+            MessageCenterViewController *controller = [MessageCenterViewController new];
+            [self.navigationController pushViewController:controller animated:YES];
             break;
         }
         case 2: {
             // 資料討論
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         }
         case 3: {
@@ -539,6 +551,20 @@
         [self dismissMenu];
     } else {
         [self showMenu];
+    }
+}
+
+- (void)swipeRight {
+    if (!_isShownMenuView) {
+        [self.view removeConstraint:_menuViewRightLayoutConstraint];
+        [self showMenu];
+    }
+}
+
+- (void)swipeLeft {
+    if (_isShownMenuView) {
+        [self.view removeConstraint:_menuViewRightLayoutConstraint];
+        [self dismissMenu];
     }
 }
 

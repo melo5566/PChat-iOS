@@ -55,6 +55,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self initMenuLayout];
+    [self initGestureRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

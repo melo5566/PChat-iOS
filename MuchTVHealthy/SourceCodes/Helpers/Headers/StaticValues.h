@@ -14,7 +14,7 @@ static NSString * const kKiiApplicationKey    = @"a213b8cfb273b87ef1261b8fa43c45
  *  color hex string
  */
 static NSString * const kDefaultBackGroundColorHexString                                = @"#FAFAFA";
-static NSString * const kNavigationBarColorHexString                                    = @"#of9bab";
+static NSString * const kNavigationBarColorHexString                                    = @"#109bac";
 static NSString * const kDefaultYellowColorHexString                                    = @"#FFCF11";
 static NSString * const kFacebookButtonColorHexString                                   = @"#5F80D6";
 static NSString * const kGooglePlusButtonColorHexString                                 = @"#F05343";
