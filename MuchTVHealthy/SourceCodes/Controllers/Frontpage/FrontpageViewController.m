@@ -37,16 +37,6 @@
     [super viewDidLoad];
     [self.navigationItem setTitle:@"首頁"];
     [self initListButton];
-    
-    UIButton *postDiscussionButton       = [UIButton buttonWithType:UIButtonTypeCustom];
-    postDiscussionButton.backgroundColor = [UIColor clearColor];
-    postDiscussionButton.frame           = CGRectMake(0, 0, 30, 30);
-    UIImage *image               = [UIImage imageNamed:[NSString stringWithFormat:@"icon_setting"]];
-    [postDiscussionButton setImage:image forState:UIControlStateNormal];
-    [postDiscussionButton addTarget:self action:@selector(postDiscussionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *navigatinBarButtonItem1 = [[UIBarButtonItem alloc] initWithCustomView:postDiscussionButton];
-    self.navigationItem.rightBarButtonItem = navigatinBarButtonItem1;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

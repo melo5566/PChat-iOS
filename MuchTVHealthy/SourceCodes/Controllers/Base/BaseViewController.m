@@ -503,8 +503,7 @@
         }
         case 1: {
             // 訊息
-            DiscussionSingleViewController *singleViewController = [DiscussionSingleViewController new];
-            [self.navigationController pushViewController:singleViewController animated:YES];
+            NSLog(@"%lu",button.tag);
             break;
         }
         case 2: {
