@@ -33,8 +33,16 @@
 		134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FB1B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m */; };
 		1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 134370FE1B68B67F00AE7FA7 /* UIView+Utils.m */; };
 		13619F1E1B7B2F5000B79CEC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13619F1D1B7B2F5000B79CEC /* .gitignore */; };
+		263CD0E11B856DB6008AE245 /* VideoListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0E01B856DB6008AE245 /* VideoListTableViewCell.m */; };
+		263CD0E51B856E2C008AE245 /* VideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0E41B856E2C008AE245 /* VideoModel.m */; };
+		263CD0E81B856E45008AE245 /* VideoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0E71B856E45008AE245 /* VideoObject.m */; };
+		263CD0EA1B857843008AE245 /* preset.png in Resources */ = {isa = PBXBuildFile; fileRef = 263CD0E91B857843008AE245 /* preset.png */; };
+		263CD0EC1B8582A4008AE245 /* icon_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 263CD0EB1B8582A4008AE245 /* icon_play.png */; };
+		263CD0EF1B858542008AE245 /* YoutubeVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */; };
 		265E30D71B842CB5006279EE /* FacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 265E30D61B842CB5006279EE /* FacebookTableViewCell.m */; };
 		265E30D91B84425B006279EE /* icon_go.png in Resources */ = {isa = PBXBuildFile; fileRef = 265E30D81B84425B006279EE /* icon_go.png */; };
+		265E30DF1B8491C9006279EE /* VideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 265E30DC1B8491C9006279EE /* VideoListViewController.m */; };
+		265E30E01B8491C9006279EE /* VideoSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 265E30DE1B8491C9006279EE /* VideoSingleViewController.m */; };
 		2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */; };
 		2673259E1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2673259D1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m */; };
 		267325A11B7DF465009641D1 /* RelativeDiscussionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 267325A01B7DF465009641D1 /* RelativeDiscussionTableViewCell.m */; };
@@ -144,9 +152,23 @@
 		134371011B68B67F00AE7FA7 /* EventList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventList.h; sourceTree = "<group>"; };
 		134371021B68B67F00AE7FA7 /* StaticValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticValues.h; sourceTree = "<group>"; };
 		13619F1D1B7B2F5000B79CEC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		263CD0DF1B856DB6008AE245 /* VideoListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoListTableViewCell.h; sourceTree = "<group>"; };
+		263CD0E01B856DB6008AE245 /* VideoListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoListTableViewCell.m; sourceTree = "<group>"; };
+		263CD0E31B856E2C008AE245 /* VideoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoModel.h; sourceTree = "<group>"; };
+		263CD0E41B856E2C008AE245 /* VideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoModel.m; sourceTree = "<group>"; };
+		263CD0E61B856E45008AE245 /* VideoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoObject.h; sourceTree = "<group>"; };
+		263CD0E71B856E45008AE245 /* VideoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoObject.m; sourceTree = "<group>"; };
+		263CD0E91B857843008AE245 /* preset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = preset.png; path = Resources/preset.png; sourceTree = "<group>"; };
+		263CD0EB1B8582A4008AE245 /* icon_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_play.png; path = Resources/icon_play.png; sourceTree = "<group>"; };
+		263CD0ED1B85853A008AE245 /* YoutubeVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoutubeVideoPlayerView.h; sourceTree = "<group>"; };
+		263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoutubeVideoPlayerView.m; sourceTree = "<group>"; };
 		265E30D51B842CB5006279EE /* FacebookTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookTableViewCell.h; sourceTree = "<group>"; };
 		265E30D61B842CB5006279EE /* FacebookTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTableViewCell.m; sourceTree = "<group>"; };
 		265E30D81B84425B006279EE /* icon_go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_go.png; path = Resources/icon_go.png; sourceTree = "<group>"; };
+		265E30DB1B8491C9006279EE /* VideoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoListViewController.h; sourceTree = "<group>"; };
+		265E30DC1B8491C9006279EE /* VideoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoListViewController.m; sourceTree = "<group>"; };
+		265E30DD1B8491C9006279EE /* VideoSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoSingleViewController.h; sourceTree = "<group>"; };
+		265E30DE1B8491C9006279EE /* VideoSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoSingleViewController.m; sourceTree = "<group>"; };
 		2672BD241B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurListTableViewCell.h; sourceTree = "<group>"; };
 		2672BD251B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnoisseurListTableViewCell.m; sourceTree = "<group>"; };
 		2673259C1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnoisseurImageTableViewCell.h; sourceTree = "<group>"; };
@@ -341,6 +363,7 @@
 		134370EA1B68B67F00AE7FA7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				265E30DA1B8491C9006279EE /* Video  */,
 				D05958EE1B7DCAFB008C102C /* Recipe */,
 				2689A3EA1B7B345C00B4F708 /* Connoisseur */,
 				D0D030BC1B72FAD300046917 /* Discussion */,
@@ -440,6 +463,7 @@
 		134371031B68B67F00AE7FA7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				263CD0E21B856DF6008AE245 /* Video */,
 				2689A3EE1B7B3B5300B4F708 /* Connoisseur */,
 				D0D2960C1B69ECC100671449 /* UserModel */,
 				D0D296041B69EB4E00671449 /* SignUpAndSignIn */,
@@ -453,6 +477,7 @@
 		134371041B68B67F00AE7FA7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				263CD0DE1B856DA7008AE245 /* Video */,
 				D0EA38441B83253700C96040 /* Recipe */,
 				2672BD231B7C4388007AB9F1 /* Connoisseur */,
 				D0D030CA1B73078200046917 /* CustomizedView */,
@@ -470,6 +495,39 @@
 				134370B71B68B19000AE7FA7 /* LaunchScreen.xib */,
 			);
 			name = StoryboardAndXib;
+			sourceTree = "<group>";
+		};
+		263CD0DE1B856DA7008AE245 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */,
+				263CD0ED1B85853A008AE245 /* YoutubeVideoPlayerView.h */,
+				263CD0DF1B856DB6008AE245 /* VideoListTableViewCell.h */,
+				263CD0E01B856DB6008AE245 /* VideoListTableViewCell.m */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		263CD0E21B856DF6008AE245 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				263CD0E31B856E2C008AE245 /* VideoModel.h */,
+				263CD0E41B856E2C008AE245 /* VideoModel.m */,
+				263CD0E61B856E45008AE245 /* VideoObject.h */,
+				263CD0E71B856E45008AE245 /* VideoObject.m */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		265E30DA1B8491C9006279EE /* Video  */ = {
+			isa = PBXGroup;
+			children = (
+				265E30DB1B8491C9006279EE /* VideoListViewController.h */,
+				265E30DC1B8491C9006279EE /* VideoListViewController.m */,
+				265E30DD1B8491C9006279EE /* VideoSingleViewController.h */,
+				265E30DE1B8491C9006279EE /* VideoSingleViewController.m */,
+			);
+			path = "Video ";
 			sourceTree = "<group>";
 		};
 		2672BD231B7C4388007AB9F1 /* Connoisseur */ = {
@@ -616,6 +674,8 @@
 		D0D295E61B68C66400671449 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				263CD0EB1B8582A4008AE245 /* icon_play.png */,
+				263CD0E91B857843008AE245 /* preset.png */,
 				265E30D81B84425B006279EE /* icon_go.png */,
 				26EA55741B81A2DD0053564F /* icon_issue.png */,
 				D0EA38421B8323D400C96040 /* icon_list.png */,
@@ -785,12 +845,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D05958BA1B7C8BCE008C102C /* btn_fanzytv.png in Resources */,
+				263CD0EA1B857843008AE245 /* preset.png in Resources */,
 				D05958BD1B7C8BCE008C102C /* icon_arrow_back.png in Resources */,
 				D0EA384F1B833B3E00C96040 /* logo.png in Resources */,
 				D0EA38491B8336A400C96040 /* image_logo.png in Resources */,
 				D05958C01B7C8BCE008C102C /* icon_personal_setting.png in Resources */,
 				D05958BC1B7C8BCE008C102C /* fanzytv_btn@2x.png in Resources */,
 				265E30D91B84425B006279EE /* icon_go.png in Resources */,
+				263CD0EC1B8582A4008AE245 /* icon_play.png in Resources */,
 				D05958C41B7C8BCE008C102C /* icon_whole.png in Resources */,
 				134370B41B68B19000AE7FA7 /* Main.storyboard in Resources */,
 				D05958ED1B7DCA3A008C102C /* icon_category.png in Resources */,
@@ -868,7 +930,9 @@
 				D0D295DD1B68C24200671449 /* FrontpageViewController.m in Sources */,
 				D0D296131B69EE0800671449 /* CustomizedSettingPageButton.m in Sources */,
 				2689A3ED1B7B34BB00B4F708 /* ConnoisseurListViewController.m in Sources */,
+				263CD0E81B856E45008AE245 /* VideoObject.m in Sources */,
 				D05958CA1B7C8C7A008C102C /* PostNewDiscussionReplyViewController.m in Sources */,
+				263CD0E51B856E2C008AE245 /* VideoModel.m in Sources */,
 				D05958F11B7DCB29008C102C /* RecipeViewController.m in Sources */,
 				D0D296071B69EBC000671449 /* SignUpAndSignInModel.m in Sources */,
 				268A67891B82D7CD00FCDD8E /* AboutTableViewCell.m in Sources */,
@@ -885,16 +949,20 @@
 				D0D296001B69D30900671449 /* FrontpageObject.m in Sources */,
 				D0D2960F1B69ECF300671449 /* UserModel.m in Sources */,
 				265E30D71B842CB5006279EE /* FacebookTableViewCell.m in Sources */,
+				263CD0EF1B858542008AE245 /* YoutubeVideoPlayerView.m in Sources */,
 				134370AE1B68B19000AE7FA7 /* AppDelegate.m in Sources */,
+				265E30E01B8491C9006279EE /* VideoSingleViewController.m in Sources */,
 				268A678C1B8321EA00FCDD8E /* RecommendTableViewCell.m in Sources */,
 				134371061B68B67F00AE7FA7 /* NSString+Utils.m in Sources */,
 				D0D2960B1B69EC4800671449 /* PersonalSettingViewController.m in Sources */,
 				1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */,
 				2689A3F11B7B3BAA00B4F708 /* ConnoisseurModel.m in Sources */,
 				2689A3F41B7B41DC00B4F708 /* ConnoisseurObject.m in Sources */,
+				265E30DF1B8491C9006279EE /* VideoListViewController.m in Sources */,
 				134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */,
 				134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */,
 				D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */,
+				263CD0E11B856DB6008AE245 /* VideoListTableViewCell.m in Sources */,
 				267325A71B7DF53F009641D1 /* ConnoisseurSingleViewController.m in Sources */,
 				134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */,
 				2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */,

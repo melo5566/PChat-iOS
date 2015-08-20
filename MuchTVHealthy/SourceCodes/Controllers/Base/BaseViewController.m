@@ -12,6 +12,7 @@
 #import "DiscussionSingleViewController.h"
 #import "ConnoisseurListViewController.h"
 #import "RecipeViewController.h"
+#import "VideoListViewController.h"
 
 @interface BaseViewController ()
 @property (nonatomic, strong) UIAlertView                       *loginAlertView;
@@ -509,6 +510,8 @@
         case 2: {
             // 資料討論
             NSLog(@"%lu",button.tag);
+            VideoListViewController     *viewController = [VideoListViewController new];
+            [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
         case 3: {

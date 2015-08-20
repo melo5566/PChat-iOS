@@ -14,6 +14,7 @@ static NSString * const kKiiApplicationKey    = @"a213b8cfb273b87ef1261b8fa43c45
  *  color hex string
  */
 static NSString * const kDefaultBackGroundColorHexString                                = @"#FAFAFA";
+static NSString * const kDefaultSeparatorLineColorHexString                             = @"#dbecee";//h
 static NSString * const kNavigationBarColorHexString                                    = @"#of9bab";
 static NSString * const kDefaultYellowColorHexString                                    = @"#FFCF11";
 static NSString * const kFacebookButtonColorHexString                                   = @"#5F80D6";
@@ -57,7 +58,6 @@ static NSString * const kColorHexStringLikeButtonBackgroundLiked        = @"#454
 static NSString * const kColorHexStringLikeButtonTitleLoading           = @"#C4C4C4";
 static NSString * const kColorHexStringLikeButtonTitleNotLiked          = @"#FFFFFF";
 static NSString * const kColorHexStringLikeButtonTitleLiked             = @"#C4C4C4";
-
 /*
  *  Font size
  */
@@ -115,6 +115,8 @@ static CGFloat const kDiscussionAvatarHeightInIphone6               = 60.0f;
 static CGFloat const kDiscussionAttachmentViewHeight                = 48.0f;
 static CGFloat const kDiscussionReplyAvatarHeightInIphone6          = 45.0f;
 
+static CGFloat const kkGlobalCardCellHeight                         = 80.0f;
+
 /*
  *  TableView Load More Data Limit
  */
@@ -130,6 +132,7 @@ static NSUInteger const kDiscussionReplyTextLimitLength      = 140;
 
 
 // size value
+static CGFloat const kkGlobalDefaultPadding     = 6.0f;
 static CGFloat const kGlobalDefaultPadding      = 8.0f;
 static CGFloat const kFrontpagePadding          = 10.0f;
 static CGFloat const kFrontpageOnAirCellHeight  = 95.0f;
@@ -208,6 +211,7 @@ static CGFloat const kChatroomTimeFontSize                              = 12.0f;
 
 
 // **CONNOISSUER **//
+static NSString * const kTimeLabelHexColor                              = @"#ffa200";
 static NSString * const kConnoisseurAboutPageTitleTextColor             = @"#109BAC";
 static NSString * const kConnoisseurDiscussionDateColor                 = @"#FFA200";
 static NSString * const kConnoisseurDiscussionTitleColor                = @"#6D6D6D";
@@ -215,6 +219,7 @@ static NSString * const kConnoisseurAboutTitleColor                     = @"#109
 static NSString * const kConnoisseurAboutContentColor                   = @"#6D6D6D";
 static NSString * const kConnoisseurRecommendTitleColor                 = @"#6D6D6D";
 static NSString * const kConnoisseurRecommendPriceColor                 = @"#FFA200";
+
 static CGFloat const kConnoisseurRecommendLabelRightPadding             = 35.0f;
 static CGFloat const kConnoisseurRecommendTitleFontSize                 = 16.0f;
 static CGFloat const kConnoisseurRecommendPriceFontSize                 = 16.0f;
@@ -235,7 +240,7 @@ static CGFloat const kConnoisseurPostDiscussionButtonTitleFontSize      = 40/3;
 static CGFloat const kConnoisseurDiscussionTitleFontSize                = 18.0f;
 static CGFloat const kConnoisseurDiscussionDateFontSize                 = 11.0f;
 
-
-
-
+// **VIDEO** //
+static NSString * const kReplyIputLabelPresetWordColor                  = @"#109bac";
+static NSString * const kVideoBackGroundColorHexString                  = @"#ecf8f7";
 

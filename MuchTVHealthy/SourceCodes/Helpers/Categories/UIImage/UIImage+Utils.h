@@ -15,4 +15,5 @@
 - (UIImage *) scaledWithMaxLength:(CGFloat)maxLength;
 + (UIImage *) nonCachedImageNamed:(NSString *)imageName;
 + (UIImage *) cutImageToSquare:(UIImage *)image;
++ (UIImage *) imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 @end
