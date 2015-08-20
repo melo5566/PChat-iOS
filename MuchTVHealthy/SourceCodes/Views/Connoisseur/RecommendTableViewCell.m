@@ -286,11 +286,11 @@
         [self.contentView addSubview:_recommendListTitleLabel];
         NSMutableArray *recommendTitleLabelconstraints = @[].mutableCopy;
         [recommendTitleLabelconstraints addObject:[NSLayoutConstraint  constraintWithItem:_recommendListTitleLabel
-                                                                      attribute:NSLayoutAttributeTop
+                                                                      attribute:NSLayoutAttributeCenterY
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:self.contentView
-                                                                      attribute:NSLayoutAttributeTop
-                                                                     multiplier:1.0f constant:20/3]];
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                     multiplier:1.0f constant:0.0f]];
         [recommendTitleLabelconstraints addObject:[NSLayoutConstraint  constraintWithItem:_recommendListTitleLabel
                                                                       attribute:NSLayoutAttributeLeft
                                                                       relatedBy:NSLayoutRelationEqual
@@ -298,10 +298,10 @@
                                                                       attribute:NSLayoutAttributeLeft
                                                                      multiplier:1.0f constant:10.0f]];
         [recommendTitleLabelconstraints addObject:[NSLayoutConstraint  constraintWithItem:_recommendListTitleLabel
-                                                                      attribute:NSLayoutAttributeBottom
+                                                                      attribute:NSLayoutAttributeHeight
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:self.contentView
-                                                                      attribute:NSLayoutAttributeBottom
+                                                                      attribute:NSLayoutAttributeHeight
                                                                      multiplier:1.0f constant:0.0f]];
         [recommendTitleLabelconstraints addObject:[NSLayoutConstraint  constraintWithItem:_recommendListTitleLabel
                                                                       attribute:NSLayoutAttributeRight

@@ -24,6 +24,7 @@
 - (void)setConnoisseurDataObject:(ConnoisseurDataObject *)connoisseurDataObject {
     self.backgroundColor = [UIColor clearColor];
     _connoisseurDataObject = connoisseurDataObject;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self initFrameView];
     [self initImageView];
     [self initLabelView];
@@ -108,10 +109,17 @@
     }
     __block __typeof (UIImageView *)ConnoisseurImageView = _ImageView;
     [_ImageView setImageWithURL:[NSURL URLWithString:_connoisseurDataObject.imageUrl]
-           withPlaceholderImage:[UIImage imageNamed:kImageNamePlaceholderWide]
+           withPlaceholderImage:[UIImage imageNamed:@"image_placeholder_4x3"]
                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
-                          if(!image) {
-                              [ConnoisseurImageView setImage:[UIImage imageNamed: kImageNamePresetNormal]];
+                          if (image) {
+                              [_ImageView setImage:image];
+                              _ImageView.alpha = 0;
+                              [UIView animateWithDuration:0.3 animations:^(){
+                                  [_ImageView setImage:image];
+                                  _ImageView.alpha = 0.9;
+                              }];
+                          } else {
+                              NSLog(@"Error");
                           }}
     usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
