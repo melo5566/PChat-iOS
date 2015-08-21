@@ -745,7 +745,7 @@
 
 - (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RecipeSingleViewController      *controller = [[RecipeSingleViewController alloc]init];
-    controller.recipeDataObject = _recipeObject.recipeList[indexPath.row];
+    controller.recipeDataObject = _showRecipeDataArray[indexPath.row];
     [self.navigationController pushViewController:controller animated:YES];
     
 }
