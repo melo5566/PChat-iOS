@@ -251,3 +251,4 @@ static NSString * const kVideoBackGroundColorHexString                  = @"#ecf
 
 // **RECIPT** //
 static NSString * const kLeftSideSeparateLineColor                      = @"#387F7F";
+static NSString * const kRecipeBackGroundColorHexString                  = @"#ecf8f7";

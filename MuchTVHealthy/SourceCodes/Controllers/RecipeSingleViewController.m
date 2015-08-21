@@ -34,7 +34,7 @@ static CGFloat const cellPadding      = 20;
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
     self.title = _recipeDataObject.title;
-    self.view.backgroundColor=[UIColor colorWithHexString:kDefaultBackGroundColorHexString];
+    self.view.backgroundColor=[UIColor clearColor];
     // Do any additional setup after loading the view.
 }
 
@@ -104,7 +104,7 @@ static CGFloat const cellPadding      = 20;
     if (!_recipeTableView) {
         _recipeTableView = [[UITableView alloc] initForAutolayout];
         _recipeTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-        _recipeTableView.backgroundColor = [UIColor clearColor];
+        _recipeTableView.backgroundColor = [UIColor colorWithHexString:kRecipeBackGroundColorHexString];
         _recipeTableView.delegate = self;
         _recipeTableView.dataSource = self;
         [self.view addSubview:_recipeTableView];
