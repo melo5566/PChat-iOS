@@ -27,6 +27,7 @@ typedef void (^SignUpAndSignInHandler)(KiiUser *user, NSError *error);
 typedef void (^FacebookLogInHandler)(facebookLogInStatus logInStatus, KiiUser *user);
 typedef void (^CheckUserAvatarHandler)(BOOL hasAvatar, NSError *error);
 typedef void (^GetAvatarAndNameHandler)(BOOL finished, NSError *error);
+typedef void (^GetResetPassswordCodeHandler)(NSError *error);
 
 @property (nonatomic, weak) id <SignUpAndSignInModelDelegate> delegate;
 - (void) kiiUserLogIn:(NSString *)account password:(NSString *)password;
@@ -40,8 +41,10 @@ typedef void (^GetAvatarAndNameHandler)(BOOL finished, NSError *error);
               password:(NSString *)password
          CompleteBlock:(SignUpAndSignInHandler)handler;
 
-- (void) verifiedUser:(NSString *)code
-    WithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
+- (void) verifyPhoneNumberWithCode:(NSString *)code
+                 WithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
+
+- (void) resendPhoneVerificationCodeWithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
 
 - (void) facebookLogInInWithReadPermissions:(NSArray *)permissionsArray
                               completeBlock:(FacebookLogInHandler)handler;
@@ -50,6 +53,12 @@ typedef void (^GetAvatarAndNameHandler)(BOOL finished, NSError *error);
                        phoneNumber:(NSString *)phoneNumber
                       password:(NSString *)password
                  CompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
+
+- (void) getResetPasswordCodeByPhoneNumber:(NSString *)phoneNumber CompleteBlock:(GetResetPassswordCodeHandler)handler;
+
+- (void) updatePassword:(NSString *)prePassword
+                    New:(NSString *)newPassword
+                    CompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler;
 
 //- (void) facebookLogInInBackgroundWithReadPermissions:(NSArray *)permissionsArray
 //                                        completeBlock:(LogInHandler)handler;

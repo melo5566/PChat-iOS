@@ -9,6 +9,7 @@
 #import "SignUpViewController.h"
 #import "CustomizedSettingPageButton.h"
 #import "SignUpAndSignInModel.h"
+#import "VerifyViewController.h"
 
 @interface SignUpViewController () <UITextFieldDelegate, CustomizedSettingPageButtonDelegate, SignUpAndSignInModelDelegate>
 @property (nonatomic, strong) UITextField                                   *signUpAccountTextField;
@@ -28,11 +29,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initNavigationBarCloseButtonAtLeft];
-    if ([_signUpType isEqualToString:@"normal"])
+    if ([_signUpType isEqualToString:@"normal"]) {
         [self.navigationItem setTitle:@"註冊"];
-    else
+        [self initNavigationBarCloseButtonAtLeft];
+    } else {
         [self.navigationItem setTitle:@"電話註冊"];
+        [self initNavigationBarBackButtonAtLeft];
+    }
+    
     // Do any additional setup after loading the view.
 }
 
@@ -421,8 +425,10 @@
                                                    return;
                                                }
                                                [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"註冊成功" delayToHide:1];
-                                               [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
-                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                               VerifyViewController *controller = [VerifyViewController new];
+                                               [self.navigationController pushViewController:controller animated:YES];
+//                                               [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
+//                                               [self dismissViewControllerAnimated:YES completion:nil];
             }];
         }
     } else {

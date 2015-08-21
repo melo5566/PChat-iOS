@@ -72,6 +72,53 @@
     }];
 }
 
+- (void) verifyPhoneNumberWithCode:(NSString *)code
+                 WithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        KiiUser *user = [KiiUser currentUser];
+        [user verifyPhoneNumber:code
+                      withBlock:^(KiiUser *verifiedUser, NSError *error) {
+                          if (error != nil) {
+                              // Error handling
+                              handler(verifiedUser, error);
+                              return;
+                          }
+                          handler(verifiedUser, error);
+                      }];
+    }];
+}
+
+- (void) resendPhoneVerificationCodeWithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        KiiUser *currentUser = [KiiUser currentUser];
+        [currentUser resendPhoneNumberVerificationWithBlock:^(KiiUser *user, NSError *error) {
+            handler(user, error);
+        }];
+    }];
+}
+
+- (void) getResetPasswordCodeByPhoneNumber:(NSString *)phoneNumber CompleteBlock:(GetResetPassswordCodeHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        NSString *phoneNumberWithCode = [phoneNumber stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+886"];
+        [KiiUser resetPassword:phoneNumberWithCode
+            notificationMethod:KiiSMS
+                         block:^(NSError *error) {
+                             handler(error);
+                         }];
+    }];
+}
+
+- (void) updatePassword:(NSString *)prePassword
+                    New:(NSString *)newPassword
+          CompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        KiiUser *currentUser = [KiiUser currentUser];
+        [currentUser updatePassword:prePassword to:newPassword withBlock:^(KiiUser *user, NSError *error) {
+            handler(user, error);
+        }];
+    }];
+}
+
 
 - (void) facebookLogInInWithReadPermissions:(NSArray *)permissionsArray
                               completeBlock:(FacebookLogInHandler)handler {
@@ -110,22 +157,6 @@
                        }
                    }];
 }
-
-- (void) verifyPhoneNumberWithCode:(NSString *)code WithCompleteBlock:(PhoneNumberSignUpAndSignInHandler)handler {
-    [self checkNetworkReachabilityAndDoNext:^{
-        KiiUser *user = [KiiUser currentUser];
-        [user verifyPhoneNumber:code
-                      withBlock:^(KiiUser *verifiedUser, NSError *error) {
-                          if (error != nil) {
-                              // Error handling
-                              handler(verifiedUser, error);
-                              return;
-                          }
-                          handler(verifiedUser, error);
-                      }];
-    }];
-}
-
 
 - (void) facebookLogInInBackgroundWithReadPermissions:(NSArray *)permissionsArray
                                         completeBlock:(FacebookLogInHandler)handler {

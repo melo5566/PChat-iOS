@@ -78,6 +78,10 @@
             NSLog(@"Error");
             return;
         }
+        if (!user.phoneVerified) {
+            [KiiUser logOut];
+        }
+            
         [_frontpageViewController firstLoadFrontpageData];
     }];
 }

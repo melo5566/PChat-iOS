@@ -37,6 +37,7 @@
 @property (nonatomic, strong) NSUserDefaults                    *defaults;
 @property (nonatomic, strong) UIButton                          *checkboxButton;
 @property (nonatomic, strong) UIButton                          *autoLoginButton;
+@property (nonatomic, strong) UIButton                          *forgetPasswordButton;
 @property (nonatomic) BOOL                                      checkboxSelected;
 @property (nonatomic) BOOL                                      autoLoginSelected;
 @property (nonatomic, strong) UITextView                        *rememberMeView;
@@ -104,32 +105,32 @@
             [self initUserLoggedOutLayout];
         }
     }
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    _account  = [defaults stringForKey:@"account"];
-//    _password = [defaults stringForKey:@"password"];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self removeNotificationObservers];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (_checkboxSelected && _autoLoginSelected) {
-        [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
-        [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
-        [defaults setObject:@"YES" forKey:@"rememberMe"];
-        [defaults setObject:@"YES" forKey:@"autoLogin"];
-    } else if (_checkboxSelected && !_autoLoginSelected) {
-        [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
-        [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
-        [defaults setObject:@"YES" forKey:@"rememberMe"];
-        [defaults setObject:@"NO" forKey:@"autoLogin"];
-    } else {
-        [defaults setObject:nil forKey:@"account"];
-        [defaults setObject:nil forKey:@"password"];
-        [defaults setObject:nil forKey:@"rememberMe"];
-        [defaults setObject:nil forKey:@"autoLogin"];
+    if (!_currentLogInUser) {
+        if (_checkboxSelected && _autoLoginSelected) {
+            [defaults setObject:_signInPasswordTextField.text forKey:@"password"];
+            [defaults setObject:_signInAccountTextField.text forKey:@"account"];
+            [defaults setObject:@"YES" forKey:@"rememberMe"];
+            [defaults setObject:@"YES" forKey:@"autoLogin"];
+        } else if (_checkboxSelected && !_autoLoginSelected) {
+            [defaults setObject:_signInPasswordTextField.text forKey:@"password"];
+            [defaults setObject:_signInAccountTextField.text forKey:@"account"];
+            [defaults setObject:@"YES" forKey:@"rememberMe"];
+            [defaults setObject:@"NO" forKey:@"autoLogin"];
+        } else {
+            [defaults setObject:nil forKey:@"account"];
+            [defaults setObject:nil forKey:@"password"];
+            [defaults setObject:nil forKey:@"rememberMe"];
+            [defaults setObject:nil forKey:@"autoLogin"];
+        }
+        [defaults synchronize];
+
     }
-    [defaults synchronize];
 }
 
 - (void) dealloc {
@@ -160,7 +161,7 @@
 }
 
 - (void) initUserLoggedOutLayout {
-    [self initFanzytvLogoButton];
+//    [self initFanzytvLogoButton];
 //    [self initViviImageView];
     [self initTextLabel];
     [self initLoginButton];
@@ -212,6 +213,7 @@
 - (void) initRememberMeView {
     if (!_rememberMeView) {
         _rememberMeView                     = [[UITextView alloc] initForAutolayout];
+        _rememberMeView.scrollEnabled       = NO;
         _rememberMeView.text                = @"Remember me";
         _rememberMeView.backgroundColor     = [UIColor clearColor];
         _rememberMeView.textColor           = [UIColor blackColor];
@@ -290,7 +292,7 @@
 
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults stringForKey:@"rememberMe"]) {
+    if ([[defaults stringForKey:@"rememberMe"] isEqualToString:@"YES"]) {
         _checkboxSelected = YES;
         [_checkboxButton setSelected:YES];
     }
@@ -299,6 +301,7 @@
 - (void) initAutoLoginView {
     if (!_autoLoginView) {
         _autoLoginView                     = [[UITextView alloc] initForAutolayout];
+        _autoLoginView.scrollEnabled       = NO;
         _autoLoginView.text                = @"Auto Login";
         _autoLoginView.backgroundColor     = [UIColor clearColor];
         _autoLoginView.textColor           = [UIColor blackColor];
@@ -378,7 +381,7 @@
         
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults stringForKey:@"autoLogin"]) {
+    if ([[defaults stringForKey:@"autoLogin"] isEqualToString:@"YES"]) {
         _autoLoginSelected = YES;
         [_autoLoginButton setSelected:YES];
     }
@@ -843,6 +846,48 @@
     [_textLabel sizeToFit];
 }
 
+- (void) initForgetPasswordButton {
+    if (!_forgetPasswordButton) {
+        _forgetPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_forgetPasswordButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [_forgetPasswordButton addTarget:self action:@selector(forgetPasswordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_forgetPasswordButton setTitle:@"忘記密碼" forState:UIControlStateNormal];
+        _forgetPasswordButton.backgroundColor = [UIColor clearColor];
+        [_forgetPasswordButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        _forgetPasswordButton.titleLabel.font     = [UIFont systemFontOfSize:15];
+        [self.view addSubview:_forgetPasswordButton];
+        
+        NSMutableArray *voteViewStatusLabelConstaint = @[].mutableCopy;
+        
+        [voteViewStatusLabelConstaint addObject:[NSLayoutConstraint constraintWithItem:_forgetPasswordButton
+                                                                             attribute:NSLayoutAttributeTop
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:_signInPasswordTextField
+                                                                             attribute:NSLayoutAttributeBottom
+                                                                            multiplier:1.0f constant:5.0f]];
+        [voteViewStatusLabelConstaint addObject:[NSLayoutConstraint constraintWithItem:_forgetPasswordButton
+                                                                             attribute:NSLayoutAttributeRight
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:_signInPasswordTextField
+                                                                             attribute:NSLayoutAttributeRight
+                                                                            multiplier:1.0f constant:0.0f]];
+        [voteViewStatusLabelConstaint addObject:[NSLayoutConstraint constraintWithItem:_forgetPasswordButton
+                                                                             attribute:NSLayoutAttributeWidth
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:nil
+                                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                                            multiplier:1.0f constant:80.0f]];
+        [voteViewStatusLabelConstaint addObject:[NSLayoutConstraint constraintWithItem:_forgetPasswordButton
+                                                                             attribute:NSLayoutAttributeHeight
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:nil
+                                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                                            multiplier:1.0f constant:25.0f]];
+        
+        [self.view addConstraints:voteViewStatusLabelConstaint];
+    }
+}
+
 - (void) initLoginButton {
     [self initSignInAccountTextField];
     [self initSignInPasswordTextField];
@@ -853,6 +898,7 @@
     [self initSignInButton];
     [self initSignUpButton];
     [self initPhoneSignUpButton];
+    [self initForgetPasswordButton];
 //    if (kGoogleLoginAvailable) {
 //        [self initGooglePlusLoginButton];
 //    }
@@ -1185,7 +1231,7 @@
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-//
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
@@ -1318,9 +1364,11 @@
 - (void)phoneSignUpButtonClicked:(id)sender {
     SignUpViewController *signUpView = [SignUpViewController new];
     signUpView.signUpType = @"phone";
-    UINavigationController *naviController = [[UINavigationController alloc] initWithRootViewController:signUpView];
-    naviController.navigationBar.translucent = NO;
-    [self presentViewController:naviController animated:YES completion:nil];
+    [self.navigationController pushViewController:signUpView animated:YES];
+}
+
+- (void) forgetPasswordButtonClicked:(id)sender {
+    
 }
 
 - (void)signInButtonClicked:(id)sender {
@@ -1349,25 +1397,36 @@
 
                                       return;
                                   }
-                                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                  if (_checkboxSelected && _autoLoginSelected) {
-                                      [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
-                                      [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
-                                      [defaults setObject:@"YES" forKey:@"rememberMe"];
-                                      [defaults setObject:@"YES" forKey:@"autoLogin"];
-                                  } else if (_checkboxSelected && !_autoLoginSelected) {
-                                      [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
-                                      [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
-                                      [defaults setObject:@"YES" forKey:@"rememberMe"];
-                                      [defaults setObject:@"NO" forKey:@"autoLogin"];
+                                  if (user.phoneVerified) {
+                                      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                      if (_checkboxSelected && _autoLoginSelected) {
+                                          [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
+                                          [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
+                                          [defaults setObject:@"YES" forKey:@"rememberMe"];
+                                          [defaults setObject:@"YES" forKey:@"autoLogin"];
+                                      } else if (_checkboxSelected && !_autoLoginSelected) {
+                                          [defaults setObject:[[NSString alloc] initWithString:_signInAccountTextField.text] forKey:@"account"];
+                                          [defaults setObject:[[NSString alloc] initWithString:_signInPasswordTextField.text] forKey:@"password"];
+                                          [defaults setObject:@"YES" forKey:@"rememberMe"];
+                                          [defaults setObject:@"NO" forKey:@"autoLogin"];
+                                      } else {
+                                          [defaults setObject:nil forKey:@"account"];
+                                          [defaults setObject:nil forKey:@"password"];
+                                          [defaults setObject:nil forKey:@"rememberMe"];
+                                          [defaults setObject:nil forKey:@"autoLogin"];
+                                      }
+                                      [defaults synchronize];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
                                   } else {
-                                      [defaults setObject:nil forKey:@"account"];
-                                      [defaults setObject:nil forKey:@"password"];
-                                      [defaults setObject:nil forKey:@"rememberMe"];
-                                      [defaults setObject:nil forKey:@"autoLogin"];
+                                      [KiiUser logOut];
+                                      _currentLogInUser = nil;
+                                      _changeAvatarAlertView = [[CustomizedAlertView alloc] initWithTitle:@"注意" andMessage:@"尚未完成認證"];
+                                      [_changeAvatarAlertView addButtonWithTitle:@"確定"
+                                                            type:CustomizedAlertViewButtonTypeDefaultGreen
+                                                        handler:nil];
+                                      [_changeAvatarAlertView show];
                                   }
-                                  [defaults synchronize];
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
+                                  
                                   
     }];
         
@@ -1543,7 +1602,10 @@
                 [_autoLoginView removeFromSuperview];
                 _autoLoginView = nil;
             }
-            
+            if (_forgetPasswordButton) {
+                [_forgetPasswordButton removeFromSuperview];
+                _forgetPasswordButton = nil;
+            }
             [self initUserLoggedInLayout];
         }];
         
@@ -1587,6 +1649,10 @@
             if (_fanzytvButton) {
                 [_fanzytvButton removeFromSuperview];
                 _fanzytvButton = nil;
+            }
+            if (_fanzytvLogoImageView) {
+                [_fanzytvLogoImageView removeFromSuperview];
+                _fanzytvLogoImageView = nil;
             }
         } completion:^(BOOL finished){
             [self initUserLoggedOutLayout];
@@ -1740,7 +1806,7 @@
     UITextField *textField = sender;
     if (isNullValue([textField markedTextRange])) {
         if (textField.text.length > 10) {
-            NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+            NSRange oversteppedRange = NSMakeRange(10, textField.text.length - 10);
             textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
         }
         
@@ -1749,7 +1815,6 @@
         } else {
             _isAccountValid = NO;
         }
-        
         [self checkValidation];
     }
 

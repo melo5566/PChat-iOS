@@ -23,6 +23,7 @@
 - (void) initMenuLayout;
 - (void) initListButton;
 - (void) dismissMenu;
+- (void) initGestureRecognizer;
 
 - (void) initNavigationBarCloseButtonAtLeft;
 - (void) initNavigationBarCloseButtonAtRight;

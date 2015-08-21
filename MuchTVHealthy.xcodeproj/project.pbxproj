@@ -102,6 +102,9 @@
 		D0EA38471B83256400C96040 /* RecipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38461B83256400C96040 /* RecipeTableViewCell.m */; };
 		D0EA38491B8336A400C96040 /* image_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D0EA38481B8336A400C96040 /* image_logo.png */; };
 		D0EA384F1B833B3E00C96040 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D0EA384E1B833B3E00C96040 /* logo.png */; };
+		D0EA38551B8496B400C96040 /* VerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38541B8496B400C96040 /* VerifyViewController.m */; };
+		D0EA385F1B85BE8700C96040 /* MessageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA385E1B85BE8700C96040 /* MessageCenterViewController.m */; };
+		D0EA38631B85BFD900C96040 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38621B85BFD900C96040 /* MessageTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,6 +273,12 @@
 		D0EA38461B83256400C96040 /* RecipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipeTableViewCell.m; path = Recipe/RecipeTableViewCell.m; sourceTree = "<group>"; };
 		D0EA38481B8336A400C96040 /* image_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_logo.png; path = Resources/image_logo.png; sourceTree = "<group>"; };
 		D0EA384E1B833B3E00C96040 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Resources/logo.png; sourceTree = "<group>"; };
+		D0EA38531B8496B400C96040 /* VerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VerifyViewController.h; path = Setting/VerifyViewController.h; sourceTree = "<group>"; };
+		D0EA38541B8496B400C96040 /* VerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerifyViewController.m; path = Setting/VerifyViewController.m; sourceTree = "<group>"; };
+		D0EA385D1B85BE8700C96040 /* MessageCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageCenterViewController.h; path = MessageCenter/MessageCenterViewController.h; sourceTree = "<group>"; };
+		D0EA385E1B85BE8700C96040 /* MessageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageCenterViewController.m; path = MessageCenter/MessageCenterViewController.m; sourceTree = "<group>"; };
+		D0EA38611B85BFD900C96040 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTableViewCell.h; path = MessageCenter/MessageTableViewCell.h; sourceTree = "<group>"; };
+		D0EA38621B85BFD900C96040 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageTableViewCell.m; path = MessageCenter/MessageTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +390,7 @@
 		134370EA1B68B67F00AE7FA7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D0EA385C1B85BE6300C96040 /* MessageCenter */,
 				265E30DA1B8491C9006279EE /* Video  */,
 				D05958EE1B7DCAFB008C102C /* Recipe */,
 				2689A3EA1B7B345C00B4F708 /* Connoisseur */,
@@ -496,6 +506,7 @@
 		134371041B68B67F00AE7FA7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0EA38601B85BFC700C96040 /* MessageCenter */,
 				263CD0DE1B856DA7008AE245 /* Video */,
 				D0EA38441B83253700C96040 /* Recipe */,
 				2672BD231B7C4388007AB9F1 /* Connoisseur */,
@@ -763,6 +774,8 @@
 				D0D2960A1B69EC4800671449 /* PersonalSettingViewController.m */,
 				D0D296161B6A128500671449 /* SignUpViewController.h */,
 				D0D296171B6A128500671449 /* SignUpViewController.m */,
+				D0EA38531B8496B400C96040 /* VerifyViewController.h */,
+				D0EA38541B8496B400C96040 /* VerifyViewController.m */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -798,6 +811,24 @@
 				D0EA38461B83256400C96040 /* RecipeTableViewCell.m */,
 			);
 			name = Recipe;
+			sourceTree = "<group>";
+		};
+		D0EA385C1B85BE6300C96040 /* MessageCenter */ = {
+			isa = PBXGroup;
+			children = (
+				D0EA385D1B85BE8700C96040 /* MessageCenterViewController.h */,
+				D0EA385E1B85BE8700C96040 /* MessageCenterViewController.m */,
+			);
+			name = MessageCenter;
+			sourceTree = "<group>";
+		};
+		D0EA38601B85BFC700C96040 /* MessageCenter */ = {
+			isa = PBXGroup;
+			children = (
+				D0EA38611B85BFD900C96040 /* MessageTableViewCell.h */,
+				D0EA38621B85BFD900C96040 /* MessageTableViewCell.m */,
+			);
+			name = MessageCenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -990,6 +1021,7 @@
 				D0D296001B69D30900671449 /* FrontpageObject.m in Sources */,
 				D0D2960F1B69ECF300671449 /* UserModel.m in Sources */,
 				265E30D71B842CB5006279EE /* FacebookTableViewCell.m in Sources */,
+				D0EA38631B85BFD900C96040 /* MessageTableViewCell.m in Sources */,
 				263CD0EF1B858542008AE245 /* YoutubeVideoPlayerView.m in Sources */,
 				134370AE1B68B19000AE7FA7 /* AppDelegate.m in Sources */,
 				265E30E01B8491C9006279EE /* VideoSingleViewController.m in Sources */,
@@ -998,6 +1030,7 @@
 				D0D2960B1B69EC4800671449 /* PersonalSettingViewController.m in Sources */,
 				1343710A1B68B67F00AE7FA7 /* UIView+Utils.m in Sources */,
 				2689A3F11B7B3BAA00B4F708 /* ConnoisseurModel.m in Sources */,
+				D0EA385F1B85BE8700C96040 /* MessageCenterViewController.m in Sources */,
 				2689A3F41B7B41DC00B4F708 /* ConnoisseurObject.m in Sources */,
 				265E30DF1B8491C9006279EE /* VideoListViewController.m in Sources */,
 				134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */,
@@ -1011,6 +1044,7 @@
 				263CD0F61B85C1AE008AE245 /* RecipeObject.m in Sources */,
 				2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */,
 				134370AB1B68B19000AE7FA7 /* main.m in Sources */,
+				D0EA38551B8496B400C96040 /* VerifyViewController.m in Sources */,
 				134371071B68B67F00AE7FA7 /* UIColor+HexColor.m in Sources */,
 				2673259E1B7DF44D009641D1 /* ConnoisseurImageTableViewCell.m in Sources */,
 			);

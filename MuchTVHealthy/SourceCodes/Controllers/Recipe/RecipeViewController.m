@@ -86,6 +86,8 @@
     [super viewDidAppear:animated];
     [self initMenuLayout];
     [self initRecipeMenuLayout];
+    [self initGestureRecognizer];
+    [self initRecipeGestureRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -167,14 +169,13 @@
         [_totalButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         [_totalButton addTarget:self action:@selector(totalButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_totalButton setTitle:@"全 部" forState:UIControlStateNormal];
-        //[_totalButton.layer setShadowColor:[UIColor blackColor].CGColor];
-        //[_totalButton.layer setShadowOpacity:0.5];
-        //[_totalButton.layer setShadowOffset:CGSizeMake(0, 0.5)];
+        _totalButton.layer.shadowColor   = [UIColor colorWithHexString:@"#4f9999"].CGColor;
+        _totalButton.layer.shadowOpacity = 1.0;
+        _totalButton.layer.shadowRadius  = 1.0;
         [_totalButton setBackgroundColor:[UIColor whiteColor]];
         [_totalButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         _totalButton.titleLabel.font     = [UIFont systemFontOfSize:18];
         [self.view addSubview:_totalButton];
-
         
         NSMutableArray *buttonConstraint = [[NSMutableArray alloc] init];
         
@@ -217,6 +218,9 @@
         //[_collectionButton.layer setShadowColor:[UIColor blackColor].CGColor];
         //[_collectionButton.layer setShadowOpacity:0.5];
         //[_collectionButton.layer setShadowOffset:CGSizeMake(0, 0.5)];
+        _collectionButton.layer.shadowColor   = [UIColor colorWithHexString:@"#4f9999"].CGColor;
+        _collectionButton.layer.shadowOpacity = 1.0;
+        _collectionButton.layer.shadowRadius  = 1.0;
         [_collectionButton setBackgroundColor:[UIColor whiteColor]];
         [_collectionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         _collectionButton.titleLabel.font     = [UIFont systemFontOfSize:18];
@@ -466,6 +470,9 @@
         
         [self.view addConstraints:menuButtonConstaint];
         
+        UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, kFrameHeight*55/600 -1, kScreenWidth*3/5, 1)];
+        borderView.backgroundColor = [UIColor colorWithHexString:@"#4f9999"];
+        [_recipeMenuButton addSubview:borderView];
     }
     
 }
@@ -549,27 +556,40 @@
     }
 }
 
+- (void) initRecipeGestureRecognizer {
+    UIScreenEdgePanGestureRecognizer *swipeLeft = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self
+                                                                                              action:@selector(recipeSwipeLeft)];
+    [swipeLeft setEdges:UIRectEdgeRight];
+    [self.view addGestureRecognizer:swipeLeft];
+    
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                     action:@selector(recipeSwipeRight)];
+    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+    [_recipeMenuView addGestureRecognizer:swipeRight];
+}
+
+
 #pragma mark - button action
 - (void)recideMenuButtonClicked:(id)sender {
     UIButton *button = sender;
     switch (button.tag) {
         case 0: {
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         } case 1: {
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         } case 2: {
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         } case 3: {
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         } case 4: {
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         } case 5: {
-            NSLog(@"%lu",button.tag);
+            NSLog(@"%d",button.tag);
             break;
         }
         default:
@@ -668,6 +688,25 @@
         [_recipeTableView reloadData];
     }
 }
+
+#pragma mark - swipe
+- (void)recipeSwipeRight {
+    if (_isShownRecipeMenuView) {
+        [self.view removeConstraint:_recipeMenuViewLeftLayoutConstraint];
+        [self dismissRecipeMenu];
+    }
+}
+
+- (void)recipeSwipeLeft {
+    if (!_isShownRecipeMenuView) {
+        if (self.isShownMenuView) {
+            [self dismissMenu];
+        }
+        [self.view removeConstraint:_recipeMenuViewLeftLayoutConstraint];
+        [self showRecipeMenu];
+    }
+}
+
 
 #pragma mark - UITableView data source and delegate
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
