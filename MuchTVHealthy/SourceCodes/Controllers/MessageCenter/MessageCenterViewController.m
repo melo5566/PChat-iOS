@@ -269,7 +269,7 @@
 //    [cell setLayoutMargins:UIEdgeInsetsZero];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
-    UIView *bottomLine          = [[UIView alloc] initWithFrame:CGRectMake(0, kFrameHeight * 11/60, kScreenWidth, 1)];
+    UIView *bottomLine          = [[UIView alloc] initWithFrame:CGRectMake(0, kFrameHeight * 11/60, kScreenWidth, 0.5)];
     bottomLine.backgroundColor  = [UIColor colorWithHexString:@"0f9bab"];
     [cell.contentView addSubview:bottomLine];
 

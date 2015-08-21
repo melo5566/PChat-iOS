@@ -84,6 +84,7 @@ static CGFloat const kDiscussionAvatarLeftPadding                   = 10.0f;
 static CGFloat const kDiscussionAvatarTopPadding                    = 10.0f;
 static CGFloat const kDiscussionAuthorNameLeftPadding               = 15.0f;
 static CGFloat const kDiscussionTimeLeftPadding                     = 5.0f;
+static CGFloat const kDiscussionTimeBottomPadding                   = 5.0f;
 static CGFloat const kDiscussionTimeIconLeftPadding                 = 15.0f;
 static CGFloat const kDiscussionContentLeftPadding                  = 15.0f;
 static CGFloat const kDiscussionContentTopPadding                   = 12.0f;

@@ -99,6 +99,7 @@
 		D0EA38551B8496B400C96040 /* VerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38541B8496B400C96040 /* VerifyViewController.m */; };
 		D0EA385F1B85BE8700C96040 /* MessageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA385E1B85BE8700C96040 /* MessageCenterViewController.m */; };
 		D0EA38631B85BFD900C96040 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38621B85BFD900C96040 /* MessageTableViewCell.m */; };
+		D0EA38661B86C02D00C96040 /* VideoReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EA38651B86C02D00C96040 /* VideoReplyTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -261,6 +262,8 @@
 		D0EA385E1B85BE8700C96040 /* MessageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageCenterViewController.m; path = MessageCenter/MessageCenterViewController.m; sourceTree = "<group>"; };
 		D0EA38611B85BFD900C96040 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTableViewCell.h; path = MessageCenter/MessageTableViewCell.h; sourceTree = "<group>"; };
 		D0EA38621B85BFD900C96040 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageTableViewCell.m; path = MessageCenter/MessageTableViewCell.m; sourceTree = "<group>"; };
+		D0EA38641B86C02D00C96040 /* VideoReplyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoReplyTableViewCell.h; sourceTree = "<group>"; };
+		D0EA38651B86C02D00C96040 /* VideoReplyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoReplyTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -511,10 +514,12 @@
 		263CD0DE1B856DA7008AE245 /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */,
 				263CD0ED1B85853A008AE245 /* YoutubeVideoPlayerView.h */,
+				263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */,
 				263CD0DF1B856DB6008AE245 /* VideoListTableViewCell.h */,
 				263CD0E01B856DB6008AE245 /* VideoListTableViewCell.m */,
+				D0EA38641B86C02D00C96040 /* VideoReplyTableViewCell.h */,
+				D0EA38651B86C02D00C96040 /* VideoReplyTableViewCell.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -995,6 +1000,7 @@
 				134371091B68B67F00AE7FA7 /* UIImageView+ActivityIndicator.m in Sources */,
 				134371081B68B67F00AE7FA7 /* UIImage+Utils.m in Sources */,
 				D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */,
+				D0EA38661B86C02D00C96040 /* VideoReplyTableViewCell.m in Sources */,
 				263CD0E11B856DB6008AE245 /* VideoListTableViewCell.m in Sources */,
 				267325A71B7DF53F009641D1 /* ConnoisseurSingleViewController.m in Sources */,
 				134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */,

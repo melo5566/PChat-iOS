@@ -25,6 +25,7 @@
 @property (nonatomic) BOOL                                      hasMoreCommentData;
 @property (nonatomic) NSUInteger                                commentStartIndex;
 @property (nonatomic) NSUInteger                                numberOfImage;
+@property (nonatomic) BOOL                                      isFirstLoad;
 @end
 
 @implementation DiscussionSingleViewController
@@ -33,12 +34,12 @@
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
     self.navigationItem.title = @"Title";
-    
+    _isFirstLoad = YES;
     _totalCommentDataArray = @[].mutableCopy;
-    for (int i = 0; i < 6; i ++) {
+    for (int i = 0; i < 5; i ++) {
         [_totalCommentDataArray addObject:@"abc"];
     }
-    for (int i = 0; i < 10; i ++) {
+    for (int i = 0; i < 9; i ++) {
         [_totalCommentDataArray addObject:@"abcdefghiabcdefghiabcdefghiabcdefghi"];
     }
     _content = @"ContentContentContentContentContentContentContentContentCont";
@@ -47,7 +48,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self firstLoadReply];
+    if (_isFirstLoad)
+        [self firstLoadReply];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -110,6 +112,7 @@
 
 #pragma mark - method
 - (void) firstLoadReply {
+    _isFirstLoad = NO;
     _commentDataArray = @[].mutableCopy;
     if (_totalCommentDataArray.count > 3) {
         _hasMoreCommentData = YES;
@@ -147,17 +150,17 @@
 #pragma mark - height for row
 - (CGFloat) heightOfReplyCellWithReplyContent:(NSString *)content {
     CGFloat replyContentHeight = [content sizeOfStringWithFont:[UIFont fontWithName:@"STHeitiTC-Light" size:kDiscussionReplyContentFontSize] andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding - kDiscussionReplyLeftAndRightPadding * 2 - (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH)].height;
-    return kDiscussionReplyTopAndBottomPadding + kDiscussionReplyContentPadding * 2 + kDiscussionReplyAuthorNameFontSize + 0.5f + replyContentHeight + kDiscussionReplyTimeFontSize + 0.5f;
+    return kDiscussionReplyTopAndBottomPadding + kDiscussionReplyContentPadding * 2 + kDiscussionReplyAuthorNameFontSize + 0.5f + replyContentHeight + kDiscussionReplyTimeFontSize + kDiscussionTimeBottomPadding + 0.5f;
 }
 
 - (CGFloat) heightOfTotalReplyCell {
-    CGFloat heightOfReplyCell = kDiscussionReplyButtonTopPadding + (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH) + kDiscussionReplyButtonBottomPadding;
+    CGFloat heightOfReplyCell = kDiscussionReplyButtonTopPadding * 2 + (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH);
     if ([_commentDataArray isNotEmpty]) {
         for (NSString *content in _commentDataArray) {
             heightOfReplyCell += ([self heightOfReplyCellWithReplyContent:content]);
         }
         
-        heightOfReplyCell += _hasMoreCommentData ? kLoadMoreCellHeight : 0;
+        heightOfReplyCell += _hasMoreCommentData ? kLoadMoreCellHeight: 0;
     }
     return heightOfReplyCell;
 }
@@ -190,15 +193,18 @@
     }
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0.1f;
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return 1.0;
+    } else {
+        return 0.1;
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section == 0) {
         return 0.1f;
-    }
-    else {
+    } else {
         return 10 + kLogoWidth * 15.0f / 48.0f + 15;
     }
 }
@@ -216,13 +222,25 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[UIView alloc]initWithFrame:CGRectZero];
+    if (section == 1) {
+        if (!_hasMoreCommentData) {
+            UIView *bottomLine             = [UIView new];
+            bottomLine.backgroundColor     = [UIColor lightGrayColor];
+            return bottomLine;
+        } else {
+            UIView *bottomLine             = [UIView new];
+            bottomLine.backgroundColor     = [UIColor clearColor];
+            return bottomLine;
+        }
+    } else {
+        return [[UIView alloc] initWithFrame:CGRectZero];
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section == 1) {
         UIView *view         = [[UIView alloc] init];
-        view.backgroundColor = [UIColor clearColor];
+        view.backgroundColor = [UIColor colorWithHexString:@"#ecf8f7"];
         _fanzytvLogo         = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_fanzytv"]];
         _fanzytvLogo.frame   = CGRectMake((kScreenWidth - kLogoWidth) / 2, 10, kLogoWidth, kLogoWidth * 15.0f / 48.0f);
         [view addSubview:_fanzytvLogo];

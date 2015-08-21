@@ -8,10 +8,13 @@
 
 #import "VideoSingleViewController.h"
 #import "YoutubeVideoPlayerView.h"
+#import "VideoReplyTableViewCell.h"
+#import "PostNewDiscussionReplyViewController.h"
 //#import "InformationCardTableViewCell.h"
-//#import "replyPageViewController.h"
 
-@interface VideoSingleViewController ()<UITableViewDataSource, UITableViewDelegate>
+#define kLogoWidth kScreenWidth * 211.0f / IPHONE_6_SCREEN_WIDTH
+
+@interface VideoSingleViewController ()<UITableViewDataSource, UITableViewDelegate, VideoReplyTableViewCellDelegate>
 @property (nonatomic, strong) UITableView                               *videoTableView;
 @property (nonatomic, strong) NSString                                  *pictureurl;
 @property (nonatomic, strong) YoutubeVideoPlayerView                    *playerView;
@@ -19,7 +22,12 @@
 @property (nonatomic, strong) UIButton                                  *shareButton;
 @property (nonatomic, strong) UIButton                                  *replyaButton;
 @property (nonatomic, strong) NSAttributedString                        *attachmentString;
-@property (nonatomic, strong) UIImageView                               *logoImage;
+@property (nonatomic, strong) UIImageView                               *fanzytvLogo;
+@property (nonatomic, strong) NSMutableArray                            *commentDataArray;
+@property (nonatomic, strong) NSMutableArray                            *totalCommentDataArray;
+@property (nonatomic) BOOL                                              hasMoreCommentData;
+@property (nonatomic) NSUInteger                                        commentStartIndex;
+@property (nonatomic) BOOL                                              isFirstLoad;
 @end
 
 @implementation VideoSingleViewController
@@ -30,33 +38,50 @@ static CGFloat const widthPadding      = 2*kkGlobalDefaultPadding+3;
     _videoDataObject = videoDataObject;
  
 }
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
     self.title = _videoDataObject.title;
-    self.view.backgroundColor=[UIColor colorWithHexString:kVideoBackGroundColorHexString];
+    self.view.backgroundColor = [UIColor colorWithHexString:kVideoBackGroundColorHexString];
+    _totalCommentDataArray = @[].mutableCopy;
+    for (int i = 0; i < 15; i ++) {
+        [_totalCommentDataArray addObject:@"abcabcabcabcabcabcabcabcabcabcabcabcabcabca"];
+    }
+    _isFirstLoad = YES;
 }
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self initTableView];
+    _commentStartIndex = 0;
+    if (_isFirstLoad) {
+        [self firstLoadReply];
+        _isFirstLoad = NO;
+    }
     
 }
 - (void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    _playerView.playerView.delegate=nil;
-    _playerView.playerView=nil;
-    _playerView=nil;
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void) initTableView{
+- (void) initVideoTableView{
     if (!_videoTableView) {
-        _videoTableView=[[UITableView alloc]initForAutolayout];
-        _videoTableView.delegate = self;
-        _videoTableView.dataSource = self;
+        _videoTableView             = [[UITableView alloc]initForAutolayout];
+        _videoTableView.delegate    = self;
+        _videoTableView.dataSource  = self;
+        [_videoTableView.layer setShadowColor:[UIColor blackColor].CGColor];
+        [_videoTableView.layer setShadowOpacity:0.5];
+        [_videoTableView.layer setShadowOffset:CGSizeMake(0, 0.5)];
+        _videoTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        [_videoTableView setLayoutMargins:UIEdgeInsetsZero];
+        _videoTableView.separatorColor = [UIColor colorWithHexString:kDefaultSeparatorLineColorHexString];
+        _videoTableView.showsVerticalScrollIndicator = YES;
+        _videoTableView.clipsToBounds = NO;
+        _videoTableView.layer.masksToBounds = NO;
+
         [self.view addSubview:_videoTableView];
         NSMutableArray *Constraint = [[NSMutableArray alloc] init];
         
@@ -79,197 +104,232 @@ static CGFloat const widthPadding      = 2*kkGlobalDefaultPadding+3;
                                                            attribute:NSLayoutAttributeRight
                                                           multiplier:1.0f constant:-widthPadding]];
         [Constraint addObject:[NSLayoutConstraint constraintWithItem:_videoTableView
-                                                           attribute:NSLayoutAttributeHeight
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:nil
-                                                           attribute:NSLayoutAttributeNotAnAttribute
-                                                          multiplier:1.0f constant:kScreenWidth/16*9+3*kkGlobalDefaultPadding+100]];
-        
-        [self.view addConstraints:Constraint];
-        [_videoTableView.layer setShadowColor:[UIColor blackColor].CGColor];
-        [_videoTableView.layer setShadowOpacity:0.5];
-        [_videoTableView.layer setShadowOffset:CGSizeMake(0, 0.5)];
-        _videoTableView.delegate = self;
-        _videoTableView.dataSource = self;
-        _videoTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        [_videoTableView setLayoutMargins:UIEdgeInsetsZero];
-        _videoTableView.separatorColor = [UIColor colorWithHexString:kDefaultSeparatorLineColorHexString];
-        _videoTableView.scrollEnabled = NO;
-         _videoTableView.showsVerticalScrollIndicator=YES;
-        _videoTableView.clipsToBounds=NO;
-        _videoTableView.layer.masksToBounds = NO;
-    }
-    if(!_logoImage){
-        _logoImage=[[UIImageView alloc]initForAutolayout];
-        _logoImage.image=[UIImage imageNamed:@"btn_fanzytv.png"];
-        [self.view addSubview:_logoImage];
-        NSMutableArray *Constraint = [[NSMutableArray alloc] init];
-    
-        [Constraint addObject:[NSLayoutConstraint constraintWithItem:_logoImage
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:_videoTableView
                                                            attribute:NSLayoutAttributeBottom
-                                                          multiplier:1.0f constant:40]];
-        [Constraint addObject:[NSLayoutConstraint constraintWithItem:_logoImage
-                                                           attribute:NSLayoutAttributeCenterX
                                                            relatedBy:NSLayoutRelationEqual
                                                               toItem:self.view
-                                                           attribute:NSLayoutAttributeCenterX
-                                                          multiplier:1.0f constant:0]];
-        [Constraint addObject:[NSLayoutConstraint constraintWithItem:_logoImage
-                                                           attribute:NSLayoutAttributeHeight
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:nil
-                                                           attribute:NSLayoutAttributeNotAnAttribute
-                                                          multiplier:1.0f constant:40]];
-        [Constraint addObject:[NSLayoutConstraint constraintWithItem:_logoImage
-                                                           attribute:NSLayoutAttributeWidth
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:nil
-                                                           attribute:NSLayoutAttributeNotAnAttribute
-                                                          multiplier:1.0f constant:140]];
-    
+                                                           attribute:NSLayoutAttributeBottom
+                                                          multiplier:1.0f constant:-kkGlobalDefaultPadding]];
+        
         [self.view addConstraints:Constraint];
+    }
+    [_videoTableView reloadData];
+}
+
+#pragma mark - method
+- (void) firstLoadReply {
+    _commentDataArray = @[].mutableCopy;
+    if (_totalCommentDataArray.count > 3) {
+        _hasMoreCommentData = YES;
+        [_commentDataArray addObjectsFromArray:[_totalCommentDataArray objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(_commentStartIndex, 3)]]];
+        _commentStartIndex = 3;
+    } else {
+        _hasMoreCommentData = NO;
+        [_commentDataArray addObjectsFromArray:_totalCommentDataArray];
+    }
+    [self initVideoTableView];
+}
+
+- (void) loadMoreReply {
+    NSUInteger length;
+    NSUInteger commentLast = _totalCommentDataArray.count - _commentDataArray.count;
+    if (commentLast >= 10) {
+        length = 10;
+        _hasMoreCommentData = commentLast == 10 ? NO : YES;
+    }
+    else {
+        length = commentLast;
+        _hasMoreCommentData = NO;
+    }
     
-    }}
+    [_commentDataArray addObjectsFromArray:[_totalCommentDataArray objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(_commentStartIndex, length)]]];
+    _commentStartIndex += length;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            [_videoTableView reloadData];
+        }];
+    });
+}
+
+
+#pragma mark - height for row
+- (CGFloat) heightOfReplyCellWithReplyContent:(NSString *)content {
+    CGFloat replyContentHeight = [content sizeOfStringWithFont:[UIFont fontWithName:@"STHeitiTC-Light" size:kDiscussionContentFontSize] andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionContentLeftPadding*2 - widthPadding * 2 - (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH)].height;
+    
+    return kDiscussionReplyTopAndBottomPadding + kDiscussionReplyContentPadding * 2 + kDiscussionReplyAuthorNameFontSize + 0.5f + replyContentHeight + kDiscussionReplyTimeFontSize + kDiscussionTimeBottomPadding + 0.5f;
+}
+
 
 #pragma mark tableview delegates
-
-- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section
-{
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        return kScreenWidth/16*9+3*kkGlobalDefaultPadding;
-    }
-    //     else if (indexPath.row > 1 && indexPath.row <= _introductionDataArray.count+1) {
-    //     return [_introductionCellHeightArray[indexPath.row - 2] floatValue];
-    //     }
-    //     else if (indexPath.row == _introductionDataArray.count + 2) {
-    //     return _videoCellHeight;
-    //     }
-    //     else if (indexPath.row == 1) {
-    //     return _discussionCellHeight;
-    //     }
-    //     else {
-    //     return 15;
-    //     }
-    else if(indexPath.row==1)
-        return 120;
-    else return 0;
-}
-- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *cellID = @"celebritypic";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
-    if (indexPath.row == 0) {
-        if(_videoDataObject.videoURL){
-            if (!_playerView) {
-                _playerView = [[YoutubeVideoPlayerView alloc] initForAutolayout];
-                _playerView.clipsToBounds = YES;
-                _playerView.backgroundColor = [UIColor blackColor];
-                
-                [cell.contentView addSubview:_playerView];
-                NSMutableArray *videoPlayerViewConstaint = @[].mutableCopy;
-                [videoPlayerViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_playerView
-                                                                                 attribute:NSLayoutAttributeTop
-                                                                                 relatedBy:NSLayoutRelationEqual
-                                                                                    toItem:cell.contentView
-                                                                                 attribute:NSLayoutAttributeTop
-                                                                                multiplier:1.0f constant:kkGlobalDefaultPadding]];
-                [videoPlayerViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_playerView
-                                                                                 attribute:NSLayoutAttributeLeft
-                                                                                 relatedBy:NSLayoutRelationEqual
-                                                                                    toItem:cell.contentView
-                                                                                 attribute:NSLayoutAttributeLeft
-                                                                                multiplier:1.0f constant:kkGlobalDefaultPadding]];
-                [videoPlayerViewConstaint addObject: [NSLayoutConstraint constraintWithItem:_playerView
-                                                                                  attribute:NSLayoutAttributeHeight
-                                                                                  relatedBy:NSLayoutRelationEqual
-                                                                                     toItem:nil
-                                                                                  attribute:NSLayoutAttributeNotAnAttribute
-                                                                                 multiplier:1.0f constant:kScreenWidth * 9 / 16]];
-                [videoPlayerViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_playerView
-                                                                                 attribute:NSLayoutAttributeRight
-                                                                                 relatedBy:NSLayoutRelationEqual
-                                                                                    toItem:cell.contentView
-                                                                                 attribute:NSLayoutAttributeRight
-                                                                                multiplier:1.0f constant:-kkGlobalDefaultPadding]];
-                [cell.contentView addConstraints:videoPlayerViewConstaint];
-                
-                _playerView.youtubeID = [_videoDataObject.videoURL getYoutubeVieoCode];
-            }
+- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
+    if (section == 0) {
+        if (_hasMoreCommentData) {
+            return _commentDataArray.count + 4;
+        } else {
+            return _commentDataArray.count + 3;
         }
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        return cell;
-        
+    } else {
+        return 0;
     }
-    if (indexPath.row == 1) {//////////to modify!!!!!!!!!!!!!!!!!!
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        cell.backgroundColor=[UIColor colorWithHexString:kDefaultSeparatorLineColorHexString];
-        
-        UIView *frontwhite=[[UIView alloc]initWithFrame:CGRectMake(0, 41, kScreenWidth-2*widthPadding, kkGlobalCardCellHeight)];
-        frontwhite.backgroundColor=[UIColor whiteColor];
-        [cell addSubview:frontwhite];
-        
-        if(!_shareButton){
-            _shareButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0.5, kScreenWidth-2*widthPadding, 39.5)];}
-        [_shareButton addTarget:self action:@selector(goShare) forControlEvents:UIControlEventTouchUpInside];
-        _shareButton.backgroundColor=[UIColor whiteColor];
-        [cell addSubview:_shareButton];
-        
-        if(!_attachmentString){
-            NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-            attachment.image=[UIImage imageWithImage:[UIImage imageNamed:@"icon_share.png"] scaledToSize:CGSizeMake(20, 20)];
-            _attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];}
-        
-        NSMutableAttributedString *attachmentShareString = [[NSMutableAttributedString alloc] initWithAttributedString:_attachmentString];
-        NSAttributedString *myText = [[NSMutableAttributedString alloc] initWithString:@" 分享" attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"STHeitiTC-Light" size:20],NSForegroundColorAttributeName : [UIColor grayColor]}];
-        [attachmentShareString appendAttributedString:myText];
-        [_shareButton setAttributedTitle:attachmentShareString forState:UIControlStateNormal];
-        
-        if(!_replyaButton){
-            _replyaButton=[[UIButton alloc]initWithFrame:CGRectMake(kkGlobalCardCellHeight+kkGlobalDefaultPadding, 60, kScreenWidth-kkGlobalCardCellHeight-3*widthPadding, 40)];}
-        _replyaButton.layer.borderColor=[UIColor colorWithHexString:kReplyIputLabelPresetWordColor].CGColor;
-        _replyaButton.layer.borderWidth=1;
-        _replyaButton.clipsToBounds=YES;
-        _replyaButton.layer.cornerRadius=10;
-        
-        NSAttributedString *mText = [[NSMutableAttributedString alloc] initWithString:@" 回覆..." attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"STHeitiTC-Light" size:20],NSForegroundColorAttributeName : [UIColor colorWithHexString:kReplyIputLabelPresetWordColor]}];
-        _replyaButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [_replyaButton setAttributedTitle:mText forState:UIControlStateNormal];
-        [_replyaButton addTarget:self action:@selector(goReply) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:_replyaButton];
-        
-        UIImageView *avatar=[[UIImageView alloc]initWithFrame:CGRectMake(kkGlobalDefaultPadding+3, kkGlobalDefaultPadding, kkGlobalCardCellHeight-kkGlobalDefaultPadding*2, kkGlobalCardCellHeight-kkGlobalDefaultPadding*2)];
-        avatar.backgroundColor=[UIColor grayColor];
-        avatar.image=[UIImage imageNamed:@"image_preset_avatar"];///////to be set to the avatar
-        avatar.clipsToBounds=YES;
-        avatar.layer.cornerRadius=(kkGlobalCardCellHeight-2*kkGlobalDefaultPadding)/2;
-        [frontwhite addSubview:avatar];
-        
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-        
-        return cell;
-    }
+    
+}
 
-    return cell;}
-- (void) goReply {
-  //  ReplyPageViewController *controller=[[ReplyPageViewController alloc]init];
-  //  [self.navigationController pushViewController:controller animated:YES];
-     NSLog(@"reply");
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0)
+            return 250;
+        else if (indexPath.row == 1)
+            return 50;
+        else if (indexPath.row == 2)
+            return kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH + 2 * kDiscussionReplyButtonTopPadding;
+        else if (indexPath.row == _commentDataArray.count + 3)
+            return kLoadMoreCellHeight;
+        else {
+            return [self heightOfReplyCellWithReplyContent:_commentDataArray[indexPath.row - 3]];
+        }
+    } else {
+        return kScreenHeight * 80 / 630;
+    }
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            static NSString *cellID = @"VideoReplyTableViewCell";
+            VideoReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            
+            if (!cell) {
+                cell = [[VideoReplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+            cell.delegate = self;
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.videoDataObject = _videoDataObject;
+            return cell;
+        } else if (indexPath.row == 1) {
+            static NSString *cellID = @"ShareButtonTableViewCell";
+            VideoReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            
+            if (!cell) {
+                cell = [[VideoReplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+            cell.delegate = self;
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell initShareButtonLayout];
+            return cell;
+        } else if (indexPath.row == 2) {
+            static NSString *cellID = @"ReplyButtonTableViewCell";
+            VideoReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            
+            if (!cell) {
+                cell = [[VideoReplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+            cell.delegate = self;
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [cell initReplyButtonLayout];
+            return cell;
+        } else if (indexPath.row == _commentDataArray.count + 3) {
+            static NSString *cellID = @"VideoLoadMoreButton";
+            VideoReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (!cell) {
+                cell = [[VideoReplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+            cell.backgroundColor = [UIColor clearColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.contentView.contentMode = UIViewContentModeCenter;
+            [cell initLoadMoreImageView];
+            return cell;
+        } else {
+            static NSString *cellID = @"ReplyTableViewCell";
+            VideoReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            
+            if (!cell) {
+                cell = [[VideoReplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+            cell.delegate = self;
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.commentString = _commentDataArray[indexPath.row - 3];
+            return cell;
+        }
+    } else {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
+        cell.selectionStyle   = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor  = [UIColor clearColor];
+        return cell;
+    }
+    
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        if (!_hasMoreCommentData) {
+            UIView *bottomLine             = [UIView new];
+            bottomLine.backgroundColor     = [UIColor lightGrayColor];
+            return bottomLine;
+        } else {
+            UIView *bottomLine             = [UIView new];
+            bottomLine.backgroundColor     = [UIColor clearColor];
+            return bottomLine;
+        }
+    } else {
+        return [[UIView alloc] initWithFrame:CGRectZero];
+    }
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return 1.0;
+    } else {
+        return 0.1;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section == 1) {
+        UIView *view         = [[UIView alloc] init];
+        view.backgroundColor = [UIColor colorWithHexString:@"#ecf8f7"];
+        _fanzytvLogo         = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_fanzytv"]];
+        _fanzytvLogo.frame   = CGRectMake((kScreenWidth - 30 - kLogoWidth) / 2, 10, kLogoWidth, kLogoWidth * 15.0f / 48.0f);
+        [view addSubview:_fanzytvLogo];
+        return view;
+    }
+    else {
+        return [[UIView alloc] initWithFrame:CGRectZero];
+    }
+}
+
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0.1f;
+    } else {
+        return 10 + kLogoWidth * 15.0f / 48.0f + 15;
+    }
+}
+
+- (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == _commentDataArray.count + 3) {
+        [self loadMoreReply];
+    }
+}
+
+#pragma mark - action
+- (void) goPostReply {
+    PostNewDiscussionReplyViewController *controller = [PostNewDiscussionReplyViewController new];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 - (void) goShare{
-    NSLog(@"shared");
+    NSLog(@"share");
 }
 @end

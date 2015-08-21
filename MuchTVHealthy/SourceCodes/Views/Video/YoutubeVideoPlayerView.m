@@ -110,15 +110,13 @@
 //    [self setupVideoPlayer:_youtubeID];
 }
 
-- (void)initLine
-{
+- (void)initLine {
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-1, self.frame.size.width, 1)];
     [lineView setBackgroundColor:[UIColor colorWithHexString:@"#5c5c5c"]];
     [self addSubview:lineView];
 }
 
-- (void)initGesture
-{
+- (void)initGesture {
     UIView* view = [[UIView alloc] initWithFrame:self.frame];
     [view setBackgroundColor:[UIColor clearColor]];
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playVideo)];
@@ -129,24 +127,19 @@
     [self addSubview:view];
     
 }
-- (void)videoWebviewResize
-{
+- (void)videoWebviewResize {
     if (self.frame.size.width > self.frame.size.height) {
         _videoPlayerWebView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    }
-    else{
+    } else {
         _videoPlayerWebView.frame = CGRectMake(0, 0, self.frame.size.height, self.frame.size.width);
     }
 }
-- (void)pinchVideo
-{
+- (void)pinchVideo {
     NSLog(@"do not thing");
 }
-- (void)playVideo
-{
+- (void)playVideo {
     NSLog(@"點");
     //[_videoPlayerWebView stringByEvaluatingJavaScriptFromString:@"playVideo()"];
-    
 }
 
 - (void) playerViewDidBecomeReady:(YTPlayerView *)playerView {

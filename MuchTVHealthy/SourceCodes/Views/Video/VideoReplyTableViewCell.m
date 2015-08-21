@@ -1,51 +1,39 @@
 //
-//  DiscussionCommentTableViewCell.m
-//  FaceNews
+//  VideoReplyTableViewCell.m
+//  MuchTVHealthy
 //
-//  Created by Peter on 2015/7/17.
+//  Created by Peter on 2015/8/21.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
-#import "DiscussionCommentTableViewCell.h"
-#import <KiiSDK/Kii.h>
-//#import "DiscussionObject.h"
+#import "VideoReplyTableViewCell.h"
+#import "YoutubeVideoPlayerView.h"
 
-@interface DiscussionCommentTableViewCell() <UITableViewDataSource, UITableViewDelegate, DiscussionCommentTableViewCellDelegate>
-@property (nonatomic, strong) UITableView                   *commentTableView;
-@property (nonatomic, strong) UIImageView                   *avatarImageView;
-@property (nonatomic, strong) UIButton                      *replyButton;
-@property (nonatomic, strong) UILabel                       *contentLabel;
-@property (nonatomic, strong) UILabel                       *authorLabel;
-@property (nonatomic, strong) UILabel                       *timeLabel;
-@property (nonatomic, strong) UITextField                   *commentTextField;
-@property (nonatomic, strong) UITableView                   *discussionCommentTableView;
-@property (nonatomic, strong) UIImageView                   *timeIcon;
-@property (nonatomic, strong) UIImageView                   *loadMoreImageView;
+@interface VideoReplyTableViewCell()
+@property (nonatomic, strong) YoutubeVideoPlayerView            *playerView;
+@property (nonatomic, strong) UITableView                       *videoAndReplyTableView;
+@property (nonatomic, strong) UIImageView                       *avatarImageView;
+@property (nonatomic, strong) UIButton                          *replyButton;
+@property (nonatomic, strong) UILabel                           *authorLabel;
+@property (nonatomic, strong) UILabel                           *contentLabel;
+@property (nonatomic, strong) UIImageView                       *timeIcon;
+@property (nonatomic, strong) UILabel                           *timeLabel;
+@property (nonatomic, strong) UIButton                          *shareButton;
+@property (nonatomic, strong) UILabel                           *shareLabel;
+@property (nonatomic, strong) UIImageView                       *shareButtonImageView;
+@property (nonatomic, strong) UIImageView                       *loadMoreImageView;
 @end
 
-@implementation DiscussionCommentTableViewCell
+@implementation VideoReplyTableViewCell
+
 - (void)awakeFromNib {
     // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
+
     // Configure the view for the selected state
-}
-
-- (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self  = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        self.backgroundColor = [UIColor clearColor];
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    return self;
-}
-
-- (void) setCommentDataArray:(NSMutableArray *)commentDataArray {
-    _commentDataArray = commentDataArray;
-    [self initCommentTableView];
 }
 
 - (void)setCommentString:(NSString *)commentString {
@@ -57,47 +45,177 @@
     [self initTimeLabel];
 }
 
-- (void) initCommentTableView {
-    if (!_discussionCommentTableView) {
-        _discussionCommentTableView                 = [[UITableView alloc] initForAutolayout];
-        _discussionCommentTableView.dataSource      = self;
-        _discussionCommentTableView.delegate        = self;
-        _discussionCommentTableView.scrollEnabled   = NO;
-        _discussionCommentTableView.backgroundColor = [UIColor whiteColor];
-        _discussionCommentTableView.clipsToBounds   = NO;
-        [_discussionCommentTableView setLayoutMargins:UIEdgeInsetsZero];
-        [self.contentView addSubview:_discussionCommentTableView];
-        NSMutableArray *discussionCommentViewConstraint = [[NSMutableArray alloc] init];
-        
-        [discussionCommentViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_discussionCommentTableView
-                                                                                attribute:NSLayoutAttributeLeft
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:self.contentView
-                                                                                attribute:NSLayoutAttributeLeft
-                                                                               multiplier:1.0f constant:0.0f]];
-        [discussionCommentViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_discussionCommentTableView
-                                                                                attribute:NSLayoutAttributeTop
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:self.contentView
-                                                                                attribute:NSLayoutAttributeTop
-                                                                               multiplier:1.0f constant:0.0f]];
-        [discussionCommentViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_discussionCommentTableView
-                                                                                attribute:NSLayoutAttributeRight
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:self.contentView
-                                                                                attribute:NSLayoutAttributeRight
-                                                                               multiplier:1.0f constant:0.0f]];
-        [discussionCommentViewConstraint addObject:[NSLayoutConstraint constraintWithItem:_discussionCommentTableView
-                                                                                attribute:NSLayoutAttributeBottom
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:self.contentView
-                                                                                attribute:NSLayoutAttributeBottom
-                                                                               multiplier:1.0f constant:0.0f]];
-        
-        [self addConstraints:discussionCommentViewConstraint];
-    }
-    [_discussionCommentTableView reloadData];
+- (void) setVideoDataObject:(VideoDataObject *)videoDataObject {
+    _videoDataObject = videoDataObject;
+    [self initVideoView];
 }
+
+- (void) initShareButtonLayout {
+    [self initShareButton];
+    [self initShareLabel];
+    [self initShareButtonImageView];
+}
+
+- (void) initVideoView {
+    if (!_playerView) {
+        _playerView = [[YoutubeVideoPlayerView alloc] initForAutolayout];
+        _playerView.clipsToBounds = YES;
+        _playerView.backgroundColor = [UIColor blackColor];
+        [self.contentView addSubview:_playerView];
+        
+        NSMutableArray *videoPlayerViewConstaint = @[].mutableCopy;
+        
+        [videoPlayerViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_playerView
+                                                                         attribute:NSLayoutAttributeTop
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.contentView
+                                                                         attribute:NSLayoutAttributeTop
+                                                                        multiplier:1.0f constant:kkGlobalDefaultPadding]];
+        [videoPlayerViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_playerView
+                                                                         attribute:NSLayoutAttributeLeft
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.contentView
+                                                                         attribute:NSLayoutAttributeLeft
+                                                                        multiplier:1.0f constant:kkGlobalDefaultPadding]];
+        [videoPlayerViewConstaint addObject: [NSLayoutConstraint constraintWithItem:_playerView
+                                                                          attribute:NSLayoutAttributeBottom
+                                                                          relatedBy:NSLayoutRelationEqual
+                                                                             toItem:self.contentView
+                                                                          attribute:NSLayoutAttributeBottom
+                                                                         multiplier:1.0f constant:-kkGlobalDefaultPadding]];
+        [videoPlayerViewConstaint addObject:[NSLayoutConstraint constraintWithItem:_playerView
+                                                                         attribute:NSLayoutAttributeRight
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.contentView
+                                                                         attribute:NSLayoutAttributeRight
+                                                                        multiplier:1.0f constant:-kkGlobalDefaultPadding]];
+        [self.contentView addConstraints:videoPlayerViewConstaint];
+        
+        _playerView.youtubeID = [@"https://www.youtube.com/watch?v=c3iL8u0Dz0A" getYoutubeVieoCode];
+    }
+
+}
+
+- (void)initShareButton {
+    if (!_shareButton) {
+        _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        _shareButton.backgroundColor   = [UIColor colorWithHexString:kDiscussionSinglePageReplyButtonBackgroundColorHexString];
+        _shareButton.layer.borderWidth = 1.0f;
+        _shareButton.layer.borderColor = [UIColor colorWithHexString:kDiscussionSinglePageReplyButtonBorderColorHexString].CGColor;
+        [_shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+        [_shareButton setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+        [_shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.contentView addSubview:_shareButton];
+        
+        NSMutableArray *replyButtonConstraint = [[NSMutableArray alloc] init];
+        
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.contentView
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                     multiplier:1.0f constant:0.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
+                                                                      attribute:NSLayoutAttributeTop
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.contentView
+                                                                      attribute:NSLayoutAttributeTop
+                                                                     multiplier:1.0f constant:0.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
+                                                                      attribute:NSLayoutAttributeRight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.contentView
+                                                                      attribute:NSLayoutAttributeRight
+                                                                     multiplier:1.0f constant:0.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.contentView
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                     multiplier:1.0f constant:0.0f]];
+        
+        [self addConstraints:replyButtonConstraint];
+    }
+}
+
+- (void) initShareButtonImageView {
+    if (!_shareButtonImageView) {
+        _shareButtonImageView = [[UIImageView alloc] initForAutolayout];
+        _shareButtonImageView.image = [UIImage imageNamed:@"icon_share"];
+        [_shareButton addSubview:_shareButtonImageView];
+        
+        NSMutableArray *replyButtonConstraint = [[NSMutableArray alloc] init];
+        
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
+                                                                      attribute:NSLayoutAttributeRight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:_shareLabel
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                     multiplier:1.0f constant:-10.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
+                                                                      attribute:NSLayoutAttributeHeight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1.0f constant:30.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
+                                                                      attribute:NSLayoutAttributeWidth
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1.0f constant:30.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:_shareButton
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                     multiplier:1.0f constant:0.0f]];
+        
+        [self addConstraints:replyButtonConstraint];
+        
+    }
+}
+
+- (void) initShareLabel {
+    if (!_shareLabel) {
+        _shareLabel = [[UILabel alloc] initForAutolayout];
+        _shareLabel.textColor = [UIColor colorWithHexString:kDiscussionSinglePageReplyButtonTitleColorHexString];
+        _shareLabel.text = @"分 享";
+        [_shareButton addSubview:_shareLabel];
+        
+        NSMutableArray *replyButtonConstraint = [[NSMutableArray alloc] init];
+        
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:_shareButton
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                     multiplier:1.0f constant:0.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
+                                                                      attribute:NSLayoutAttributeTop
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:_shareButton
+                                                                      attribute:NSLayoutAttributeTop
+                                                                     multiplier:1.0f constant:0.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
+                                                                      attribute:NSLayoutAttributeWidth
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1.0f constant:50.0f]];
+        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:_shareButton
+                                                                      attribute:NSLayoutAttributeBottom
+                                                                     multiplier:1.0f constant:0.0f]];
+        
+        [self addConstraints:replyButtonConstraint];
+    }
+}
+
 
 - (void) initReplyButtonLayout {
     if (!_avatarImageView) {
@@ -290,7 +408,6 @@
         [self addConstraints:authorLabelViewConstraint];
         
     }
-    //    _authorLabel.text = _discussionReplyObject.authorName;
     _authorLabel.text          = @"Author";
     _authorLabel.numberOfLines = 1;
     _authorLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -432,38 +549,31 @@
         NSMutableArray *loadMoreConstraint = [[NSMutableArray alloc] init];
         
         [loadMoreConstraint addObject:[NSLayoutConstraint constraintWithItem:_loadMoreImageView
-                                                                   attribute:NSLayoutAttributeCenterX
-                                                                   relatedBy:NSLayoutRelationEqual
-                                                                      toItem:self.contentView
-                                                                   attribute:NSLayoutAttributeCenterX
-                                                                  multiplier:1.0f constant:0.0f]];
+                                                                        attribute:NSLayoutAttributeCenterX
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeCenterX
+                                                                       multiplier:1.0f constant:0.0f]];
         [loadMoreConstraint addObject:[NSLayoutConstraint constraintWithItem:_loadMoreImageView
-                                                                   attribute:NSLayoutAttributeCenterY
-                                                                   relatedBy:NSLayoutRelationEqual
-                                                                      toItem:self.contentView
-                                                                   attribute:NSLayoutAttributeCenterY
-                                                                  multiplier:1.0f constant:0.0f]];
+                                                                        attribute:NSLayoutAttributeCenterY
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.contentView
+                                                                        attribute:NSLayoutAttributeCenterY
+                                                                       multiplier:1.0f constant:0.0f]];
         [loadMoreConstraint addObject:[NSLayoutConstraint constraintWithItem:_loadMoreImageView
-                                                                   attribute:NSLayoutAttributeWidth
-                                                                   relatedBy:NSLayoutRelationEqual
-                                                                      toItem:nil
-                                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                                  multiplier:1.0f constant:20.0f]];
+                                                                        attribute:NSLayoutAttributeWidth
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0f constant:20.0f]];
         [loadMoreConstraint addObject:[NSLayoutConstraint constraintWithItem:_loadMoreImageView
-                                                                   attribute:NSLayoutAttributeHeight
-                                                                   relatedBy:NSLayoutRelationEqual
-                                                                      toItem:nil
-                                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                                  multiplier:1.0f constant:15.0f]];
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0f constant:15.0f]];
         [self addConstraints:loadMoreConstraint];
     }
-}
-
-#pragma mark - reply content height
-- (CGFloat) heightOfReplyCellWithReplyContent:(NSString *)content {
-    CGFloat replyContentHeight = [content sizeOfStringWithFont:[UIFont fontWithName:@"STHeitiTC-Light" size:kDiscussionContentFontSize] andMaxLength:kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionContentLeftPadding*2 ].height;
-    
-    return kDiscussionReplyTopAndBottomPadding + kDiscussionReplyContentPadding * 2 + kDiscussionReplyAuthorNameFontSize + 0.5f + replyContentHeight + kDiscussionReplyTimeFontSize + kDiscussionTimeBottomPadding + 0.5f;
 }
 
 #pragma mark - button clicked
@@ -473,89 +583,10 @@
     }
 }
 
-
-#pragma mark - tableView datasource and delegate
-- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-    if (_hasMoreCommentData) {
-        return _commentDataArray.count + 2;
-    } else {
-        return _commentDataArray.count + 1;
+- (void) shareButtonClicked:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(goShare)]) {
+        [self.delegate goShare];
     }
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0.1f;
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.1f;
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0)
-        return 60;
-    else if (indexPath.row == _commentDataArray.count + 1)
-        return kLoadMoreCellHeight;
-    else {
-        return [self heightOfReplyCellWithReplyContent:_commentDataArray[indexPath.row - 1]];
-    }
-    
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[UIView alloc]initWithFrame:CGRectZero];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectZero];
-}
-
-- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"DiscussionCommentTableViewCell";
-    DiscussionCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    
-    if (!cell) {
-        cell = [[DiscussionCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
-    [cell setSeparatorInset:UIEdgeInsetsZero];
-    [cell setLayoutMargins:UIEdgeInsetsZero];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    if (indexPath.row == 0) {
-        cell.delegate = self.delegate;
-        [cell initReplyButtonLayout];
-    } else if (indexPath.row == _commentDataArray.count + 1) {
-        static NSString *cellID = @"DiscussionLoadMoreButton";
-        DiscussionCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-        
-        if (!cell) {
-            cell = [[DiscussionCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        }
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.contentView.contentMode = UIViewContentModeCenter;
-        [cell initLoadMoreImageView];
-        return cell;
-    } else {
-        cell.commentString = _commentDataArray[indexPath.row - 1];
-    }
-    return cell;
-}
-
-- (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == _commentDataArray.count + 1) {
-        if ([self.delegate respondsToSelector:@selector(loadMoreReply)]) {
-            [self.delegate loadMoreReply];
-        }
-    }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 @end

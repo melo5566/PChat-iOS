@@ -218,7 +218,6 @@
     if ([_contentTextView isFirstResponder]) {
         [_contentTextView endEditing:YES];
     }
-    
 //    _notFinishedAlert = [[UIAlertView alloc] initWithTitle:@"注意"
 //                                                   message:@"尚未完成，\n您確定要離開了嗎？"
 //                                                  delegate:self
