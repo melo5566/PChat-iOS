@@ -159,54 +159,6 @@
     _videoListTableView.scrollEnabled=_videoListTableView.isScrollEnabled?NO:YES;
     _videoListTableView.allowsSelection=_videoListTableView.allowsSelection?NO:YES;
 }
-/*- (void) pushToController:(int)num{
-    switch (num) {
-        case 6:
-            [self goSetting];
-            break;
-        case 4:
-            [self goCele];
-            break;
-        case 5:
-            [self goMenu];
-            break;
-        case 3:
-            [self goVideo];
-            break;
-        case 2:
-            [self goMessage];
-            break;
-        default:
-            break;
-    }
-    
-}
-
--(void) goVideo{
-    VideoListViewController *controller=[[VideoListViewController alloc]init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
--(void) goCele{
-    CelebrityListViewController *controller=[[CelebrityListViewController alloc]init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
--(void) goMenu{
-    MenuListViewController *controller=[[MenuListViewController alloc]init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
--(void) goMessage{
-    MessageListViewController *controller=[[MessageListViewController alloc]init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
--(void) goSetting{
-    SettingViewController *controller=[[SettingViewController alloc]init];
-    [self.navigationController pushViewController:controller animated:YES];}
-
-#pragma mark right delegate
-- (void)reloadDataFor:(int)num{
-    NSLog(@"go num %d",num);
-    [_videoListTableView reloadData];
-}*/
 
 
 

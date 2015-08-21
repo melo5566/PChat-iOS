@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RecipeObject.h"
 
 @interface RecipeTableViewCell : UITableViewCell
 @property (nonatomic, strong) NSString              *string;
+@property (nonatomic, strong) RecipeDataObject      *recipeDataObject;
 @end

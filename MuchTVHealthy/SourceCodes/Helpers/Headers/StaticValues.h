@@ -102,6 +102,7 @@ static CGFloat const kDiscussionSingleViewTopPadding                = 15.0f;
 static CGFloat const kDiscussionSingleViewLeftPadding               = 15.0f;
 static CGFloat const kDiscussionSingleViewRightPadding              = 15.0f;
 
+
 /*
  *  Size Value
  */
@@ -116,6 +117,8 @@ static CGFloat const kDiscussionAttachmentViewHeight                = 48.0f;
 static CGFloat const kDiscussionReplyAvatarHeightInIphone6          = 45.0f;
 
 static CGFloat const kkGlobalCardCellHeight                         = 80.0f;
+static CGFloat const kkGlobalFooterHeight                           = 30.0f;
+static CGFloat const kHeaderHeightIncludingThick1Height             = 30.0f;
 
 /*
  *  TableView Load More Data Limit
@@ -211,6 +214,7 @@ static CGFloat const kChatroomTimeFontSize                              = 12.0f;
 
 
 // **CONNOISSUER **//
+static NSString * const kCellTitleLabelTextColor                        = @"#109BAC";
 static NSString * const kTimeLabelHexColor                              = @"#ffa200";
 static NSString * const kConnoisseurAboutPageTitleTextColor             = @"#109BAC";
 static NSString * const kConnoisseurDiscussionDateColor                 = @"#FFA200";
@@ -244,3 +248,6 @@ static CGFloat const kConnoisseurDiscussionDateFontSize                 = 11.0f;
 static NSString * const kReplyIputLabelPresetWordColor                  = @"#109bac";
 static NSString * const kVideoBackGroundColorHexString                  = @"#ecf8f7";
 
+
+// **RECIPT** //
+static NSString * const kLeftSideSeparateLineColor                      = @"#387F7F";

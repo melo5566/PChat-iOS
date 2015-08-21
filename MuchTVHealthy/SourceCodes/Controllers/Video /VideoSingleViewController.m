@@ -8,6 +8,7 @@
 
 #import "VideoSingleViewController.h"
 #import "YoutubeVideoPlayerView.h"
+#import "PostNewDiscussionReplyViewController.h"
 //#import "InformationCardTableViewCell.h"
 //#import "replyPageViewController.h"
 
@@ -265,9 +266,8 @@ static CGFloat const widthPadding      = 2*kkGlobalDefaultPadding+3;
 
     return cell;}
 - (void) goReply {
-  //  ReplyPageViewController *controller=[[ReplyPageViewController alloc]init];
-  //  [self.navigationController pushViewController:controller animated:YES];
-     NSLog(@"reply");
+        PostNewDiscussionReplyViewController *controller=[[PostNewDiscussionReplyViewController alloc]init];
+        [self.navigationController pushViewController:controller animated:YES];
 }
 - (void) goShare{
     NSLog(@"shared");
