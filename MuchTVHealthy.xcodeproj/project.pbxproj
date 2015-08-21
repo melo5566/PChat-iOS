@@ -39,6 +39,9 @@
 		263CD0EA1B857843008AE245 /* preset.png in Resources */ = {isa = PBXBuildFile; fileRef = 263CD0E91B857843008AE245 /* preset.png */; };
 		263CD0EC1B8582A4008AE245 /* icon_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 263CD0EB1B8582A4008AE245 /* icon_play.png */; };
 		263CD0EF1B858542008AE245 /* YoutubeVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */; };
+		263CD0F31B85C18C008AE245 /* RecipeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0F21B85C18C008AE245 /* RecipeModel.m */; };
+		263CD0F61B85C1AE008AE245 /* RecipeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0F51B85C1AE008AE245 /* RecipeObject.m */; };
+		263CD0FC1B85C42A008AE245 /* RecipeSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 263CD0FB1B85C42A008AE245 /* RecipeSingleViewController.m */; };
 		265E30D71B842CB5006279EE /* FacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 265E30D61B842CB5006279EE /* FacebookTableViewCell.m */; };
 		265E30D91B84425B006279EE /* icon_go.png in Resources */ = {isa = PBXBuildFile; fileRef = 265E30D81B84425B006279EE /* icon_go.png */; };
 		265E30DF1B8491C9006279EE /* VideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 265E30DC1B8491C9006279EE /* VideoListViewController.m */; };
@@ -52,6 +55,9 @@
 		2689A3F41B7B41DC00B4F708 /* ConnoisseurObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2689A3F31B7B41DC00B4F708 /* ConnoisseurObject.m */; };
 		268A67891B82D7CD00FCDD8E /* AboutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A67881B82D7CD00FCDD8E /* AboutTableViewCell.m */; };
 		268A678C1B8321EA00FCDD8E /* RecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A678B1B8321EA00FCDD8E /* RecommendTableViewCell.m */; };
+		26B76C281B86C81500D99873 /* InformationContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B76C271B86C81500D99873 /* InformationContentTableViewCell.m */; };
+		26B76C2B1B86CD6300D99873 /* InformationIntroductionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B76C2A1B86CD6300D99873 /* InformationIntroductionView.m */; };
+		26B76C2E1B86D2C800D99873 /* InformationCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B76C2D1B86D2C800D99873 /* InformationCardTableViewCell.m */; };
 		26EA55751B81A2DD0053564F /* icon_issue.png in Resources */ = {isa = PBXBuildFile; fileRef = 26EA55741B81A2DD0053564F /* icon_issue.png */; };
 		2AEE06F5EB4218866127775F /* libPods-MuchTVHealthy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969A746379A920AD933F9B1 /* libPods-MuchTVHealthy.a */; };
 		D05958BA1B7C8BCE008C102C /* btn_fanzytv.png in Resources */ = {isa = PBXBuildFile; fileRef = D05958AC1B7C8BCE008C102C /* btn_fanzytv.png */; };
@@ -166,6 +172,12 @@
 		263CD0EB1B8582A4008AE245 /* icon_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_play.png; path = Resources/icon_play.png; sourceTree = "<group>"; };
 		263CD0ED1B85853A008AE245 /* YoutubeVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoutubeVideoPlayerView.h; sourceTree = "<group>"; };
 		263CD0EE1B858542008AE245 /* YoutubeVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoutubeVideoPlayerView.m; sourceTree = "<group>"; };
+		263CD0F11B85C18C008AE245 /* RecipeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeModel.h; sourceTree = "<group>"; };
+		263CD0F21B85C18C008AE245 /* RecipeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeModel.m; sourceTree = "<group>"; };
+		263CD0F41B85C1AE008AE245 /* RecipeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeObject.h; sourceTree = "<group>"; };
+		263CD0F51B85C1AE008AE245 /* RecipeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeObject.m; sourceTree = "<group>"; };
+		263CD0FA1B85C42A008AE245 /* RecipeSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeSingleViewController.h; sourceTree = "<group>"; };
+		263CD0FB1B85C42A008AE245 /* RecipeSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeSingleViewController.m; sourceTree = "<group>"; };
 		265E30D51B842CB5006279EE /* FacebookTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookTableViewCell.h; sourceTree = "<group>"; };
 		265E30D61B842CB5006279EE /* FacebookTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTableViewCell.m; sourceTree = "<group>"; };
 		265E30D81B84425B006279EE /* icon_go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_go.png; path = Resources/icon_go.png; sourceTree = "<group>"; };
@@ -191,6 +203,12 @@
 		268A67881B82D7CD00FCDD8E /* AboutTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewCell.m; sourceTree = "<group>"; };
 		268A678A1B8321EA00FCDD8E /* RecommendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendTableViewCell.h; sourceTree = "<group>"; };
 		268A678B1B8321EA00FCDD8E /* RecommendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendTableViewCell.m; sourceTree = "<group>"; };
+		26B76C261B86C81500D99873 /* InformationContentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InformationContentTableViewCell.h; path = Recipe/InformationContentTableViewCell.h; sourceTree = "<group>"; };
+		26B76C271B86C81500D99873 /* InformationContentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InformationContentTableViewCell.m; path = Recipe/InformationContentTableViewCell.m; sourceTree = "<group>"; };
+		26B76C291B86CD6300D99873 /* InformationIntroductionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InformationIntroductionView.h; path = Recipe/InformationIntroductionView.h; sourceTree = "<group>"; };
+		26B76C2A1B86CD6300D99873 /* InformationIntroductionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InformationIntroductionView.m; path = Recipe/InformationIntroductionView.m; sourceTree = "<group>"; };
+		26B76C2C1B86D2C800D99873 /* InformationCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InformationCardTableViewCell.h; path = Recipe/InformationCardTableViewCell.h; sourceTree = "<group>"; };
+		26B76C2D1B86D2C800D99873 /* InformationCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InformationCardTableViewCell.m; path = Recipe/InformationCardTableViewCell.m; sourceTree = "<group>"; };
 		26EA55741B81A2DD0053564F /* icon_issue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_issue.png; path = Resources/icon_issue.png; sourceTree = "<group>"; };
 		5F9C5A42D50BA51301FA66C9 /* Pods-MuchTVHealthy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.release.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.release.xcconfig"; sourceTree = "<group>"; };
 		9DEE69189D1511A00CA0B152 /* Pods-MuchTVHealthy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuchTVHealthy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MuchTVHealthy/Pods-MuchTVHealthy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -476,6 +494,7 @@
 		134371031B68B67F00AE7FA7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				263CD0F01B85C169008AE245 /* Recipe */,
 				263CD0E21B856DF6008AE245 /* Video */,
 				2689A3EE1B7B3B5300B4F708 /* Connoisseur */,
 				D0D2960C1B69ECC100671449 /* UserModel */,
@@ -533,6 +552,17 @@
 				263CD0E71B856E45008AE245 /* VideoObject.m */,
 			);
 			path = Video;
+			sourceTree = "<group>";
+		};
+		263CD0F01B85C169008AE245 /* Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				263CD0F11B85C18C008AE245 /* RecipeModel.h */,
+				263CD0F21B85C18C008AE245 /* RecipeModel.m */,
+				263CD0F41B85C1AE008AE245 /* RecipeObject.h */,
+				263CD0F51B85C1AE008AE245 /* RecipeObject.m */,
+			);
+			path = Recipe;
 			sourceTree = "<group>";
 		};
 		265E30DA1B8491C9006279EE /* Video  */ = {
@@ -621,6 +651,8 @@
 			children = (
 				D05958EF1B7DCB29008C102C /* RecipeViewController.h */,
 				D05958F01B7DCB29008C102C /* RecipeViewController.m */,
+				263CD0FA1B85C42A008AE245 /* RecipeSingleViewController.h */,
+				263CD0FB1B85C42A008AE245 /* RecipeSingleViewController.m */,
 			);
 			name = Recipe;
 			sourceTree = "<group>";
@@ -774,6 +806,12 @@
 		D0EA38441B83253700C96040 /* Recipe */ = {
 			isa = PBXGroup;
 			children = (
+				26B76C2C1B86D2C800D99873 /* InformationCardTableViewCell.h */,
+				26B76C2D1B86D2C800D99873 /* InformationCardTableViewCell.m */,
+				26B76C291B86CD6300D99873 /* InformationIntroductionView.h */,
+				26B76C2A1B86CD6300D99873 /* InformationIntroductionView.m */,
+				26B76C261B86C81500D99873 /* InformationContentTableViewCell.h */,
+				26B76C271B86C81500D99873 /* InformationContentTableViewCell.m */,
 				D0EA38451B83256400C96040 /* RecipeTableViewCell.h */,
 				D0EA38461B83256400C96040 /* RecipeTableViewCell.m */,
 			);
@@ -960,6 +998,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				263CD0FC1B85C42A008AE245 /* RecipeSingleViewController.m in Sources */,
 				D0D295E51B68C3D000671449 /* FrontpageTableViewCell.m in Sources */,
 				134370B11B68B19000AE7FA7 /* ViewController.m in Sources */,
 				D0D030C61B72FF2700046917 /* DiscussionCommentTableViewCell.m in Sources */,
@@ -980,8 +1019,10 @@
 				D0D030AF1B6F26A800046917 /* PostNewDiscussionViewController.m in Sources */,
 				D0D295FD1B69D2B800671449 /* FrontpageModel.m in Sources */,
 				D0D295E21B68C38D00671449 /* BaseViewController.m in Sources */,
+				26B76C2B1B86CD6300D99873 /* InformationIntroductionView.m in Sources */,
 				D0D030BF1B72FB2000046917 /* DiscussionSingleViewController.m in Sources */,
 				D0D030CD1B7307B900046917 /* ImageSlideView.m in Sources */,
+				26B76C2E1B86D2C800D99873 /* InformationCardTableViewCell.m in Sources */,
 				D0D296001B69D30900671449 /* FrontpageObject.m in Sources */,
 				D0D2960F1B69ECF300671449 /* UserModel.m in Sources */,
 				265E30D71B842CB5006279EE /* FacebookTableViewCell.m in Sources */,
@@ -1002,8 +1043,11 @@
 				D0D030C91B72FFF000046917 /* DiscussionAuthorAndContentTableViewCell.m in Sources */,
 				D0EA38661B86C02D00C96040 /* VideoReplyTableViewCell.m in Sources */,
 				263CD0E11B856DB6008AE245 /* VideoListTableViewCell.m in Sources */,
+				263CD0F31B85C18C008AE245 /* RecipeModel.m in Sources */,
+				26B76C281B86C81500D99873 /* InformationContentTableViewCell.m in Sources */,
 				267325A71B7DF53F009641D1 /* ConnoisseurSingleViewController.m in Sources */,
 				134371051B68B67F00AE7FA7 /* NSArray+Utils.m in Sources */,
+				263CD0F61B85C1AE008AE245 /* RecipeObject.m in Sources */,
 				2672BD261B7C43CF007AB9F1 /* ConnoisseurListTableViewCell.m in Sources */,
 				134370AB1B68B19000AE7FA7 /* main.m in Sources */,
 				D0EA38551B8496B400C96040 /* VerifyViewController.m in Sources */,

@@ -7,7 +7,10 @@
 //
 
 #import "RecipeViewController.h"
+#import "RecipeSingleViewController.h"
 #import "RecipeTableViewCell.h"
+#import "RecipeModel.h"
+#import "RecipeObject.h"
 
 @interface RecipeViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView                       *recipeTableView;
@@ -22,8 +25,15 @@
 @property (nonatomic, strong) UIImageView                       *fanzytvLogo;
 @property (nonatomic, strong) NSLayoutConstraint                *recipeMenuViewLeftLayoutConstraint;
 @property (nonatomic) BOOL                                      isShownRecipeMenuView;
-@property (nonatomic, strong) NSMutableArray                    *recipeDataArray;
+//@property (nonatomic, strong) NSMutableArray                    *recipeDataArray;
 @property (nonatomic, strong) NSString                          *recipeType;
+@property (nonatomic, strong) UIView                            *buttonSeparateLine;
+@property (nonatomic, strong) RecipeModel                       *recipeModel;
+@property (nonatomic, strong) RecipeObject                      *recipeObject;
+@property (nonatomic, strong) NSMutableArray                    *showRecipeDataArray;
+@property (nonatomic) BOOL                                      hasMoreRecipe;
+@property (nonatomic) BOOL                                      isFirstLoad;
+
 @end
 
 @implementation RecipeViewController
@@ -33,7 +43,8 @@
     [self.navigationItem setTitle:@"食譜"];
     [self initListButton];
     _recipeType = @"total";
-    
+    _isFirstLoad = YES;
+    [self initModel];
     UIButton *customizedButton       = [UIButton buttonWithType:UIButtonTypeCustom];
     customizedButton.backgroundColor = [UIColor clearColor];
     customizedButton.frame           = CGRectMake(0, 0, 25, 25);
@@ -47,14 +58,28 @@
     // Do any additional setup after loading the view.
 }
 
+
+- (void) initModel {
+    if(!_recipeModel) {
+        _recipeModel = [[RecipeModel alloc]init];
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _recipeDataArray = @[].mutableCopy;
-    for (int i = 0; i < 10; i ++) {
-        [_recipeDataArray addObject:@"total"];
+  
+    // load data
+    if(_isFirstLoad) {
+        [self resetPara];
+        _isFirstLoad = NO;
+        [self firstLoadData];
+        [self initLayout];
     }
-    
-    [self initLayout];
+}
+
+- (void) resetPara {
+    _hasMoreRecipe = NO;
+    _showRecipeDataArray = @[].mutableCopy;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -71,6 +96,20 @@
     [self dismissRecipeMenu];
 }
 
+- (void) firstLoadData {
+     [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"讀取中..." delayToHide:-1];
+     [_recipeModel loadRecipeDataWithBlock:^(RecipeObject *recipeObject,BOOL hasMore) {
+         [self.hud hide:YES];
+         _recipeObject = recipeObject;
+         _showRecipeDataArray = recipeObject.recipeList;
+         _hasMoreRecipe = hasMore;
+         if(_recipeObject.recipeList.count==0) {
+             [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"目前沒有任何食谱" delayToHide:1];
+         }
+         _recipeTableView.hidden = NO;
+     }];
+    [_recipeTableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -79,11 +118,49 @@
 
 #pragma mark - init
 - (void) initLayout {
+    [self initButtonSeparateLine];
     [self initTotalButton];
     [self initCollectionButton];
     [self initTotalImageView];
     [self initCollectionImageView];
     [self initRecipeTableView];
+}
+
+- (void) initButtonSeparateLine {
+    if (!_buttonSeparateLine) {
+        _buttonSeparateLine = [[UIView alloc]initForAutolayout];
+        _buttonSeparateLine.backgroundColor = [UIColor colorWithHexString:kConnoisseurSinglePageDiscussionCellBorderColor];
+        [self.view addSubview:_buttonSeparateLine];
+        NSMutableArray *buttonSeparateLineConstrants = [[NSMutableArray alloc] init];
+        
+        [buttonSeparateLineConstrants addObject:[NSLayoutConstraint constraintWithItem:_buttonSeparateLine
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonSeparateLineConstrants addObject:[NSLayoutConstraint constraintWithItem:_buttonSeparateLine
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0f constant:2.0f]];
+        [buttonSeparateLineConstrants addObject:[NSLayoutConstraint constraintWithItem:_buttonSeparateLine
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0f constant:0.0f]];
+        [buttonSeparateLineConstrants addObject:[NSLayoutConstraint constraintWithItem:_buttonSeparateLine
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0f constant:40.0f]];
+        
+        [self.view addConstraints:buttonSeparateLineConstrants];
+
+    }
 }
 
 - (void) initTotalButton {
@@ -117,8 +194,8 @@
         [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalButton
                                                                  attribute:NSLayoutAttributeRight
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.view
-                                                                 attribute:NSLayoutAttributeCenterX
+                                                                    toItem:_buttonSeparateLine
+                                                                 attribute:NSLayoutAttributeLeft
                                                                 multiplier:1.0f constant:0.0f]];
         [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_totalButton
                                                                  attribute:NSLayoutAttributeHeight
@@ -138,6 +215,9 @@
         [_collectionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         [_collectionButton addTarget:self action:@selector(collectionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_collectionButton setTitle:@"收 藏" forState:UIControlStateNormal];
+        //[_collectionButton.layer setShadowColor:[UIColor blackColor].CGColor];
+        //[_collectionButton.layer setShadowOpacity:0.5];
+        //[_collectionButton.layer setShadowOffset:CGSizeMake(0, 0.5)];
         _collectionButton.layer.shadowColor   = [UIColor colorWithHexString:@"#4f9999"].CGColor;
         _collectionButton.layer.shadowOpacity = 1.0;
         _collectionButton.layer.shadowRadius  = 1.0;
@@ -158,7 +238,7 @@
         [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionButton
                                                                  attribute:NSLayoutAttributeLeft
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_totalButton
+                                                                    toItem:_buttonSeparateLine
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f constant:0.0f]];
         [buttonConstraint addObject:[NSLayoutConstraint constraintWithItem:_collectionButton
@@ -354,6 +434,8 @@
         [_recipeMenuButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         _recipeMenuButton.tag = i;
         [_recipeMenuButton addTarget:self action:@selector(recideMenuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        _recipeMenuButton.layer.borderWidth = 0.8f;
+        _recipeMenuButton.layer.borderColor = [UIColor colorWithHexString:kLeftSideSeparateLineColor].CGColor;
         [_recipeMenuButton setTitle:buttonArray[i] forState:UIControlStateNormal];
         [_recipeMenuButton setTitleColor:[UIColor colorWithR:255 G:255 B:255] forState:UIControlStateNormal];
         _recipeMenuButton.titleLabel.font     = [UIFont systemFontOfSize:18];
@@ -587,10 +669,8 @@
 
 - (void) totalButtonPressed:(id)sender {
     if ([_recipeType isEqualToString:@"collection"]) {
-        _recipeDataArray = @[].mutableCopy;
-        for (int i = 0; i < 10; i ++) {
-            [_recipeDataArray addObject:@"total"];
-        }
+        _showRecipeDataArray = @[].mutableCopy;
+        _showRecipeDataArray = _recipeObject.recipeList;
         _recipeType = @"total";
         [_recipeTableView reloadData];
     }
@@ -598,9 +678,11 @@
 
 - (void) collectionButtonPressed:(id)sender {
     if ([_recipeType isEqualToString:@"total"]) {
-        _recipeDataArray = @[].mutableCopy;
-        for (int i = 0; i < 10; i ++) {
-            [_recipeDataArray addObject:@"collection"];
+        _showRecipeDataArray = @[].mutableCopy;
+        for (RecipeDataObject* object in _recipeObject.recipeList) {
+            if([object.type isEqualToString:@"collect"]) {
+                [_showRecipeDataArray addObject:object];
+            }
         }
         _recipeType = @"collection";
         [_recipeTableView reloadData];
@@ -632,7 +714,7 @@
 }
 
 - (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-    return _recipeDataArray.count;
+    return _showRecipeDataArray.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -649,19 +731,22 @@
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"FrontpageTableViewCell";
+    static NSString *cellID = @"RecipeListViewCell";
     RecipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
     if (!cell) {
         cell = [[RecipeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    
-    cell.string = _recipeDataArray[indexPath.row];
+    //cell.string = _recipeDataArray[indexPath.row];
+    cell.recipeDataObject = _showRecipeDataArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 - (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    RecipeSingleViewController      *controller = [[RecipeSingleViewController alloc]init];
+    controller.recipeDataObject = _showRecipeDataArray[indexPath.row];
+    [self.navigationController pushViewController:controller animated:YES];
     
 }
 

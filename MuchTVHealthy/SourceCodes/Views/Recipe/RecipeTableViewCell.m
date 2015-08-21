@@ -33,8 +33,8 @@
 }
 
 
-- (void) setString:(NSString *)string {
-    _string = string;
+- (void) setRecipeDataObject:(RecipeDataObject *)recipeDataObject{
+    _recipeDataObject = recipeDataObject;
     [self initRecipeView];
     [self initRecipeImageView];
     [self initRecipeTitleLabel];
@@ -122,15 +122,16 @@
         [self addConstraints:recipeImageViewConstraint];
         
     }
-    [_recipeImageView setImageWithURL:[NSURL URLWithString:@""]
+    __block __typeof (UIImageView *)picture = _recipeImageView;
+    [_recipeImageView setImageWithURL:[NSURL URLWithString:_recipeDataObject.imageUrl]
                     withPlaceholderImage:[UIImage imageNamed:@"image_placeholder_4x3"]
                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
                                    if (image) {
-                                       [_recipeImageView setImage:image];
-                                       _recipeImageView.alpha = 0;
+                                       [picture setImage:image];
+                                       picture.alpha = 0;
                                        [UIView animateWithDuration:0.3 animations:^(){
-                                           [_recipeImageView setImage:image];
-                                           _recipeImageView.alpha = 0.9;
+                                           [picture setImage:image];
+                                           picture.alpha = 0.9;
                                        }];
                                    } else {
                                        NSLog(@"Error");
@@ -179,7 +180,7 @@
         [self addConstraints:titleLabelViewConstraint];
         
     }
-    _titleLabel.text = _string;
+    _titleLabel.text = _recipeDataObject.title;
 }
 
 - (void) initRecipeTimeLabel {
@@ -217,7 +218,7 @@
         
         [self addConstraints:timeLabelViewConstraint];
     }
-    _timeLabel.text = @"2015/08/18";
+    _timeLabel.text = _recipeDataObject.time;
     
 }
 

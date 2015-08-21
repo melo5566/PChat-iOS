@@ -329,6 +329,7 @@ static CGFloat const widthPadding      = 2*kkGlobalDefaultPadding+3;
     PostNewDiscussionReplyViewController *controller = [PostNewDiscussionReplyViewController new];
     [self.navigationController pushViewController:controller animated:YES];
 }
+
 - (void) goShare{
     NSLog(@"share");
 }
