@@ -1,24 +1,26 @@
 //
 //  SignUpViewController.m
-//  MuchTVHealthy
+//  493_Project
 //
-//  Created by Peter on 2015/7/30.
+//  Created by Peter on 2015/10/30.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
 #import "SignUpViewController.h"
 #import "CustomizedSettingPageButton.h"
 #import "SignUpAndSignInModel.h"
-#import "VerifyViewController.h"
+#import <Parse/Parse.h>
 
 @interface SignUpViewController () <UITextFieldDelegate, CustomizedSettingPageButtonDelegate, SignUpAndSignInModelDelegate>
 @property (nonatomic, strong) UITextField                                   *signUpAccountTextField;
 @property (nonatomic, strong) UITextField                                   *signUpPasswordTextField;
 @property (nonatomic, strong) UITextField                                   *signUpUserNameTextField;
+@property (nonatomic, strong) UITextField                                   *reSignUpPasswordTextField;
 @property (nonatomic, strong) CustomizedSettingPageButton                   *confirmButton;
 @property (nonatomic, strong) UILabel                                       *userNameLabel;
 @property (nonatomic, strong) UILabel                                       *accountLabel;
 @property (nonatomic, strong) UILabel                                       *passwordLabel;
+@property (nonatomic, strong) UILabel                                       *rePasswordLabel;
 @property (nonatomic, strong) SignUpAndSignInModel                          *signUpAndSignInModel;
 @property (nonatomic) BOOL                                                  isAccountValid;
 @property (nonatomic) BOOL                                                  isPasswordValid;
@@ -29,14 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([_signUpType isEqualToString:@"normal"]) {
-        [self.navigationItem setTitle:@"註冊"];
-        [self initNavigationBarCloseButtonAtLeft];
-    } else {
-        [self.navigationItem setTitle:@"電話註冊"];
-        [self initNavigationBarBackButtonAtLeft];
-    }
-    
+    [self.navigationItem setTitle:@"Sign Up"];
+    [self initNavigationBarCloseButtonAtLeft];
     // Do any additional setup after loading the view.
 }
 
@@ -68,6 +64,8 @@
     [self initSignUpAccountTextField];
     [self initPasswordLabel];
     [self initSignUpPasswordTextField];
+    [self initRePasswordLabel];
+    [self initReSignUpPasswordTextField];
     [self initConfirmButton];
 }
 
@@ -168,13 +166,8 @@
         
         [self.view addConstraints:signUpAccountConstraint];
     }
-    if ([_signUpType isEqualToString:@"normal"]) {
-        _signUpAccountTextField.keyboardType = UIKeyboardTypeDefault;
-        _signUpAccountTextField.placeholder = @"Please enter account";
-    } else {
-        _signUpAccountTextField.keyboardType = UIKeyboardTypeNumberPad;
-        _signUpAccountTextField.placeholder = @"Please enter your phone number";
-    }
+    _signUpAccountTextField.keyboardType = UIKeyboardTypeDefault;
+    _signUpAccountTextField.placeholder = @"Please enter account(6-8 letter or number)";
 }
 
 
@@ -184,7 +177,7 @@
         _signUpPasswordTextField.backgroundColor            = [UIColor whiteColor];
         _signUpPasswordTextField.borderStyle                = UITextBorderStyleRoundedRect;
         _signUpPasswordTextField.font                       = [UIFont systemFontOfSize:15];
-        _signUpPasswordTextField.placeholder                = @"Please enter password";
+        _signUpPasswordTextField.placeholder                = @"Please enter a password(6-8 letter or number)";
         _signUpPasswordTextField.secureTextEntry            = YES;
         _signUpPasswordTextField.autocorrectionType         = UITextAutocorrectionTypeNo;
         _signUpPasswordTextField.keyboardType               = UIKeyboardTypeDefault;
@@ -193,6 +186,9 @@
         _signUpPasswordTextField.contentVerticalAlignment   = UIControlContentVerticalAlignmentCenter;
         _signUpPasswordTextField.leftViewMode               = UITextFieldViewModeAlways;
         _signUpPasswordTextField.delegate                   = self;
+        
+        _signUpPasswordTextField.returnKeyType = UIReturnKeyDone;
+        
         [_signUpPasswordTextField addTarget:self
                                      action:@selector(signUpPasswordTextFieldDidChange:)
                            forControlEvents:UIControlEventEditingChanged];
@@ -230,6 +226,61 @@
     
 }
 
+- (void) initReSignUpPasswordTextField {
+    if (!_reSignUpPasswordTextField) {
+        _reSignUpPasswordTextField                            = [[UITextField alloc] initForAutolayout];
+        _reSignUpPasswordTextField.backgroundColor            = [UIColor whiteColor];
+        _reSignUpPasswordTextField.borderStyle                = UITextBorderStyleRoundedRect;
+        _reSignUpPasswordTextField.font                       = [UIFont systemFontOfSize:15];
+        _reSignUpPasswordTextField.placeholder                = @"Please confirm the password...";
+        _reSignUpPasswordTextField.secureTextEntry            = YES;
+        _reSignUpPasswordTextField.autocorrectionType         = UITextAutocorrectionTypeNo;
+        _reSignUpPasswordTextField.keyboardType               = UIKeyboardTypeDefault;
+        _reSignUpPasswordTextField.returnKeyType              = UIReturnKeyDone;
+        _reSignUpPasswordTextField.clearButtonMode            = UITextFieldViewModeWhileEditing;
+        _reSignUpPasswordTextField.contentVerticalAlignment   = UIControlContentVerticalAlignmentCenter;
+        _reSignUpPasswordTextField.leftViewMode               = UITextFieldViewModeAlways;
+        _reSignUpPasswordTextField.delegate                   = self;
+        
+        _reSignUpPasswordTextField.returnKeyType = UIReturnKeyDone;
+        
+        [_reSignUpPasswordTextField addTarget:self
+                                     action:@selector(signUpPasswordTextFieldDidChange:)
+                           forControlEvents:UIControlEventEditingChanged];
+        [self.view addSubview:_reSignUpPasswordTextField];
+        
+        NSMutableArray *signUpPasswordConstraint = @[].mutableCopy;
+        
+        [signUpPasswordConstraint addObject:[NSLayoutConstraint constraintWithItem:_reSignUpPasswordTextField
+                                                                         attribute:NSLayoutAttributeTop
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:_rePasswordLabel
+                                                                         attribute:NSLayoutAttributeBottom
+                                                                        multiplier:1.0f constant:0.0f]];
+        [signUpPasswordConstraint addObject:[NSLayoutConstraint constraintWithItem:_reSignUpPasswordTextField
+                                                                         attribute:NSLayoutAttributeRight
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.view
+                                                                         attribute:NSLayoutAttributeRight
+                                                                        multiplier:1.0f constant:-20.0f]];
+        [signUpPasswordConstraint addObject:[NSLayoutConstraint constraintWithItem:_reSignUpPasswordTextField
+                                                                         attribute:NSLayoutAttributeLeft
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.view
+                                                                         attribute:NSLayoutAttributeLeft
+                                                                        multiplier:1.0f constant:20.0f]];
+        [signUpPasswordConstraint addObject:[NSLayoutConstraint constraintWithItem:_reSignUpPasswordTextField
+                                                                         attribute:NSLayoutAttributeHeight
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:nil
+                                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                                        multiplier:1.0f constant:40.0f]];
+        
+        [self.view addConstraints:signUpPasswordConstraint];
+    }
+    
+}
+
 - (void) initConfirmButton {
     if (!_confirmButton) {
         _confirmButton                       = [[CustomizedSettingPageButton alloc] init];
@@ -244,7 +295,7 @@
         [confirmButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_confirmButton
                                                                         attribute:NSLayoutAttributeTop
                                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                                           toItem:_signUpPasswordTextField
+                                                                           toItem:_reSignUpPasswordTextField
                                                                         attribute:NSLayoutAttributeBottom
                                                                        multiplier:1.0f constant:40.0f]];
         [confirmButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_confirmButton
@@ -284,7 +335,7 @@
                                                                 relatedBy:NSLayoutRelationEqual
                                                                    toItem:self.view
                                                                 attribute:NSLayoutAttributeTop
-                                                               multiplier:1.0f constant:40.0f]];
+                                                               multiplier:1.0f constant:10.0f]];
         [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_userNameLabel
                                                                 attribute:NSLayoutAttributeLeft
                                                                 relatedBy:NSLayoutRelationEqual
@@ -306,7 +357,7 @@
         
         [self.view addConstraints:labelConstraint];
     }
-    _userNameLabel.text = @"暱稱";
+    _userNameLabel.text = @"Display Name";
 }
 
 - (void) initAccountLabel {
@@ -345,10 +396,7 @@
         
         [self.view addConstraints:labelConstraint];
     }
-    if ([_signUpType isEqualToString:@"normal"])
-        _accountLabel.text = @"帳號";
-    else
-        _accountLabel.text = @"電話號碼";
+    _accountLabel.text = @"Account";
 }
 
 - (void) initPasswordLabel {
@@ -387,57 +435,91 @@
         
         [self.view addConstraints:labelConstraint];
     }
-    _passwordLabel.text = @"密碼";
+    _passwordLabel.text = @"Password";
+}
+
+- (void) initRePasswordLabel {
+    if (!_rePasswordLabel) {
+        _rePasswordLabel                 = [[UILabel alloc] initForAutolayout];
+        _rePasswordLabel.backgroundColor = [UIColor clearColor];
+        _rePasswordLabel.textColor       = [UIColor blackColor];
+        [self.view addSubview:_rePasswordLabel];
+        
+        NSMutableArray *labelConstraint = @[].mutableCopy;
+        
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_rePasswordLabel
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_signUpPasswordTextField
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f constant:15.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_rePasswordLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1.0f constant:-20.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_rePasswordLabel
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.view
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1.0f constant:25.0f]];
+        [labelConstraint addObject:[NSLayoutConstraint constraintWithItem:_rePasswordLabel
+                                                                attribute:NSLayoutAttributeHeight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:nil
+                                                                attribute:NSLayoutAttributeWidth
+                                                               multiplier:1.0f constant:30.0f]];
+        
+        [self.view addConstraints:labelConstraint];
+    }
+    _rePasswordLabel.text = @"Confirm Password";
 }
 
 
 - (void)confirmButtonClicked:(id)sender {
-    if (_signUpAccountTextField.text.length > 0 && _signUpPasswordTextField.text.length > 0 && _signUpUserNameTextField.text.length > 0) {
-        _signUpAndSignInModel = [SignUpAndSignInModel new];
-        _signUpAndSignInModel.delegate = self;
-        [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"註冊中..." delayToHide:-1];
-        if ([_signUpType isEqualToString:@"normal"]) {
-            NSLog(@"normal signup");
-            [_signUpAndSignInModel kiiUserSignUp:[[NSString alloc] initWithString:_signUpUserNameTextField.text]
-                                         account:[[NSString alloc] initWithString:_signUpAccountTextField.text]
-                                        password:[[NSString alloc] initWithString:_signUpPasswordTextField.text]
-                                   CompleteBlock:^(KiiUser *user, NSError *error) {
-                                       [self.hud hide:YES];
-                                       if (error != nil) {
-                                           NSLog(@"# ERROR : %@",error.userInfo[@"server_message"]);
-                                           NSLog(@"# ERROR CODE : %ld",(long)error.code);
-                                           return;
-                                       }
-                                       [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"註冊成功" delayToHide:1];
-                                       [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
-                                       [self dismissViewControllerAnimated:YES completion:nil];
+    if (_signUpAccountTextField.text.length > 0 && _signUpPasswordTextField.text.length > 0 && _signUpUserNameTextField.text.length > 0 && _reSignUpPasswordTextField.text.length > 0) {
+        if ([_reSignUpPasswordTextField.text isEqualToString:_signUpPasswordTextField.text]) {
+            _signUpAndSignInModel = [SignUpAndSignInModel new];
+            _signUpAndSignInModel.delegate = self;
+            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeIndeterminate text:@"Signing Up..." delayToHide:-1];
+            PFUser *user = [PFUser user];
+            user[@"displayName"] = [[NSString alloc] initWithString:_signUpUserNameTextField.text];
+            user.username = [[NSString alloc] initWithString:_signUpAccountTextField.text];
+            user.password = [[NSString alloc] initWithString:_signUpPasswordTextField.text];
+            user[@"hasChatroom"] = @NO;
+            
+            [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    [self.hud hide:YES];
+                    [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"Successfully Sign Up..." delayToHide:1];
+                    [PFUser logInWithUsernameInBackground:user.username
+                                                 password:user.password
+                                                    block:^(PFUser *user, NSError *error) {
+                                                        if (user) {
+                                                            [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
+                                                            [self dismissViewControllerAnimated:YES completion:nil];
+                                                        } else {
+                                                            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:[error userInfo][@"error"] delayToHide:1];
+                                                        }
+                                                    }];
+                    
+                } else {
+                    NSString *errorString = [error userInfo][@"error"];   // Show the errorString somewhere and let the user try again.
+                    [self.hud hide:YES];
+                    [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:errorString delayToHide:1];
+                }
+            }];
+        } else
+            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"The password and confirm password should be the same..." delayToHide:1];
+    } else
+        [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"Please enter name, account and password..." delayToHide:1];
+}
 
-            }];
-        } else {
-            [_signUpAndSignInModel signUpWithPhoneNumber:[[NSString alloc] initWithString:_signUpUserNameTextField.text]
-                                             phoneNumber:[[NSString alloc] initWithString:_signUpAccountTextField.text]
-                                                password:[[NSString alloc] initWithString:_signUpPasswordTextField.text]
-                                           CompleteBlock:^(KiiUser *user, NSError *error) {
-                                               [self.hud hide:YES];
-                                               if (error != nil) {
-                                                   NSLog(@"# ERROR : %@",error.userInfo[@"server_message"]);
-                                                   NSLog(@"# ERROR CODE : %ld",(long)error.code);
-                                                   return;
-                                               }
-                                               [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"註冊成功" delayToHide:1];
-                                               VerifyViewController *controller = [VerifyViewController new];
-                                               [self.navigationController pushViewController:controller animated:YES];
-//                                               [[NSNotificationCenter defaultCenter] postNotificationName:kEventUserStatusChanged object:@"LOGGED_IN"];
-//                                               [self dismissViewControllerAnimated:YES completion:nil];
-            }];
-        }
-    } else {
-        if ([_signUpType isEqualToString:@"normal"])
-            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"請輸入名稱，帳號和密碼" delayToHide:1];
-        else
-            [self showHUDAddedTo:self.view animated:YES HUDMode:MBProgressHUDModeText text:@"請輸入名稱，電話號碼和密碼" delayToHide:1];
-    }
-    
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)dismissKeyboard {
@@ -479,34 +561,15 @@
 - (void) signUpAccountTextFieldDidChange:(id)sender {
     UITextField *textField = sender;
     if (isNullValue([textField markedTextRange])) {
-        if ([_signUpType isEqualToString:@"phone"]) {
-            if (textField.text.length > 10) {
-                NSRange oversteppedRange = NSMakeRange(10, textField.text.length - 10);
-                textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
-            }
-
-        } else {
-            if (textField.text.length > 8) {
-                NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
-                textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
-            }
-
+        if (textField.text.length > 8) {
+            NSRange oversteppedRange = NSMakeRange(8, textField.text.length - 8);
+            textField.text = [textField.text stringByReplacingCharactersInRange:oversteppedRange withString:@""];
         }
-        
-        if ([_signUpType isEqualToString:@"phone"]) {
-            if ([textField.text isPhoneNumber])
-                _isAccountValid = YES;
-            else
-                _isAccountValid = NO;
+        if (textField.text.length >= 6) {
+            _isAccountValid = YES;
         } else {
-            if (textField.text.length >= 6) {
-                _isAccountValid = YES;
-            } else {
-                _isAccountValid = NO;
-            }
-
+            _isAccountValid = NO;
         }
-        
         [self checkValidation];
     }
     
@@ -528,8 +591,8 @@
         
         [self checkValidation];
     }
-
 }
+
 
 /*
 #pragma mark - Navigation

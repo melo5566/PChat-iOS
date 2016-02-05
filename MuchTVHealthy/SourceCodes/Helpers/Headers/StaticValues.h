@@ -1,16 +1,15 @@
 //
-//  North7StaticValue.h
-//  North7
 //
-//  Created by Weiyu Chen on 2015/4/18.
-//  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
-// ** Kii Keys ** //
-static NSString * const kKiiApplicationID     = @"d116d82a";
-static NSString * const kKiiApplicationKey    = @"a213b8cfb273b87ef1261b8fa43c4570";
 
-/* 
+// ** Parse Keys ** //
+static NSString * const kParseApplicationID     = @"zrY0AiF03ZEzUA3ymchS5XNvohANV7bkNuDYJVIi";
+static NSString * const kParseClientKey         = @"88AxG5syBwR6ZXRVW86VT0xkEmCvkPsOLRBThgiZ";
+static NSString * const kParseRestAPIKey        = @"cbAaExbsgiNkHgMRf1aLw5BQAKb6GYDttLvuUOrN";
+
+
+/*
  *  color hex string
  */
 static NSString * const kDefaultBackGroundColorHexString                                = @"#FAFAFA";
@@ -202,6 +201,7 @@ static NSUInteger const kChatroomMessageTypeStiker                      = 1;
 static NSUInteger const kChatroomMessageTypeIx                          = 100;
 static NSUInteger const kChatroomSpeakerTextLimitLength                 = 140;
 static CGFloat const kChatroomContentPadding                            = 5.0f;
+static CGFloat const kChatroomBubbleTriangleGapPadding                  = 8.0f;
 static CGFloat const kChatroomBubblePadding                             = 10.0f;
 static CGFloat const kChatroomSpeakerViewOriginHeight                   = 51.0f;
 static CGFloat const kChatroomAvatarWidth                               = 55.0f;
@@ -209,7 +209,7 @@ static CGFloat const kChatroomAvatarHeight                              = 55.0f;
 static CGFloat const kChatroomTimeLabelMinimumWidth                     = 32.0f;
 static CGFloat const kChatroomDeleteMessageButtonWidth                  = 25.0f;
 static CGFloat const kChatroomResendMessageButtonWidth                  = 25.0f;
-static CGFloat const kChatroomUsernameFontSize                          = 12.0f;
+static CGFloat const kChatroomUsernameFontSize                          = 13.0f;
 static CGFloat const kChatroomContentFontSize                           = 14.0f;
 static CGFloat const kChatroomTimeFontSize                              = 12.0f;
 
@@ -244,10 +244,6 @@ static CGFloat const kConnoisseurAboutContentFontSize                   = 16.0f;
 static CGFloat const kConnoisseurPostDiscussionButtonTitleFontSize      = 40/3;
 static CGFloat const kConnoisseurDiscussionTitleFontSize                = 18.0f;
 static CGFloat const kConnoisseurDiscussionDateFontSize                 = 11.0f;
-
-// **VIDEO** //
-static NSString * const kReplyIputLabelPresetWordColor                  = @"#109bac";
-static NSString * const kVideoBackGroundColorHexString                  = @"#ecf8f7";
 
 
 // **RECIPT** //

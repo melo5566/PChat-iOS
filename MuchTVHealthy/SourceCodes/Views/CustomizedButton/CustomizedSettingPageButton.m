@@ -1,8 +1,8 @@
 //
 //  CustomizedSettingPageButton.m
-//  FaceNews
+//  493_Project
 //
-//  Created by Weiyu Chen on 2015/7/8.
+//  Created by Wu Peter on 2015/7/8.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -43,13 +43,13 @@
             self.backgroundColor    = [UIColor colorWithR:0 G:139 B:139];
             self.layer.borderWidth  = 1.0f;
             self.layer.borderColor  = [UIColor colorWithR:0 G:139 B:139].CGColor;
-            [self setTitle:@"登出" forState:UIControlStateNormal];
+            [self setTitle:@"Log Out" forState:UIControlStateNormal];
             [self setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
             break;
         }
         case SettingPageButtonTypeSignUp: {
             self.backgroundColor = [UIColor colorWithHexString:kPhoneButtonColorHexString];
-            [self setTitle:@"註冊" forState:UIControlStateNormal];
+            [self setTitle:@"Sign Up" forState:UIControlStateNormal];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             break;
         }
@@ -62,16 +62,23 @@
 
         case SettingPageButtonTypeSignIn: {
             self.backgroundColor = [UIColor colorWithHexString:kGooglePlusButtonColorHexString];
-            [self setTitle:@"登入" forState:UIControlStateNormal];
+            [self setTitle:@"Sign In" forState:UIControlStateNormal];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             break;
         }
         case SettingPageButtonTypeConfirm: {
             self.backgroundColor = [UIColor colorWithHexString:kGooglePlusButtonColorHexString];
-            [self setTitle:@"確認" forState:UIControlStateNormal];
+            [self setTitle:@"Confirm" forState:UIControlStateNormal];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             break;
 
+        }
+        case ChatroomButtonTypeCreate: {
+            self.backgroundColor = [UIColor colorWithHexString:kGooglePlusButtonColorHexString];
+            [self setTitle:@"Create" forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            break;
+            
         }
         default:
             break;

@@ -1,14 +1,15 @@
 //
 //  DiscussionCommentTableViewCell.m
-//  FaceNews
+//  493_Project
 //
-//  Created by Peter on 2015/7/17.
+//  Created by Peter on 2015/11/17.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
 #import "DiscussionCommentTableViewCell.h"
-#import <KiiSDK/Kii.h>
-//#import "DiscussionObject.h"
+#import "DiscussionObject.h"
+#import <Parse/Parse.h>
+
 
 @interface DiscussionCommentTableViewCell() <UITableViewDataSource, UITableViewDelegate, DiscussionCommentTableViewCellDelegate>
 @property (nonatomic, strong) UITableView                   *commentTableView;
@@ -48,8 +49,8 @@
     [self initCommentTableView];
 }
 
-- (void)setCommentString:(NSString *)commentString {
-    _commentString = commentString;
+- (void)setReplyObject:(ReplyObject *)replyObject {
+    _replyObject = replyObject;
     [self initAvatarImageView];
     [self initAuthorLabel];
     [self initContentLabel];
@@ -141,9 +142,11 @@
         [self addConstraints:avatarImageViewConstraint];
     }
     
-    if ([KiiUser currentUser]) {
+    if ([PFUser currentUser]) {
+        PFUser *user = [PFUser currentUser];
+        PFFile *file = user[@"imageFile"];
         __block __typeof (UIImageView *) avatar = _avatarImageView;
-        [_avatarImageView setImageWithURL:[NSURL URLWithString:[[KiiUser currentUser] getObjectForKey:@"avatar"]]
+        [_avatarImageView setImageWithURL:[NSURL URLWithString:file.url]
                      withPlaceholderImage:[UIImage imageNamed:kImageNamePlaceholderSquare]
                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
                                     if (!image) {
@@ -165,7 +168,7 @@
         [_replyButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
         [_replyButton setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
         [_replyButton setTitleColor:[UIColor colorWithR:0 G:125 B:125] forState:UIControlStateNormal];
-        [_replyButton setTitle:@"我要回覆..." forState:UIControlStateNormal];
+        [_replyButton setTitle:@"I want to reply..." forState:UIControlStateNormal];
         [_replyButton addTarget:self action:@selector(replyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:_replyButton];
@@ -242,7 +245,7 @@
         [self addConstraints:avatarImageViewConstraint];
     }
     __block __typeof (UIImageView *) avatar = _avatarImageView;
-    [_avatarImageView setImageWithURL:[NSURL URLWithString:@""]
+    [_avatarImageView setImageWithURL:[NSURL URLWithString:_replyObject.authorPhoto]
                  withPlaceholderImage:[UIImage imageNamed:kImageNamePlaceholderSquare]
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
                                 if (!image) {
@@ -290,8 +293,7 @@
         [self addConstraints:authorLabelViewConstraint];
         
     }
-    //    _authorLabel.text = _discussionReplyObject.authorName;
-    _authorLabel.text          = @"Author";
+    _authorLabel.text          = _replyObject.authorName;
     _authorLabel.numberOfLines = 1;
     _authorLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 }
@@ -334,7 +336,7 @@
         
         [self addConstraints:contentLabelViewConstraint];
     }
-    _contentLabel.text          = _commentString;
+    _contentLabel.text          = _replyObject.content;
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [_contentLabel sizeThatFits:CGSizeMake(kScreenWidth - kDiscussionCardLeftAndRightPadding * 2 - kDiscussionReplyLeftAndRightPadding * 2 - kDiscussionReplyButtonLeftPadding, kDiscussionReplyAuthorNameFontSize)];
@@ -416,10 +418,7 @@
         [self addConstraints:timeLabelViewConstraint];
         
     }
-    
-    //    _timeLabel.text = _discussionReplyObject.createdAt;
-    _timeLabel.text = @"2015/08/06";
-    
+    _timeLabel.text = _replyObject.createTime;
 }
 
 - (void) initLoadMoreImageView {
@@ -501,7 +500,8 @@
     else if (indexPath.row == _commentDataArray.count + 1)
         return kLoadMoreCellHeight;
     else {
-        return [self heightOfReplyCellWithReplyContent:_commentDataArray[indexPath.row - 1]];
+        ReplyObject *replyObject = _commentDataArray[indexPath.row - 1];
+        return [self heightOfReplyCellWithReplyContent:replyObject.content];
     }
     
 }
@@ -541,7 +541,8 @@
         [cell initLoadMoreImageView];
         return cell;
     } else {
-        cell.commentString = _commentDataArray[indexPath.row - 1];
+        ReplyObject *replyObject = _commentDataArray[indexPath.row - 1];
+        cell.replyObject = replyObject;
     }
     return cell;
 }

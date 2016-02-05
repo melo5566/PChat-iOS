@@ -1,8 +1,8 @@
 //
 //  CustomizedSettingPageButton.h
-//  FaceNews
+//  493_Project
 //
-//  Created by Weiyu Chen on 2015/7/8.
+//  Created by Wu Peter on 2015/11/8.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -17,6 +17,7 @@ typedef enum SettingPageButtonType : NSUInteger {
     SettingPageButtonTypePhoneSignUp,
     SettingPageButtonTypeSignIn,
     SettingPageButtonTypeConfirm,
+    ChatroomButtonTypeCreate,
 } SettingPageButtonType;
 
 

@@ -1,8 +1,8 @@
 //
 //  DiscussionSingleViewController.m
-//  MuchTVHealthy
+//  493_Project
 //
-//  Created by Peter on 2015/8/6.
+//  Created by Peter on 2015/11/6.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -10,7 +10,9 @@
 #import "DiscussionAuthorAndContentTableViewCell.h"
 #import "DiscussionCommentTableViewCell.h"
 #import "PostNewDiscussionReplyViewController.h"
-
+#import "DiscussionModel.h"
+#import "CustomizedAlertView.h"
+#import "PersonalSettingViewController.h"
 
 
 #define kLogoWidth kScreenWidth * 211.0f / IPHONE_6_SCREEN_WIDTH
@@ -24,32 +26,30 @@
 @property (nonatomic, strong) NSString                          *content;
 @property (nonatomic) BOOL                                      hasMoreCommentData;
 @property (nonatomic) NSUInteger                                commentStartIndex;
-@property (nonatomic) NSUInteger                                numberOfImage;
 @property (nonatomic) BOOL                                      isFirstLoad;
+@property (nonatomic, strong) DiscussionModel                   *discussionModel;
+@property (nonatomic, strong) CustomizedAlertView               *loginAlertView;
 @end
 
 @implementation DiscussionSingleViewController
 
+- (void)setDisscusionObject:(DiscussionObject *)discussionObject {
+    _discussionObject = discussionObject;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBarBackButtonAtLeft];
-    self.navigationItem.title = @"Title";
+    self.navigationItem.title = _discussionObject.title;
     _isFirstLoad = YES;
-    _totalCommentDataArray = @[].mutableCopy;
-    for (int i = 0; i < 5; i ++) {
-        [_totalCommentDataArray addObject:@"abc"];
-    }
-    for (int i = 0; i < 9; i ++) {
-        [_totalCommentDataArray addObject:@"abcdefghiabcdefghiabcdefghiabcdefghi"];
-    }
-    _content = @"ContentContentContentContentContentContentContentContentCont";
-    _numberOfImage = 5;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (_isFirstLoad)
-        [self firstLoadReply];
+    if (!_discussionModel)
+        _discussionModel = [DiscussionModel new];
+    _totalCommentDataArray = @[].mutableCopy;
+    [self loadAllReply];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,6 +111,13 @@
 }
 
 #pragma mark - method
+- (void) loadAllReply {
+    [_discussionModel loadReplyWithBlock:_discussionObject.objectID completeBlock:^(NSArray *replyArray) {
+        [_totalCommentDataArray addObjectsFromArray:replyArray];
+        [self firstLoadReply];
+    }];
+}
+
 - (void) firstLoadReply {
     _isFirstLoad = NO;
     _commentDataArray = @[].mutableCopy;
@@ -156,7 +163,8 @@
 - (CGFloat) heightOfTotalReplyCell {
     CGFloat heightOfReplyCell = kDiscussionReplyButtonTopPadding * 2 + (kScreenWidth * kDiscussionReplyAvatarHeightInIphone6 / IPHONE_6_SCREEN_WIDTH);
     if ([_commentDataArray isNotEmpty]) {
-        for (NSString *content in _commentDataArray) {
+        for (ReplyObject *replyObject in _commentDataArray) {
+            NSString *content = replyObject.content;
             heightOfReplyCell += ([self heightOfReplyCellWithReplyContent:content]);
         }
         
@@ -171,84 +179,47 @@
 }
 
 - (CGFloat) heightOfAuthorAndContentCell {
-    if (_numberOfImage != 0) {
-        return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_content] + kDiscussionImageSlideViewTopPadding + kImageSlideViewHeight + kScreenHeight/10;
+    if (_discussionObject.imageArray.count != 0) {
+        return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_discussionObject.content] + kDiscussionImageSlideViewTopPadding + kImageSlideViewHeight
+        + kScreenHeight/40;
     } else {
-        return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_content] + kScreenHeight/10 + 10;
+        return kDiscussionCardTopPadding + kDiscussionAvatarTopPadding + (kScreenWidth*kDiscussionAvatarHeightInIphone6/IPHONE_6_SCREEN_WIDTH) + kDiscussionContentTopPadding + [self heightForText:_discussionObject.content] + kScreenHeight/10 + 10;
     }
-    
 }
 
 
 #pragma mark - tableView datasource and delegate
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-    if (section == 0) {
-        return 2;
-    } else {
-        return 0;
-    }
+    return 2;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
-        return 1.0;
-    } else {
-        return 0.1;
-    }
+    return 1.0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        return 0.1f;
-    } else {
-        return 10 + kLogoWidth * 15.0f / 48.0f + 15;
-    }
+    return 0.1f;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return [self heightOfAuthorAndContentCell];
-        } else {
-            return [self heightOfTotalReplyCell];
-        }
+    if (indexPath.row == 0) {
+        return [self heightOfAuthorAndContentCell];
     } else {
-        return kScreenHeight*80/630;
+        return [self heightOfTotalReplyCell];
     }
+
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
-        if (!_hasMoreCommentData) {
-            UIView *bottomLine             = [UIView new];
-            bottomLine.backgroundColor     = [UIColor lightGrayColor];
-            return bottomLine;
-        } else {
-            UIView *bottomLine             = [UIView new];
-            bottomLine.backgroundColor     = [UIColor clearColor];
-            return bottomLine;
-        }
-    } else {
-        return [[UIView alloc] initWithFrame:CGRectZero];
-    }
+    return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 1) {
-        UIView *view         = [[UIView alloc] init];
-        view.backgroundColor = [UIColor colorWithHexString:@"#ecf8f7"];
-        _fanzytvLogo         = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_fanzytv"]];
-        _fanzytvLogo.frame   = CGRectMake((kScreenWidth - kLogoWidth) / 2, 10, kLogoWidth, kLogoWidth * 15.0f / 48.0f);
-        [view addSubview:_fanzytvLogo];
-        return view;
-    }
-    else {
-        return [[UIView alloc] initWithFrame:CGRectZero];
-    }
+   return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -265,7 +236,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.delegate       = self;
             cell.contentHeight  = [self heightForText:_content];
-            cell.content        = _content;
+            cell.discussionObject = _discussionObject;
             return cell;
             
         } else {
@@ -300,14 +271,31 @@
 }
 
 #pragma mark - Author and Content delegate
-- (void) shareButtonClicked {
-    NSLog(@"shareButtonClicked");
+- (void) goPostReply {
+    if ([PFUser currentUser]) {
+        PostNewDiscussionReplyViewController *postReplyViewController = [PostNewDiscussionReplyViewController new];
+        postReplyViewController.discussionObject = _discussionObject;
+        [self.navigationController pushViewController:postReplyViewController animated:YES];
+    } else {
+        [self askToLogIn];
+    }
 }
 
-- (void) goPostReply {
-    PostNewDiscussionReplyViewController *postReplyViewController = [PostNewDiscussionReplyViewController new];
-    [self.navigationController pushViewController:postReplyViewController animated:YES];
+- (void) askToLogIn {
+    _loginAlertView = [[CustomizedAlertView alloc] initWithTitle:@"Warning" andMessage:@"Please login first..."];
+    [_loginAlertView addButtonWithTitle:@"No Thanks"
+                                   type:CustomizedAlertViewButtonTypeDefaultLightGreen
+                                handler:nil];
+    
+    [_loginAlertView addButtonWithTitle:@"Login"
+                                   type:CustomizedAlertViewButtonTypeDefaultGreen
+                                handler:^(CustomizedAlertView *alertView) {
+                                    PersonalSettingViewController *controller = [[PersonalSettingViewController alloc] init];
+                                    [self.navigationController pushViewController:controller animated:YES];
+                                }];
+    [_loginAlertView show];
 }
+
 /*
  #pragma mark - Navigation
  

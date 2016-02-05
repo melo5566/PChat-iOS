@@ -1,13 +1,14 @@
 //
 //  DiscussionAuthorAndContentTableViewCell.m
-//  MuchTVHealthy
+//  493_Project
 //
-//  Created by Peter on 2015/8/6.
+//  Created by Peter on 2015/11/6.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
 #import "DiscussionAuthorAndContentTableViewCell.h"
 #import "ImageSlideView.h"
+#import <Parse/Parse.h>
 
 #define kImageSlideViewHeight (kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionImageSlideViewInsideImagePadding) * (3.0f/4.0f)
 
@@ -18,9 +19,6 @@
 @property (nonatomic, strong) UILabel                       *timeLabel;
 @property (nonatomic, strong) UILabel                       *contentLabel;
 @property (nonatomic, strong) ImageSlideView                *imageSlideView;
-@property (nonatomic, strong) UIButton                      *shareButton;
-@property (nonatomic, strong) UIImageView                   *shareButtonImageView;
-@property (nonatomic, strong) UILabel                       *shareLabel;
 @property (nonatomic, strong) UIImageView                   *timeIcon;
 @end
 
@@ -36,8 +34,8 @@
     // Configure the view for the selected state
 }
 
-- (void)setContent:(NSString *)content {
-    _content = content;
+- (void)setDiscussionObject:(DiscussionObject *)discussionObject {
+    _discussionObject = discussionObject;
     [self initLayout];
 }
 
@@ -48,10 +46,8 @@
     [self initTimeIcon];
     [self initTimeLabel];
     [self initContentLabel];
-    [self initImageSlideView];
-    [self initShareButton];
-    [self initShareLabel];
-    [self initShareButtonImageView];
+    if (_discussionObject.imageArray.count > 0)
+        [self initImageSlideView];
 }
 
 - (void)initSingleView {
@@ -87,7 +83,7 @@
                                                                      relatedBy:NSLayoutRelationEqual
                                                                         toItem:self.contentView
                                                                      attribute:NSLayoutAttributeBottom
-                                                                    multiplier:1.0f constant:-kScreenHeight/10]];
+                                                                    multiplier:1.0f constant:0.0f]];
         
         [self addConstraints:singleViewConstraint];
         
@@ -135,8 +131,21 @@
         
         [self addConstraints:avatarConstraint];
     }
-    
-    [_avatarImageView setImage:[UIImage imageNamed:@"image_preset_avatar"]];
+    __block __typeof (UIImageView *) imageView = _avatarImageView;
+    [_avatarImageView setImageWithURL:[NSURL URLWithString:_discussionObject.authorPhoto]
+           withPlaceholderImage:[UIImage imageNamed:kImageNamePresetAvatar]
+                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
+                          if (image) {
+                              imageView.alpha = 0;
+                              [UIView animateWithDuration:0.3 animations:^(){
+                                  imageView.alpha = 1;
+                              }];
+                          }
+                          else {
+                              [imageView setImage:[UIImage imageNamed:kImageNamePresetAvatar]];
+                          }
+                      }
+    usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 }
 
 - (void) initAuthorLabel {
@@ -175,7 +184,7 @@
         
         [self addConstraints:authorLabelViewConstraint];
     }
-    _authorLabel.text = @"Author";
+    _authorLabel.text = _discussionObject.authorName;
 }
 
 - (void) initTimeIcon {
@@ -253,7 +262,7 @@
         [self addConstraints:timeLabelViewConstraint];
     }
     
-    _timeLabel.text = @"2015/08/06";
+    _timeLabel.text = _discussionObject.createTime;
 }
 
 
@@ -297,7 +306,7 @@
         [self addConstraints:contentLabelViewConstraint];
     }
     
-    _contentLabel.text          = _content;
+    _contentLabel.text          = _discussionObject.content;
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = UILineBreakModeWordWrap;
     [_contentLabel sizeThatFits:CGSizeMake(kScreenWidth - kDiscussionCardLeftAndRightPadding*2 - kDiscussionContentLeftPadding*2, MAXFLOAT)];
@@ -308,9 +317,7 @@
         [_imageSlideView removeFromSuperview];
         _imageSlideView = nil;
     }
-    NSArray *imageArray = @[@"",@"",@"",@""];
-    
-    _imageSlideView = [[ImageSlideView alloc] initWithImageUrlArray:imageArray];
+    _imageSlideView = [[ImageSlideView alloc] initWithImageUrlArray:_discussionObject.imageArray];
     _imageSlideView.backgroundColor = [UIColor clearColor];
     [_singleView insertSubview:_imageSlideView atIndex:99];
     
@@ -343,132 +350,6 @@
     [self addConstraints:scrollViewConstaint];
     [self layoutIfNeeded];
     [_imageSlideView initLayout];
-}
-
-- (void)initShareButton {
-    if (!_shareButton) {
-        _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_shareButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-        _shareButton.backgroundColor   = [UIColor colorWithHexString:kDiscussionSinglePageReplyButtonBackgroundColorHexString];
-        _shareButton.layer.borderWidth = 1.0f;
-        _shareButton.layer.borderColor = [UIColor colorWithHexString:kDiscussionSinglePageReplyButtonBorderColorHexString].CGColor;
-        [_shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-        [_shareButton setContentEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-        [_shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.contentView addSubview:_shareButton];
-        
-        NSMutableArray *replyButtonConstraint = [[NSMutableArray alloc] init];
-        
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
-                                                                      attribute:NSLayoutAttributeLeft
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.contentView
-                                                                      attribute:NSLayoutAttributeLeft
-                                                                     multiplier:1.0f constant:0.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
-                                                                      attribute:NSLayoutAttributeTop
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_singleView
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                     multiplier:1.0f constant:0.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
-                                                                      attribute:NSLayoutAttributeRight
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.contentView
-                                                                      attribute:NSLayoutAttributeRight
-                                                                     multiplier:1.0f constant:0.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButton
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.contentView
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                     multiplier:1.0f constant:0.0f]];
-        
-        [self addConstraints:replyButtonConstraint];
-    }
-}
-
-- (void) initShareButtonImageView {
-    if (!_shareButtonImageView) {
-        _shareButtonImageView = [[UIImageView alloc] initForAutolayout];
-        _shareButtonImageView.image = [UIImage imageNamed:@"icon_share"];
-        [_shareButton addSubview:_shareButtonImageView];
-        
-        NSMutableArray *replyButtonConstraint = [[NSMutableArray alloc] init];
-        
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
-                                                                      attribute:NSLayoutAttributeRight
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_shareLabel
-                                                                      attribute:NSLayoutAttributeLeft
-                                                                     multiplier:1.0f constant:-10.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
-                                                                      attribute:NSLayoutAttributeHeight
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0f constant:30.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
-                                                                      attribute:NSLayoutAttributeWidth
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0f constant:30.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareButtonImageView
-                                                                      attribute:NSLayoutAttributeCenterY
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_shareButton
-                                                                      attribute:NSLayoutAttributeCenterY
-                                                                     multiplier:1.0f constant:0.0f]];
-        
-        [self addConstraints:replyButtonConstraint];
-        
-    }
-}
-
-- (void) initShareLabel {
-    if (!_shareLabel) {
-        _shareLabel = [[UILabel alloc] initForAutolayout];
-        _shareLabel.textColor = [UIColor colorWithHexString:kDiscussionSinglePageReplyButtonTitleColorHexString];
-        _shareLabel.text = @"分 享";
-        [_shareButton addSubview:_shareLabel];
-        
-        NSMutableArray *replyButtonConstraint = [[NSMutableArray alloc] init];
-        
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
-                                                                      attribute:NSLayoutAttributeLeft
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_shareButton
-                                                                      attribute:NSLayoutAttributeCenterX
-                                                                     multiplier:1.0f constant:0.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
-                                                                      attribute:NSLayoutAttributeTop
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_shareButton
-                                                                      attribute:NSLayoutAttributeTop
-                                                                     multiplier:1.0f constant:0.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
-                                                                      attribute:NSLayoutAttributeWidth
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0f constant:50.0f]];
-        [replyButtonConstraint addObject:[NSLayoutConstraint constraintWithItem:_shareLabel
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:_shareButton
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                     multiplier:1.0f constant:0.0f]];
-        
-        [self addConstraints:replyButtonConstraint];
-    }
-}
-
-- (void) shareButtonClicked:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(shareButtonClicked)]) {
-        [self.delegate shareButtonClicked];
-    }
 }
 
 @end

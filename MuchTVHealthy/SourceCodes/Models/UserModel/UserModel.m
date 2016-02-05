@@ -1,8 +1,8 @@
 //
 //  UserModel.m
-//  North7
+//  493_Project
 //
-//  Created by Weiyu Chen on 2015/6/28.
+//  Created by Peter on 2015/10/28.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -11,78 +11,91 @@
 @implementation UserModel
 @dynamic delegate;
 
-- (void) uploadAvatar:(NSData *)avatarImageData ForUser:(KiiUser *)user {
+
+- (void) uploadAvatarWithBlock:(NSData *)avatarImageData ForUser:(PFUser *)user completeBlock:(UploadAvatarWithBlock)handler {
     [self checkNetworkReachabilityAndDoNext:^{
-        // Create User Scope Bucket
-        KiiBucket *userbucket = [user bucketWithName:@"photoUser"];
-        KiiObject *object = [userbucket createObject];
-        
-        // Save KiiObject
-        [object saveWithBlock:^(KiiObject *createdObject, NSError *error) {
-            if (error != nil) {
-                if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-                    [self.delegate hasNoNetworkConnection];
-                }
-                return;
+        PFFile *imageFile = [PFFile fileWithName:@"image.png" data:avatarImageData];
+        user[@"imageName"] = @"Test";
+        user[@"imageFile"] = imageFile;
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                PFFile *imageFile = user[@"imageFile"];
+                handler(imageFile.url);
+            } else {
+                NSLog(@"Error!");
             }
-            
-            // Upload object body
-            [createdObject uploadBodyWithData:avatarImageData
-                               andContentType:@"image/jpeg"
-                                andCompletion:^(KiiObject *bodyUploadedObject, NSError *error) {
-                                    if (error != nil) {
-                                        if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-                                            [self.delegate hasNoNetworkConnection];
-                                        }
-                                        return;
-                                    }
-                                    
-                                    // publish and get url
-                                    [bodyUploadedObject publishBodyWithBlock:^(KiiObject *obj, NSString *url, NSError *error) {
-                                        if (error != nil) {
-                                            if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-                                                [self.delegate hasNoNetworkConnection];
-                                            }
-                                            return;
-                                        }
-                                        
-                                        KiiUserFields *userFields = [[KiiUserFields alloc] init];
-                                        [userFields setObject:url forKey:@"avatar"];
-                                        
-                                        [user updateWithUserFields:userFields block:^(KiiUser *user, NSError *error) {
-                                            if (error != nil) {
-                                                if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-                                                    [self.delegate hasNoNetworkConnection];
-                                                }
-                                                return;
-                                            }
-                                            if ([self.delegate respondsToSelector:@selector(didUpdateUserAvatarWithImageData:)]) {
-                                                [self.delegate didUpdateUserAvatarWithImageData:avatarImageData];
-                                            }
-                                        }];
-                                    }];
-                                }];
         }];
+    }];
+
+}
+
+- (void) updateUsername:(NSString *)username ForUser:(PFUser *)user completeBlock:(UpdateUserNameWithBlock)handler {
+    [self checkNetworkReachabilityAndDoNext:^{
+        user[@"displayName"] = username;
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                handler();
+            } else {
+                NSLog(@"Error!");
+            }
+        }];
+
     }];
 }
 
-- (void) updateUsername:(NSString *)username ForUser:(KiiUser *)user {
-    [self checkNetworkReachabilityAndDoNext:^{
-        KiiUserFields *userFields = [[KiiUserFields alloc] init];
-        [userFields setDisplayName:username];
-        
-        [user updateWithUserFields:userFields block:^(KiiUser *user, NSError *error) {
-            if (error != nil) {
-                if ([self.delegate respondsToSelector:@selector(hasNoNetworkConnection)]) {
-                    [self.delegate hasNoNetworkConnection];
-                }
-                return;
+- (void)updateFavorites:(NSString *)category ForUser:(PFUser *)user completeBlock:(UpdateFavoritesWithBlock)handler {
+    [self checkNetworkReachabilityAndDoNext:^() {
+        if (isNotNullValue(user[@"Favorites"])) {
+            NSMutableArray *array = user[@"Favorites"];
+            if (![array containsObject:category]) {
+                [array addObject:category];
+                user[@"Favorites"] = array;
+                [user saveInBackground];
+                handler(NO);
+            } else {
+                handler(YES);
             }
-            
-            if ([self.delegate respondsToSelector:@selector(didUpdateUserName)]) {
-                [self.delegate didUpdateUserName];
-            }
-        }];
+        } else {
+            user[@"Favorites"] = @[category];
+            [user saveInBackground];
+            handler(NO);
+        }
     }];
 }
+
+- (void)loadFavoriteWithBlock:(PFUser *)user completeBlock:(LoadFavoriteWithBlock)handler {
+    [self checkNetworkReachabilityAndDoNext:^() {
+        NSMutableArray *array = user[@"Favorites"];
+        handler(array);
+    }];
+}
+
+- (void)queryUserWithBlock:(NSString *)userID completeBlock:(QueryUserWithBlock)handler {
+    [self checkNetworkReachabilityAndDoNext:^() {
+        PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+        [query getObjectInBackgroundWithId:userID
+                                     block:^(PFObject *object, NSError *error) {
+                                         if(!error) {
+                                             handler(object);
+                                         } else {
+                                             NSLog(@"Error");
+                                         }
+                                     }];
+    }];
+}
+
+- (void)deleteFromMyFavorite:(PFUser *)user category:(NSString *)category completeBlock:(DeleteFromMyFavoriteWithBlock)handler {
+    [self checkNetworkReachabilityAndDoNext:^() {
+        NSMutableArray *array = user[@"Favorites"];
+        for(int i = 0; i < array.count; i ++) {
+            if ([array[i] isEqualToString:category]) {
+                [array removeObjectAtIndex:i];
+            }
+        }
+        user[@"Favorites"] = array;
+        [user saveInBackground];
+        handler();
+    }];
+}
+
 @end

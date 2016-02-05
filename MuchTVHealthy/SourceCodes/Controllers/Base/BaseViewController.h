@@ -1,8 +1,8 @@
 //
 //  BaseViewController.h
-//  MuchTVHealthy
+//  493_Project
 //
-//  Created by Peter on 2015/7/29.
+//  Created by Peter on 2015/10/29.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -25,6 +25,8 @@
 - (void) dismissMenu;
 - (void) initGestureRecognizer;
 
+
+- (void) showNoNetworkAlert;
 - (void) initNavigationBarCloseButtonAtLeft;
 - (void) initNavigationBarCloseButtonAtRight;
 - (void) initNavigationBarBackButtonAtLeft;

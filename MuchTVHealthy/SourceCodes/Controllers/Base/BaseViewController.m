@@ -1,31 +1,30 @@
 //
 //  BaseViewController.m
-//  MuchTVHealthy
+//  493_Project
 //
-//  Created by Peter on 2015/7/29.
+//  Created by Peter on 2015/10/29.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
 #import "BaseViewController.h"
 #import "PersonalSettingViewController.h"
-#import "FrontpageViewController.h"
 #import "DiscussionSingleViewController.h"
-#import "ConnoisseurListViewController.h"
-#import "RecipeViewController.h"
-#import "MessageCenterViewController.h"
-#import "VideoListViewController.h"
+#import "ChatroomViewController.h"
+#import "DiscussionListViewController.h"
+#import "IntroductionViewController.h"
+#import <Parse/Parse.h>
 
 @interface BaseViewController ()
 @property (nonatomic, strong) UIAlertView                       *loginAlertView;
 //@property (nonatomic, strong) UIView                            *menuView;
-@property (nonatomic, strong) UIView                            *fanzytvLogoView;
+@property (nonatomic, strong) UILabel                           *UMLogoView;
 @property (nonatomic, strong) UILabel                           *userNameLabel;
 @property (nonatomic, strong) UIButton                          *menuButton;
 @property (nonatomic, strong) UIButton                          *settinButton;
 @property (nonatomic, strong) UIImageView                       *avatarImageView;
-@property (nonatomic, strong) UIImageView                       *fanzytvLogo;
+@property (nonatomic, strong) UIImageView                       *UMLogo;
 //@property (nonatomic, strong) NSLayoutConstraint                *menuViewRightLayoutConstraint;
-@property (nonatomic, strong) KiiUser                           *currentUser;
+@property (nonatomic, strong) PFUser                            *currentUser;
 @end
 
 @implementation BaseViewController
@@ -35,6 +34,8 @@
     // Do any additional setup after loading the view.
     [self setNavigationBarStyle];
     self.view.backgroundColor = [UIColor colorWithHexString:kDefaultBackGroundColorHexString];
+    BaseModel *model = [BaseModel new];
+    model.delegate = self;
 }
 
 - (void) viewWillAppear:(BOOL) animated {
@@ -43,7 +44,6 @@
 
 - (void) viewWillDisappear:(BOOL) animated {
     [super viewWillDisappear:animated];
-    
     // remove notification
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kEventReceiveNotification object:nil];
 }
@@ -168,8 +168,8 @@
 }
 
 - (void) initMenuLayout {
-    if ([KiiUser currentUser]) {
-        _currentUser = [KiiUser currentUser];
+    if ([PFUser currentUser]) {
+        _currentUser = [PFUser currentUser];
     } else {
         _currentUser = nil;
     }
@@ -177,8 +177,8 @@
     [self initAvatarImageView];
     [self initUserNameLabel];
     [self initMenuButton];
-    [self initFanzytvLogoView];
-    [self initFanzytvLogo];
+    [self initUMLogoView];
+    [self initUMLogo];
     [self initSettingButton];
 }
 
@@ -210,17 +210,17 @@
                                                                       toItem:self.view
                                                                    attribute:NSLayoutAttributeBottom
                                                                   multiplier:1.0f constant:0.0f]];
-        
         _menuViewRightLayoutConstraint = [NSLayoutConstraint constraintWithItem:_menuView
                                                                       attribute:NSLayoutAttributeRight
                                                                       relatedBy:NSLayoutRelationEqual
                                                                          toItem:self.view
                                                                       attribute:NSLayoutAttributeLeft
-                                                                     multiplier:1.0f constant:0.0f];
+                                                                     multiplier:1.0f constant:kScreenWidth*3/5];
+        
         
         [self.view addConstraints:menuViewConstraint];
         [self.view addConstraint:_menuViewRightLayoutConstraint];
-        
+        _isShownMenuView = YES;
     }
 }
 
@@ -269,7 +269,8 @@
     }
     
     if (_currentUser) {
-        [_avatarImageView setImageWithURL:[NSURL URLWithString:[_currentUser getObjectForKey:@"avatar"]]
+        PFFile *imageFile = _currentUser[@"imageFile"];
+        [_avatarImageView setImageWithURL:[NSURL URLWithString:imageFile.url]
                      withPlaceholderImage:[UIImage imageNamed:@"image_preset_avatar"]
                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
                                     if (image) {
@@ -288,7 +289,6 @@
     } else {
         _avatarImageView.image  = [UIImage imageNamed:@"image_preset_avatar"];
     }
-    
 }
 
 - (void) initUserNameLabel {
@@ -331,13 +331,13 @@
         
     }
     if (_currentUser)
-        _userNameLabel.text = _currentUser.displayName;
+        _userNameLabel.text = _currentUser[@"displayName"];
     else
         _userNameLabel.text = @"User";
 }
 
 - (void)initMenuButton {
-    NSArray *buttonArray = @[@"首頁",@"訊息中心",@"節目影音",@"達人專區",@"食譜"];
+    NSArray *buttonArray = @[@"Chatroom",@"Sports",@"Academics",@"Games",@"Favorites"];
     NSArray *colorArray  = @[@"#438a8a",@"#387f7f",@"#2a7372",@"#216563",@"#135350"];
     for (int i = 0; i < buttonArray.count; i++) {
         _menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -364,7 +364,7 @@
                                                                     relatedBy:NSLayoutRelationEqual
                                                                        toItem:_userNameLabel
                                                                     attribute:NSLayoutAttributeBottom
-                                                                   multiplier:1.0f constant:kFrameHeight*30/600 + i*kFrameHeight*55/600]];
+                                                                   multiplier:1.0f constant:kFrameHeight*10/600 + i*kFrameHeight*55/600]];
         [menuButtonConstaint addObject:[NSLayoutConstraint constraintWithItem:_menuButton
                                                                     attribute:NSLayoutAttributeHeight
                                                                     relatedBy:NSLayoutRelationEqual
@@ -384,85 +384,95 @@
     
 }
 
-- (void) initFanzytvLogoView {
-    if (!_fanzytvLogoView) {
-        _fanzytvLogoView                 = [[UIView alloc] initForAutolayout];
-        _fanzytvLogoView.backgroundColor = [UIColor colorWithHexString:@"#0c3937"];
-        [_menuView addSubview:_fanzytvLogoView];
+- (void) initUMLogoView {
+    if (!_UMLogoView) {
+        _UMLogoView                 = [[UILabel alloc] initForAutolayout];
+        _UMLogoView.textAlignment = UITextAlignmentCenter;
+        _UMLogoView.userInteractionEnabled = YES;
+        _UMLogoView.text = @"Information";
+        _UMLogoView.textColor = [UIColor whiteColor];
+        _UMLogoView.font = [UIFont systemFontOfSize:18];
+//        _UMLogoView.backgroundColor = [UIColor colorWithHexString:@"#0c3937"];
+        _UMLogoView.backgroundColor = [UIColor clearColor];
+        [_menuView addSubview:_UMLogoView];
         
-        NSMutableArray *fanzytvLogoConstaint = @[].mutableCopy;
+        NSMutableArray *UMLogoConstaint = @[].mutableCopy;
         
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeLeft
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_menuView
-                                                                     attribute:NSLayoutAttributeLeft
-                                                                    multiplier:1.0f constant:0.0f]];
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeTop
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_menuButton
-                                                                     attribute:NSLayoutAttributeBottom
-                                                                    multiplier:1.0f constant:0.0f]];
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeBottom
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_menuView
-                                                                     attribute:NSLayoutAttributeBottom
-                                                                    multiplier:1.0f constant:0.0f]];
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeRight
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_menuView
-                                                                     attribute:NSLayoutAttributeRight
-                                                                    multiplier:1.0f constant:0.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogoView
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_menuView
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1.0f constant:0.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogoView
+                                                                attribute:NSLayoutAttributeTop
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_menuButton
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f constant:0.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogoView
+                                                                attribute:NSLayoutAttributeBottom
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_menuView
+                                                                attribute:NSLayoutAttributeBottom
+                                                               multiplier:1.0f constant:0.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogoView
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_menuView
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1.0f constant:0.0f]];
         
-        [self.view addConstraints:fanzytvLogoConstaint];
+        [self.view addConstraints:UMLogoConstaint];
         
-        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToIntro:)];
+        tap.numberOfTapsRequired = 1;
+        [_UMLogoView addGestureRecognizer:tap];
     }
 }
 
-
-- (void) initFanzytvLogo {
-    if (!_fanzytvLogo) {
-        _fanzytvLogo = [[UIImageView alloc] initForAutolayout];
-        _fanzytvLogo.backgroundColor = [UIColor clearColor];
-        _fanzytvLogo.image = [UIImage imageNamed:@"fanzytv_btn@2x"];
+- (void) initUMLogo {
+    if (!_UMLogo) {
+        _UMLogo                 = [[UIImageView alloc] initForAutolayout];
+        [_UMLogo setImage:[UIImage imageNamed:@"info"]];
+        _UMLogo.userInteractionEnabled = YES;
+        [_menuView addSubview:_UMLogo];
         
-        [_fanzytvLogoView addSubview:_fanzytvLogo];
+        NSMutableArray *UMLogoConstaint = @[].mutableCopy;
         
-        NSMutableArray *fanzytvLogoConstaint = @[].mutableCopy;
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogo
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_UMLogoView
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1.0f constant:10.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogo
+                                                                attribute:NSLayoutAttributeCenterY
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_UMLogoView
+                                                                attribute:NSLayoutAttributeCenterY
+                                                               multiplier:1.0f constant:0.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogo
+                                                                attribute:NSLayoutAttributeHeight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:nil
+                                                                attribute:NSLayoutAttributeNotAnAttribute
+                                                               multiplier:1.0f constant:30.0f]];
+        [UMLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_UMLogo
+                                                                attribute:NSLayoutAttributeWidth
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:nil
+                                                                attribute:NSLayoutAttributeNotAnAttribute
+                                                               multiplier:1.0f constant:30.0f]];
         
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogo
-                                                                     attribute:NSLayoutAttributeLeft
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeLeft
-                                                                    multiplier:1.0f constant:20.0f]];
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogo
-                                                                     attribute:NSLayoutAttributeTop
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeTop
-                                                                    multiplier:1.0f constant:kFrameHeight*20/600]];
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogo
-                                                                     attribute:NSLayoutAttributeBottom
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeBottom
-                                                                    multiplier:1.0f constant:-kFrameHeight*20/600]];
-        [fanzytvLogoConstaint addObject:[NSLayoutConstraint constraintWithItem:_fanzytvLogo
-                                                                     attribute:NSLayoutAttributeRight
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_fanzytvLogoView
-                                                                     attribute:NSLayoutAttributeRight
-                                                                    multiplier:1.0f constant:-20.0f]];
+        [self.view addConstraints:UMLogoConstaint];
         
-        [self.view addConstraints:fanzytvLogoConstaint];
-        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToIntro:)];
+        tap.numberOfTapsRequired = 1;
+        [_UMLogo addGestureRecognizer:tap];
     }
 }
+
 
 - (void) initSettingButton {
     if (!_settinButton) {
@@ -508,33 +518,24 @@
     UIButton *button = sender;
     switch (button.tag) {
         case 0: {
-            FrontpageViewController *viewController = [FrontpageViewController new];
+            ChatroomViewController *viewController = [ChatroomViewController new];
             [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
         case 1: {
-            // 訊息
-            MessageCenterViewController *controller = [MessageCenterViewController new];
+            DiscussionListViewController *controller = [DiscussionListViewController new];
+            controller.title = @"Sports";
             [self.navigationController pushViewController:controller animated:YES];
             break;
         }
         case 2: {
-            // 資料討論
-            NSLog(@"%lu",button.tag);
-            VideoListViewController     *viewController = [VideoListViewController new];
-            [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
         case 3: {
-            // 名人堂
-            ConnoisseurListViewController *controller = [ConnoisseurListViewController new];
-            [self.navigationController pushViewController:controller animated:YES];
             break;
         }
         case 4: {
-            //食譜
-            RecipeViewController *controller = [RecipeViewController new];
-            [self.navigationController pushViewController:controller animated:YES];
+            break;
         }
         default:
             break;
@@ -545,6 +546,7 @@
 
 - (void)settingButtonClicked:(id)sender {
     PersonalSettingViewController *controller = [[PersonalSettingViewController alloc] init];
+    [self dismissMenu];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -604,6 +606,48 @@
                          [self.view layoutIfNeeded];
                      }];
     
+}
+
+
+- (void) showNoNetworkAlert {
+    if (IS_IOS_8) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"目前網路不穩定，無法正常執行，請您重新檢查網路後進行重新整理"
+                                                                       message:@""
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 [self.hud hide:YES];
+                                                                 if ([self.noNetworkAlertDelegate respondsToSelector:@selector(noNetworkAlertCancelButtonPressed)]) {
+                                                                     [self.noNetworkAlertDelegate noNetworkAlertCancelButtonPressed];
+                                                                 }
+                                                                 
+                                                             }];
+        UIAlertAction *refreshAction = [UIAlertAction actionWithTitle:@"重新整理"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self.hud hide:YES];
+                                                                  [self.noNetworkAlertDelegate noNetworkAlertRefreshButtonPressed];
+                                                              }];
+        [alert addAction:cancelAction];
+        [alert addAction:refreshAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"目前網路不穩定，無法正常執行，請您重新檢查網路後進行重新整理"
+                                                            message:@""
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"重新整理", nil];
+        [alertView show];
+    }
+    
+}
+
+- (void)goToIntro:(id)sender {
+    IntroductionViewController *controller = [IntroductionViewController new];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

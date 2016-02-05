@@ -7,13 +7,15 @@
 //
 
 #import "AppDelegate.h"
-#import "FrontpageViewController.h"
 #import "SignUpAndSignInModel.h"
+#import "ChatroomViewController.h"
+#import "DiscussionListViewController.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate () <SignUpAndSignInModelDelegate>
 @property UINavigationController *navController;
 @property (nonatomic, strong) SignUpAndSignInModel              *signUpAndSignInModel;
-@property (nonatomic, strong) FrontpageViewController           *frontpageViewController;
+@property (nonatomic, strong) DiscussionListViewController      *discussionListViewController;
 @end
 
 @implementation AppDelegate
@@ -24,15 +26,19 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.window.backgroundColor = [UIColor clearColor];
     
-    [Kii beginWithID:kKiiApplicationID
-              andKey:kKiiApplicationKey
-             andSite:kiiSiteJP];
+    [Parse setApplicationId:kParseApplicationID
+                  clientKey:kParseClientKey];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults stringForKey:@"firstLaunch"]) {
+        [defaults setObject:@"YES" forKey:@"firstLaunch"];
+        [defaults synchronize];
+    }
     if ([[defaults stringForKey:@"autoLogin"] isEqualToString:@"YES"]) {
         [self loginWithUserDefault];
     }
     [self setFrontpageForRootViewController];
+    
     return YES;
 }
 
@@ -60,8 +66,8 @@
 
 - (void) setFrontpageForRootViewController {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _frontpageViewController = [FrontpageViewController new];
-    self.navController = [[UINavigationController alloc] initWithRootViewController:_frontpageViewController];
+    _discussionListViewController = [DiscussionListViewController new];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:_discussionListViewController];
     [self.navController.navigationBar setTranslucent:NO];
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
@@ -72,18 +78,14 @@
         _signUpAndSignInModel = [SignUpAndSignInModel new];
         _signUpAndSignInModel.delegate = self;
     }
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [_signUpAndSignInModel kiiUserLogIn:[defaults stringForKey:@"account"] password:[defaults stringForKey:@"password"] CompleteBlock:^(KiiUser *user, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Error");
-            return;
-        }
-        if (!user.phoneVerified) {
-            [KiiUser logOut];
-        }
-            
-        [_frontpageViewController firstLoadFrontpageData];
-    }];
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //    [_signUpAndSignInModel kiiUserLogIn:[defaults stringForKey:@"account"] password:[defaults stringForKey:@"password"] CompleteBlock:^(KiiUser *user, NSError *error) {
+    //        if (error != nil) {
+    //            NSLog(@"Error");
+    //            return;
+    //        }
+    //        
+    //    }];
 }
 
 @end

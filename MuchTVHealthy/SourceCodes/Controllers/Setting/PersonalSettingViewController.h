@@ -1,8 +1,8 @@
 //
 //  PersonalSettingViewController.h
-//  North7
+//  493_Project
 //
-//  Created by Weiyu Chen on 2015/4/23.
+//  Created by Peter on 2015/11/23.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 

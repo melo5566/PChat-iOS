@@ -1,8 +1,8 @@
 //
 //  CustomizedAlertView.m
-//  Community
+//  493_Project
 //
-//  Created by Weiyu Chen on 2015/3/13.
+//  Created by Wu Peter on 2015/11/13.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -246,8 +246,18 @@
     self.containerView.backgroundColor      = [UIColor whiteColor];
     self.containerView.layer.shadowRadius   = 2;
     self.containerView.layer.shadowOpacity  = 0.5;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideBackground:)];
+    tap.numberOfTapsRequired = 1;
+    [_containerView addGestureRecognizer:tap];
+    
     [_backgroundWindow addSubview:_containerView];
 }
+
+- (void)hideBackground:(id)sender {
+    [self hideBackgroundAnimated:YES];
+}
+
 
 - (void)updateTitleLabel {
     if (self.title) {

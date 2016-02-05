@@ -1,8 +1,8 @@
 //
 //  SignUpViewController.h
-//  MuchTVHealthy
+//  493_Project
 //
-//  Created by Peter on 2015/7/30.
+//  Created by Peter on 2015/10/30.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -10,5 +10,5 @@
 #import "BaseViewController.h"
 
 @interface SignUpViewController : BaseViewController
-@property (nonatomic, strong) NSString                  *signUpType;
+
 @end

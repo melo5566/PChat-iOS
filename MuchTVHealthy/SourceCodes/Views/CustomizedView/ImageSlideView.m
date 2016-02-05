@@ -1,8 +1,8 @@
 //
 //  ImageSlideView.m
-//  FaceNews
+//  493_Project
 //
-//  Created by Weiyu Chen on 2015/7/17.
+//  Created by Wu Peter on 2015/11/17.
 //  Copyright (c) 2015年 Fanzytv. All rights reserved.
 //
 
@@ -187,7 +187,7 @@
         else if (_isUseImageUrl) {
             // Set image with url
             __block __typeof (UIImageView *) thisImageView = imageView;
-            [imageView setImageWithURL:[NSURL URLWithString:@"123"]
+            [imageView setImageWithURL:[NSURL URLWithString:_imageArray[i]]
                          withPlaceholderImage:[UIImage imageNamed:kImageNamePlaceholderWide]
                                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
                                         if (image) {
